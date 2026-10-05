@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import LikeButton from '../../components/LikeButton.astro';
 import { site } from '../../data/site.js';
 import { formatDate, runtime } from '../../lib/films.js';
 import { getPosts } from '../../lib/posts';
@@ -27,6 +28,7 @@ const { Content } = await render(post);
       </p>
       <h1 class="font-serif text-5xl leading-[1.05] text-screen sm:text-6xl">{post.data.title}</h1>
       {post.data.description && <p class="mx-auto mt-5 max-w-lg text-dim">{post.data.description}</p>}
+      <div class="mt-6 flex justify-center"><LikeButton slug={post.id} /></div>
     </header>
 
     <div class="prose-film">
@@ -35,6 +37,8 @@ const { Content } = await render(post);
 
     <div class="mt-16 border-t border-line pt-8 text-center">
       <p class="label mb-2">Fin.</p>
+      <p class="mb-5 font-serif text-2xl text-screen">Did this stay with you?</p>
+      <div class="mb-8 flex justify-center"><LikeButton slug={post.id} size="lg" /></div>
       <p class="text-dim">Written by {site.name}. <a href={url('main')} class="text-gold hover:underline">Say hello</a></p>
     </div>
 

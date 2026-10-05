@@ -1,0 +1,88 @@
+---
+// Heart button with a like count. Every button for the same post on a page stays in sync.
+// Hidden until the count loads, so it never shows up broken if likes aren't set up.
+import heart from '@tabler/icons/outline/heart.svg?raw';
+import heartFilled from '@tabler/icons/filled/heart.svg?raw';
+
+interface Props {
+  slug: string;
+  size?: 'sm' | 'lg';
+}
+
+const { slug, size = 'sm' } = Astro.props;
+const icon = (svg: string) => svg.replace(/width="24"/, 'width="100%"').replace(/height="24"/, 'height="100%"');
+---
+
+<button
+  type="button"
+  data-like={slug}
+  aria-pressed="false"
+  aria-label="Like this post"
+  hidden
+  class:list={[
+    'like group inline-flex items-center gap-2 rounded-full border border-line text-dim transition hover:border-gold/60 hover:text-screen aria-pressed:border-gold/60 aria-pressed:text-gold',
+    size === 'lg' ? 'px-5 py-2.5 text-base' : 'px-3.5 py-1.5 text-sm',
+  ]}
+>
+  <span class:list={['heart relative block', size === 'lg' ? 'h-6 w-6' : 'h-4 w-4']}>
+    <span class="outline-icon absolute inset-0 group-aria-pressed:hidden" set:html={icon(heart)} />
+    <span class="filled-icon absolute inset-0 hidden group-aria-pressed:block" set:html={icon(heartFilled)} />
+  </span>
+  <span class="count font-mono tabular-nums">0</span>
+</button>
+
+<script>
+  type State = { count: number; liked: boolean };
+
+  // The script can run more than once on a page; only set up buttons that aren't wired yet.
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('button[data-like]:not([data-ready])')];
+  buttons.forEach((b) => (b.dataset.ready = ''));
+  const slugs = [...new Set(buttons.map((b) => b.dataset.like!))];
+
+  function render(slug: string, state: State) {
+    for (const b of buttons.filter((b) => b.dataset.like === slug)) {
+      b.hidden = false;
+      b.setAttribute('aria-pressed', String(state.liked));
+      b.setAttribute('aria-label', state.liked ? 'Unlike this post' : 'Like this post');
+      b.querySelector('.count')!.textContent = String(state.count);
+    }
+  }
+
+  for (const slug of slugs) {
+    let state: State | null = null;
+    let busy = false;
+
+    fetch(`/api/likes/${slug}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data) render(slug, (state = data));
+      })
+      .catch(() => {});
+
+    for (const button of buttons.filter((b) => b.dataset.like === slug)) {
+      button.addEventListener('click', async () => {
+        if (!state || busy) return;
+        busy = true;
+        const before = state;
+        // Show the change right away, then confirm with the server.
+        state = { liked: !before.liked, count: before.count + (before.liked ? -1 : 1) };
+        render(slug, state);
+        if (state.liked) {
+          button.querySelector('.heart')!.animate(
+            [{ transform: 'scale(1)' }, { transform: 'scale(1.35)' }, { transform: 'scale(1)' }],
+            { duration: 320, easing: 'cubic-bezier(.2,.7,.2,1)' },
+          );
+        }
+        try {
+          const res = await fetch(`/api/likes/${slug}`, { method: 'POST' });
+          if (!res.ok) throw new Error();
+          state = await res.json();
+        } catch {
+          state = before;
+        }
+        render(slug, state!);
+        busy = false;
+      });
+    }
+  }
+</script>
