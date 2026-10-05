@@ -28,7 +28,8 @@ async function search(film) {
   });
   if (!res.ok) throw new Error(`TMDB ${res.status} for "${film.title}"`);
   const { results } = await res.json();
-  return results.find((r) => r.poster_path)?.poster_path ?? null;
+  // Uzbek titles often match foreign films with similar names, so only accept Uzbek-language results.
+  return results.find((r) => r.poster_path && (!film.uz || r.original_language === 'uz'))?.poster_path ?? null;
 }
 
 let found = 0;
