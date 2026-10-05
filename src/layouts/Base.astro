@@ -6,9 +6,11 @@ import { url } from '../lib/urls.js';
 interface Props {
   title?: string;
   description?: string;
+  /** Hide the header and footer (used by the landing page). */
+  bare?: boolean;
 }
 
-const { title, description = site.tagline } = Astro.props;
+const { title, description = site.tagline, bare = false } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
 // Which nav item to highlight. Pages live on different subdomains, so match on the file path.
 const path = Astro.url.pathname;
@@ -37,11 +39,12 @@ const nav = [
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&family=Kaushan+Script&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
+    {!bare && (
     <header class="mx-auto flex max-w-5xl flex-col gap-2 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-8">
       <a href={url('main')} class="font-serif text-2xl text-screen">{site.name}<span class="text-gold">.</span></a>
       <nav class="flex gap-5 text-sm sm:gap-6">
@@ -58,11 +61,13 @@ const nav = [
         ))}
       </nav>
     </header>
+    )}
 
     <main>
       <slot />
     </main>
 
+    {!bare && (
     <footer class="mt-24 border-t border-line">
       <div class="mx-auto max-w-5xl px-5 py-14 text-center sm:px-8">
         <p class="label mb-3">End credits</p>
@@ -73,5 +78,6 @@ const nav = [
         <p class="label mt-8">© {new Date().getFullYear()} {site.fullName}</p>
       </div>
     </footer>
+    )}
   </body>
 </html>

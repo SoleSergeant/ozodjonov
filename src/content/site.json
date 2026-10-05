@@ -1,6 +1,8 @@
 {
   "name": "Muhammadjon",
   "fullName": "Muhammadjon Ozodjonov",
+  "role": "Student / Writer / Film lover",
+  "photo": null,
   "tagline": "Notes on leadership, films, and growing up.",
   "intro": "I'm Muhammadjon, a student from Uzbekistan. This is where I think out loud, and keep a diary of every film that stayed with me.",
   "links": [
@@ -18,6 +20,11 @@
       "label": "LinkedIn",
       "href": "https://www.linkedin.com/in/muhammadjon-ozodjonov",
       "handle": "in/muhammadjon-ozodjonov"
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/SoleSergeant",
+      "handle": "SoleSergeant"
     }
   ]
 }

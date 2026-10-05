@@ -122,7 +122,14 @@ export default config({
       format: { data: 'json' },
       schema: {
         name: fields.text({ label: 'Short name', description: 'Shown in the header.' }),
-        fullName: fields.text({ label: 'Full name' }),
+        fullName: fields.text({ label: 'Full name', description: 'Shown big on the landing page.' }),
+        role: fields.text({ label: 'Role line', description: 'Shown under your name on the landing page, e.g. Student / Writer / Film lover.' }),
+        photo: fields.image({
+          label: 'Your photo',
+          description: 'Shown in the circle on the landing page. A square photo works best.',
+          directory: 'public/images/site',
+          publicPath: '/images/site/',
+        }),
         tagline: fields.text({ label: 'Tagline', description: 'Used in search results and link previews.' }),
         intro: fields.text({ label: 'Homepage intro', multiline: true }),
         links: fields.array(
