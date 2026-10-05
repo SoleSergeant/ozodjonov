@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Poster from '../../../components/Poster.astro';
+import ActorPhoto from '../../../components/ActorPhoto.astro';
 import { actors } from '../../../data/people.js';
 import { findFilms } from '../../../lib/films.js';
 
@@ -16,9 +17,7 @@ const films = findFilms(actor.films, `actor "${actor.slug}"`);
   <div class="mx-auto max-w-5xl px-5 sm:px-8">
     <a href="/movies" class="mt-10 inline-block text-sm text-dim hover:text-gold">← The film diary</a>
     <header class="mt-8 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
-      <div class="flex aspect-square w-28 shrink-0 items-center justify-center rounded-full border border-gold bg-reel font-serif text-4xl text-gold">
-        {actor.initials}
-      </div>
+      <ActorPhoto actor={actor} highlight class="w-32 text-4xl sm:w-40" />
       <div>
         <p class="label mb-2">The leading men · {films.length} titles</p>
         <h1 class="font-serif text-5xl leading-tight text-screen sm:text-6xl">{actor.name}</h1>

@@ -58,6 +58,33 @@ try {
   if (!optional) process.exitCode = 1;
 }
 
+// Actor photos, stored in the same file under "person|<name>".
+const ACTORS = new URL('../src/content/actors/', import.meta.url);
+try {
+  for (const file of (await readdir(ACTORS)).filter((f) => f.endsWith('.json'))) {
+    const { name } = JSON.parse(await readFile(new URL(file, ACTORS), 'utf8'));
+    const key = `person|${name}`;
+    if (!name || key in posters) continue;
+    const params = new URLSearchParams({ query: name });
+    if (TMDB_API_KEY) params.set('api_key', TMDB_API_KEY);
+    const res = await fetch(`https://api.themoviedb.org/3/search/person?${params}`, {
+      headers: TMDB_TOKEN ? { Authorization: `Bearer ${TMDB_TOKEN}` } : {},
+    });
+    if (!res.ok) throw new Error(`TMDB ${res.status} for "${name}"`);
+    const { results } = await res.json();
+    const path = results.find((r) => r.profile_path)?.profile_path;
+    if (path) {
+      posters[key] = path;
+      found++;
+    } else {
+      missing.push(name);
+    }
+  }
+} catch (err) {
+  console.warn(`[posters] Actor photos stopped early: ${err.message}`);
+  if (!optional) process.exitCode = 1;
+}
+
 await writeFile(OUT, JSON.stringify(posters, null, 2) + '\n');
 console.log(`[posters] Found ${found} new posters (${Object.keys(posters).length} total).`);
 if (missing.length) {
