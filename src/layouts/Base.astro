@@ -12,18 +12,11 @@ interface Props {
 
 const { title, description = site.tagline, bare = false } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
-// Which nav item to highlight. Pages live on different subdomains, so match on the file path.
+// Each subdomain is its own site; the header just says which one you're on.
 const path = Astro.url.pathname;
-const current = path.startsWith('/blog') ? 'blog'
-  : path.startsWith('/collections') ? 'collections'
-  : path.startsWith('/movies') ? 'movies'
-  : path.startsWith('/contact') ? 'contact' : 'home';
-const nav = [
-  { id: 'blog', href: url('blog'), label: 'Blog' },
-  { id: 'movies', href: url('movie'), label: 'Movies' },
-  { id: 'collections', href: url('movie', '/collections'), label: 'Collections' },
-  { id: 'contact', href: url('main', '/contact'), label: 'Contact' },
-];
+const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
+  : path.startsWith('/movies') || path.startsWith('/collections') ? { label: 'movies', href: url('movie') }
+  : null;
 ---
 
 <!doctype html>
@@ -45,21 +38,14 @@ const nav = [
   </head>
   <body>
     {!bare && (
-    <header class="mx-auto flex max-w-5xl flex-col gap-2 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-8">
-      <a href={url('main')} class="font-serif text-2xl text-screen">{site.name}<span class="text-gold">.</span></a>
-      <nav class="flex gap-5 text-sm sm:gap-6">
-        {nav.map((item) => (
-          <a
-            href={item.href}
-            class:list={[
-              'transition hover:text-screen',
-              current === item.id ? 'text-gold' : 'text-dim',
-            ]}
-          >
-            {item.label}
-          </a>
-        ))}
-      </nav>
+    <header class="mx-auto flex max-w-5xl items-baseline gap-3 px-5 py-6 sm:px-8">
+      <a href={url('main')} class="font-serif text-2xl text-screen transition hover:text-gold">{site.name}<span class="text-gold">.</span></a>
+      {section && (
+        <>
+          <span aria-hidden="true" class="text-line">/</span>
+          <a href={section.href} class="font-mono text-sm tracking-wide text-dim transition hover:text-screen">{section.label}</a>
+        </>
+      )}
     </header>
     )}
 

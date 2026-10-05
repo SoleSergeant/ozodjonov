@@ -1,0 +1,29 @@
+---
+// Switch between the two parts of movie.ozodjonov.com.
+import { url } from '../lib/urls.js';
+
+interface Props {
+  active: 'diary' | 'collections';
+}
+
+const { active } = Astro.props;
+const tabs = [
+  { id: 'diary', label: 'The diary', href: url('movie') },
+  { id: 'collections', label: 'Collections', href: url('movie', '/collections') },
+];
+---
+
+<nav aria-label="Movies" class="mt-8 flex gap-6 border-b border-line text-sm">
+  {tabs.map((tab) => (
+    <a
+      href={tab.href}
+      aria-current={tab.id === active ? 'page' : undefined}
+      class:list={[
+        '-mb-px border-b pb-3 transition',
+        tab.id === active ? 'border-gold text-screen' : 'border-transparent text-dim hover:text-screen',
+      ]}
+    >
+      {tab.label}
+    </a>
+  ))}
+</nav>

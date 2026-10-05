@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Poster from '../../components/Poster.astro';
 import ActorPhoto from '../../components/ActorPhoto.astro';
+import MovieTabs from '../../components/MovieTabs.astro';
 import { diary, years, allEntries } from '../../data/movies.js';
 import { actors } from '../../data/people.js';
 import { findFilms } from '../../lib/films.js';
@@ -27,6 +28,7 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
 
 <Base title="Movies" description="A diary of every film and series I've watched since 2024.">
   <div class="mx-auto max-w-5xl px-5 sm:px-8">
+    <MovieTabs active="diary" />
     <header class="mt-12">
       <p class="label mb-3">Now showing · The film diary</p>
       <h1 class="font-serif text-5xl leading-[1.05] text-screen sm:text-6xl">
