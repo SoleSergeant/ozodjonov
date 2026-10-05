@@ -174,7 +174,7 @@ export const diary = {
     m('Farz', null, uz),
     m('X-Men: Apocalypse', 2016),
     m('The Wolverine', 2013),
-    m('Raqs va olmos', null, uz),
+    m('Happy New Year', 2014),
     m('Enola Holmes 3', null),
     m('3 Idiots', 2009),
     m('The Sheep Detectives', null),
