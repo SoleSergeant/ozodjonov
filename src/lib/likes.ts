@@ -1,6 +1,7 @@
 // Like counts for blog posts, stored in Upstash Redis (added through Vercel → Storage).
 // Each post has a set of anonymous visitor ids; the like count is the size of the set.
-// Visitor ids are a salted hash of IP + browser, so no IP addresses are stored.
+// Visitors are anonymous random ids (a cookie), stored only as salted hashes; IPs are
+// used, hashed, just for the per-minute spam limit.
 
 const env = (name: string): string | undefined =>
   (typeof process !== 'undefined' ? process.env[name] : undefined) || (import.meta.env as Record<string, string>)[name];
