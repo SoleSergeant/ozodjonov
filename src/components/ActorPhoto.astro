@@ -13,21 +13,29 @@ const src = photoUrl(actor.name);
 
 <div
   class:list={[
-    'flex aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full border bg-reel font-serif text-gold transition',
+    'relative flex aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full border bg-reel font-serif text-gold transition',
     highlight ? 'border-gold' : 'border-line group-hover:border-gold',
     className,
   ]}
 >
   {src ? (
-    <img
-      src={src}
-      alt={actor.name}
-      loading="lazy"
-      class:list={[
-        'h-full w-full object-cover object-top transition duration-500',
-        !highlight && 'grayscale group-hover:grayscale-0',
-      ]}
-    />
+    <>
+      <img
+        src={src}
+        alt={actor.name}
+        loading="lazy"
+        class:list={[
+          'h-full w-full scale-110 object-cover object-[50%_20%] transition duration-500',
+          highlight ? 'brightness-95' : 'brightness-90 contrast-110 grayscale group-hover:brightness-100 group-hover:grayscale-0',
+        ]}
+      />
+      {/* Fades every photo's background into the page so they match. */}
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 rounded-full"
+        style="background: radial-gradient(circle at 50% 42%, transparent 40%, rgba(11,11,11,0.7) 64%, #0b0b0b 88%)"
+      ></span>
+    </>
   ) : (
     actor.initials
   )}
