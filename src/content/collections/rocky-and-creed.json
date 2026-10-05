@@ -1,0 +1,18 @@
+{
+  "title": "Rocky and Creed",
+  "kind": "franchise",
+  "line": "It ain't about how hard you hit.",
+  "order": 5,
+  "allUzbek": false,
+  "films": [
+    "Rocky",
+    "Rocky II",
+    "Rocky III",
+    "Rocky IV",
+    "Rocky V",
+    "Rocky Balboa",
+    "Creed",
+    "Creed II",
+    "Creed III"
+  ]
+}

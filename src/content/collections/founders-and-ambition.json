@@ -1,0 +1,15 @@
+{
+  "title": "Founders and ambition",
+  "kind": "theme",
+  "line": "What it takes to build something, and what it can cost.",
+  "order": 2,
+  "allUzbek": false,
+  "films": [
+    "The Social Network",
+    "The Founder",
+    "The Wolf of Wall Street",
+    "The Aviator",
+    "Ford v Ferrari",
+    "The Pursuit of Happyness"
+  ]
+}

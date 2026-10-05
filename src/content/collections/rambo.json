@@ -1,0 +1,14 @@
+{
+  "title": "Rambo",
+  "kind": "franchise",
+  "line": "First blood and everything after.",
+  "order": 9,
+  "allUzbek": false,
+  "films": [
+    "First Blood",
+    "Rambo: First Blood Part II",
+    "Rambo III",
+    "John Rambo",
+    "Rambo: Last Blood"
+  ]
+}

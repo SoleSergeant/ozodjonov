@@ -1,0 +1,13 @@
+{
+  "title": "Brilliant minds",
+  "kind": "theme",
+  "line": "Genius, and the weight that comes with it.",
+  "order": 3,
+  "allUzbek": false,
+  "films": [
+    "A Beautiful Mind",
+    "The Imitation Game",
+    "The Theory of Everything",
+    "Good Will Hunting"
+  ]
+}

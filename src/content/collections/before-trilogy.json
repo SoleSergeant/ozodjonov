@@ -1,0 +1,12 @@
+{
+  "title": "The Before trilogy",
+  "kind": "franchise",
+  "line": "One conversation, eighteen years.",
+  "order": 8,
+  "allUzbek": false,
+  "films": [
+    "Before Sunrise",
+    "Before Sunset",
+    "Before Midnight"
+  ]
+}

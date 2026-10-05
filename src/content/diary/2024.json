@@ -1,0 +1,158 @@
+{
+  "year": "2024",
+  "films": [
+    {
+      "title": "Dead Poets Society",
+      "released": 1989,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Life Is Beautiful",
+      "released": 1997,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Interstellar",
+      "released": 2014,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Good Will Hunting",
+      "released": 1997,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Social Network",
+      "released": 2010,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Founder",
+      "released": 2016,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Great Gatsby",
+      "released": 2013,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Stranger Things",
+      "released": 2016,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": true,
+      "reflection": null
+    },
+    {
+      "title": "The Imitation Game",
+      "released": 2014,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Hacksaw Ridge",
+      "released": 2016,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Truman Show",
+      "released": 1998,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Harry Potter (all films)",
+      "released": 2001,
+      "search": "Harry Potter and the Philosopher's Stone",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "A Beautiful Mind",
+      "released": 2001,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Substance",
+      "released": 2024,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Titanic",
+      "released": 1997,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Whiplash",
+      "released": 2014,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Inception",
+      "released": 2010,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    }
+  ]
+}

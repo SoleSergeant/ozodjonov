@@ -1,0 +1,12 @@
+{
+  "title": "The Dark Knight trilogy",
+  "kind": "franchise",
+  "line": "Nolan's Batman.",
+  "order": 7,
+  "allUzbek": false,
+  "films": [
+    "Batman Begins",
+    "The Dark Knight",
+    "The Dark Knight Rises"
+  ]
+}

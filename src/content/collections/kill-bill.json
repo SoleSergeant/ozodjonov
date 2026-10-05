@@ -1,0 +1,11 @@
+{
+  "title": "Kill Bill",
+  "kind": "franchise",
+  "line": "Two volumes, one revenge.",
+  "order": 10,
+  "allUzbek": false,
+  "films": [
+    "Kill Bill: Vol. 1",
+    "Kill Bill: Vol. 2"
+  ]
+}

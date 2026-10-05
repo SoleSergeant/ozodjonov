@@ -1,0 +1,1031 @@
+{
+  "year": "2026",
+  "films": [
+    {
+      "title": "Atonement",
+      "released": 2007,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Southpaw",
+      "released": 2015,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Godfather Part II",
+      "released": 1974,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Good Will Hunting",
+      "released": 1997,
+      "search": "",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Children of Men",
+      "released": 2006,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Aviator",
+      "released": 2004,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Black Swan",
+      "released": 2010,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Curious Case of Benjamin Button",
+      "released": 2008,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Don't Look Up",
+      "released": 2021,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Housemaid",
+      "released": 2025,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Good Morning, Vietnam",
+      "released": 1987,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Sarvqomat dilbarim",
+      "released": null,
+      "search": "",
+      "rewatch": false,
+      "uzbek": true,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Awakenings",
+      "released": 1990,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Sinners",
+      "released": 2025,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Dead Poets Society",
+      "released": 1989,
+      "search": "",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Patch Adams",
+      "released": 1998,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Marty Supreme",
+      "released": 2025,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Inglourious Basterds",
+      "released": 2009,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Shawshank Redemption",
+      "released": 1994,
+      "search": "",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Eternal Sunshine of the Spotless Mind",
+      "released": 2004,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Avengers",
+      "released": 2012,
+      "search": "",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Amazing Spider-Man",
+      "released": 2012,
+      "search": "",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Amazing Spider-Man 2",
+      "released": 2014,
+      "search": "",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Ford v Ferrari",
+      "released": 2019,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Before Sunrise",
+      "released": 1995,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Before Sunset",
+      "released": 2004,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Before Midnight",
+      "released": 2013,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Devil Wears Prada",
+      "released": 2006,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Avengers: Infinity War",
+      "released": 2018,
+      "search": "",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Novda",
+      "released": null,
+      "search": "",
+      "rewatch": false,
+      "uzbek": true,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Avengers: Endgame",
+      "released": 2019,
+      "search": "",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Revenant",
+      "released": 2015,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Thor: Love and Thunder",
+      "released": 2022,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Notting Hill",
+      "released": 1999,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Martian",
+      "released": 2015,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Mrs. Doubtfire",
+      "released": 1993,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "A Bronx Tale",
+      "released": 1993,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Vatan",
+      "released": null,
+      "search": "",
+      "rewatch": true,
+      "uzbek": true,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Ko'zlarim yo'lingda",
+      "released": null,
+      "search": "",
+      "rewatch": false,
+      "uzbek": true,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Vanilla Sky",
+      "released": 2001,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Spider-Man: Homecoming",
+      "released": 2017,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Iron Man",
+      "released": 2008,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Iron Man 2",
+      "released": 2010,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Iron Man 3",
+      "released": 2013,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Children of Heaven",
+      "released": 1997,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Kill Bill: Vol. 1",
+      "released": 2003,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Kill Bill: Vol. 2",
+      "released": 2004,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Doctor Strange",
+      "released": 2016,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Doctor Strange in the Multiverse of Madness",
+      "released": 2022,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Spider-Man: No Way Home",
+      "released": 2021,
+      "search": "",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Avengers: Age of Ultron",
+      "released": 2015,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "12 Years a Slave",
+      "released": 2013,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Godfather Part III",
+      "released": 1990,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Qo'rg'oshin",
+      "released": null,
+      "search": "",
+      "rewatch": false,
+      "uzbek": true,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Captain America: Brave New World",
+      "released": 2025,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Rocky",
+      "released": 1976,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Rocky II",
+      "released": 1979,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Rocky III",
+      "released": 1982,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Rocky IV",
+      "released": 1985,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Rocky V",
+      "released": 1990,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Creed",
+      "released": 2015,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Creed II",
+      "released": 2018,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Creed III",
+      "released": 2023,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Guardians of the Galaxy",
+      "released": 2014,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Guardians of the Galaxy Vol. 2",
+      "released": 2017,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Guardians of the Galaxy Vol. 3",
+      "released": 2023,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Primal Fear",
+      "released": 1996,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "First Blood",
+      "released": 1982,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Rambo: First Blood Part II",
+      "released": 1985,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Rambo III",
+      "released": 1988,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Jab Tak Hai Jaan",
+      "released": 2012,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "John Rambo",
+      "released": 2008,
+      "search": "Rambo",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Rambo: Last Blood",
+      "released": 2019,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Deadpool & Wolverine",
+      "released": 2024,
+      "search": "",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Deadpool",
+      "released": 2016,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Deadpool 2",
+      "released": 2018,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Gladiator",
+      "released": 2000,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Janob Hech Kim",
+      "released": null,
+      "search": "",
+      "rewatch": false,
+      "uzbek": true,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Spider-Man: Across the Spider-Verse",
+      "released": 2023,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Red Notice",
+      "released": 2021,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Dacha",
+      "released": null,
+      "search": "",
+      "rewatch": false,
+      "uzbek": true,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "X-Men Origins: Wolverine",
+      "released": 2009,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Farz",
+      "released": null,
+      "search": "",
+      "rewatch": false,
+      "uzbek": true,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "X-Men: Apocalypse",
+      "released": 2016,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Wolverine",
+      "released": 2013,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Happy New Year",
+      "released": 2014,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Enola Holmes 3",
+      "released": null,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "3 Idiots",
+      "released": 2009,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Sheep Detectives",
+      "released": null,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Harry Potter (all films)",
+      "released": 2001,
+      "search": "Harry Potter and the Philosopher's Stone",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Thor",
+      "released": 2011,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Thor: Ragnarok",
+      "released": 2017,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Thor: The Dark World",
+      "released": 2013,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Black Panther: Wakanda Forever",
+      "released": 2022,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Captain America: Civil War",
+      "released": 2016,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Spider-Man: Brand New Day",
+      "released": 2026,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "X-Men: Days of Future Past",
+      "released": 2014,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Ant-Man and the Wasp",
+      "released": 2018,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Ant-Man and the Wasp: Quantumania",
+      "released": 2023,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Real Steel",
+      "released": 2011,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "The Fantastic Four: First Steps",
+      "released": 2025,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Aquaman",
+      "released": 2018,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Aquaman and the Lost Kingdom",
+      "released": 2023,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "O'tkan kunlar",
+      "released": null,
+      "search": "",
+      "rewatch": false,
+      "uzbek": true,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Serpico",
+      "released": 1973,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Supergirl",
+      "released": 2026,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "...And Justice for All",
+      "released": 1979,
+      "search": "And Justice for All",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Captain America: The First Avenger",
+      "released": 2011,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Frankie and Johnny",
+      "released": 1991,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Donnie Brasco",
+      "released": 1997,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "reflection": null
+    },
+    {
+      "title": "Spider-Noir",
+      "released": null,
+      "search": "",
+      "rewatch": false,
+      "uzbek": false,
+      "series": true,
+      "reflection": null
+    },
+    {
+      "title": "Loki (Seasons 1–2)",
+      "released": 2021,
+      "search": "Loki",
+      "rewatch": false,
+      "uzbek": false,
+      "series": true,
+      "reflection": null
+    },
+    {
+      "title": "Merlin (Seasons 1–5)",
+      "released": 2008,
+      "search": "Merlin",
+      "rewatch": false,
+      "uzbek": false,
+      "series": true,
+      "reflection": null
+    },
+    {
+      "title": "House of the Dragon (Seasons 1–3)",
+      "released": 2022,
+      "search": "House of the Dragon",
+      "rewatch": false,
+      "uzbek": false,
+      "series": true,
+      "reflection": null
+    }
+  ]
+}

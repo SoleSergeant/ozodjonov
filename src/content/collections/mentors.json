@@ -1,0 +1,15 @@
+{
+  "title": "Mentors",
+  "kind": "theme",
+  "line": "Teachers, coaches, and the people who see something in you first.",
+  "order": 1,
+  "allUzbek": false,
+  "films": [
+    "Dead Poets Society",
+    "Good Will Hunting",
+    "Scent of a Woman",
+    "Whiplash",
+    "Detachment",
+    "Patch Adams"
+  ]
+}

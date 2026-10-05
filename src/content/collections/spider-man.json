@@ -1,0 +1,16 @@
+{
+  "title": "Spider-Man",
+  "kind": "franchise",
+  "line": "Every version of the friendly neighbor.",
+  "order": 12,
+  "allUzbek": false,
+  "films": [
+    "The Amazing Spider-Man",
+    "The Amazing Spider-Man 2",
+    "Spider-Man: Homecoming",
+    "Spider-Man: No Way Home",
+    "Spider-Man: Across the Spider-Verse",
+    "Spider-Man: Brand New Day",
+    "Spider-Noir"
+  ]
+}

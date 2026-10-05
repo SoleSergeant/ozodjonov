@@ -1,0 +1,8 @@
+{
+  "title": "Uzbek cinema",
+  "kind": "theme",
+  "line": "Films from home.",
+  "order": 4,
+  "allUzbek": true,
+  "films": []
+}

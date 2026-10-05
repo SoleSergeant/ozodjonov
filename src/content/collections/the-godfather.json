@@ -1,0 +1,12 @@
+{
+  "title": "The Godfather trilogy",
+  "kind": "franchise",
+  "line": "The Corleone family saga.",
+  "order": 6,
+  "allUzbek": false,
+  "films": [
+    "The Godfather",
+    "The Godfather Part II",
+    "The Godfather Part III"
+  ]
+}

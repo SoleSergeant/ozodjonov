@@ -1,0 +1,17 @@
+{
+  "title": "X-Men and Wolverine",
+  "kind": "franchise",
+  "line": "Mutants, claws, and one very long goodbye.",
+  "order": 13,
+  "allUzbek": false,
+  "films": [
+    "X-Men Origins: Wolverine",
+    "X-Men: Days of Future Past",
+    "The Wolverine",
+    "X-Men: Apocalypse",
+    "Logan",
+    "Deadpool",
+    "Deadpool 2",
+    "Deadpool & Wolverine"
+  ]
+}

@@ -26,11 +26,16 @@ export const uniqueFilms = (() => {
 
 const byTitle = new Map(uniqueFilms.map((f) => [f.title, f]));
 
+// Titles typed in the admin that don't match the diary are skipped (with a warning)
+// rather than failing the whole site build.
 export function findFilms(titles, where) {
-  return titles.map((title) => {
+  return titles.flatMap((title) => {
     const film = byTitle.get(title);
-    if (!film) throw new Error(`"${title}" in ${where} is not in movies.js — check the spelling.`);
-    return film;
+    if (!film) {
+      console.warn(`[films] "${title}" in ${where} is not in the film diary — check the spelling.`);
+      return [];
+    }
+    return [film];
   });
 }
 

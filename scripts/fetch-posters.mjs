@@ -1,19 +1,28 @@
 // Looks up a poster for every diary entry on TMDB and saves the paths to
-// src/data/posters.json. Run with `npm run posters` after adding films.
-// Needs TMDB_API_KEY or TMDB_TOKEN in .env (see .env.example).
-import { readFile, writeFile } from 'node:fs/promises';
-import { allEntries, posterKey } from '../src/data/movies.js';
+// src/data/posters.json. Runs before every build; run `npm run posters` by hand too.
+// Needs TMDB_API_KEY or TMDB_TOKEN in .env locally, or in Vercel's environment variables.
+// With --optional (used by the build), a missing key or TMDB outage never fails the build.
+import { readFile, readdir, writeFile } from 'node:fs/promises';
+import { fromDiaryFile, posterKey } from '../src/data/poster-key.js';
 
 const OUT = new URL('../src/data/posters.json', import.meta.url);
+const DIARY = new URL('../src/content/diary/', import.meta.url);
+const optional = process.argv.includes('--optional');
 const { TMDB_API_KEY, TMDB_TOKEN } = process.env;
 
 if (!TMDB_API_KEY && !TMDB_TOKEN) {
-  console.error('Add TMDB_API_KEY or TMDB_TOKEN to a .env file first (see .env.example).');
-  process.exit(1);
+  console.log('[posters] No TMDB key set, skipping poster lookup.');
+  process.exit(optional ? 0 : 1);
+}
+
+const films = [];
+for (const file of (await readdir(DIARY)).filter((f) => f.endsWith('.json'))) {
+  const { films: list } = JSON.parse(await readFile(new URL(file, DIARY), 'utf8'));
+  films.push(...list.map(fromDiaryFile));
 }
 
 const posters = JSON.parse(await readFile(OUT, 'utf8'));
-const pending = [...new Map(allEntries.map((f) => [posterKey(f), f])).values()].filter(
+const pending = [...new Map(films.map((f) => [posterKey(f), f])).values()].filter(
   (f) => !(posterKey(f) in posters),
 );
 
@@ -34,18 +43,23 @@ async function search(film) {
 
 let found = 0;
 const missing = [];
-for (const film of pending) {
-  const path = await search(film);
-  if (path) {
-    posters[posterKey(film)] = path;
-    found++;
-  } else {
-    missing.push(film.title);
+try {
+  for (const film of pending) {
+    const path = await search(film);
+    if (path) {
+      posters[posterKey(film)] = path;
+      found++;
+    } else {
+      missing.push(film.title);
+    }
   }
+} catch (err) {
+  console.warn(`[posters] Stopped early: ${err.message}`);
+  if (!optional) process.exitCode = 1;
 }
 
 await writeFile(OUT, JSON.stringify(posters, null, 2) + '\n');
-console.log(`Found ${found} new posters (${Object.keys(posters).length} total).`);
+console.log(`[posters] Found ${found} new posters (${Object.keys(posters).length} total).`);
 if (missing.length) {
-  console.log(`No poster for ${missing.length} titles (they'll use a title card):\n  ${missing.join('\n  ')}`);
+  console.log(`[posters] No poster for ${missing.length} titles (they'll use a title card):\n  ${missing.join('\n  ')}`);
 }
