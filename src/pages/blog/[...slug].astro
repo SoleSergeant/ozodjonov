@@ -19,7 +19,7 @@ const { post, next } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<Base title={post.data.title} description={post.data.description}>
+<Base title={post.data.title} description={post.data.description} type="article">
   <article class="mx-auto max-w-2xl px-5 sm:px-8">
     <header class="mb-12 mt-14 text-center">
       <p class="label mb-4">

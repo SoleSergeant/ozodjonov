@@ -23,3 +23,11 @@ function localPath(section, path) {
 
 export const url = (section, path = '/') =>
   import.meta.env.PROD ? hosts[section] + path : localPath(section, path);
+
+// The public address of a page from its file path, e.g. /blog/beginning -> https://blog.ozodjonov.com/beginning.
+export function publicUrl(filePath) {
+  if (filePath.startsWith('/blog')) return hosts.blog + (filePath.slice(5) || '/');
+  if (filePath.startsWith('/movies')) return hosts.movie + (filePath.slice(7) || '/');
+  if (filePath.startsWith('/collections')) return hosts.movie + filePath;
+  return hosts.main + filePath;
+}

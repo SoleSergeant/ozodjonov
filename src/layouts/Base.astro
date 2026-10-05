@@ -1,17 +1,21 @@
 ---
 import '../styles/global.css';
 import { site } from '../data/site.js';
-import { url } from '../lib/urls.js';
+import { url, publicUrl, hosts } from '../lib/urls.js';
 
 interface Props {
   title?: string;
   description?: string;
   /** Hide the header and footer (used by the landing page). */
   bare?: boolean;
+  /** 'article' for blog posts; shapes how link previews are shown. */
+  type?: 'website' | 'article';
 }
 
-const { title, description = site.tagline, bare = false } = Astro.props;
-const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
+const { title, description = site.tagline, bare = false, type = 'website' } = Astro.props;
+const pageTitle = title ? `${title} · ${site.name}` : `${site.fullName} · ${site.tagline}`;
+const pageUrl = publicUrl(Astro.url.pathname.replace(/\/$/, '') || '/');
+const ogImage = `${hosts.main}/og.png`;
 // Each subdomain is its own site; the header just says which one you're on.
 const path = Astro.url.pathname;
 const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
@@ -26,8 +30,20 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={pageUrl} />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="ozodjonov" />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ozodjonov" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
