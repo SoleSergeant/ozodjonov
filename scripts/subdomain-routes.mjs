@@ -6,8 +6,9 @@ import { readFile, writeFile } from 'node:fs/promises';
 const CONFIG = new URL('../.vercel/output/config.json', import.meta.url);
 const host = (value) => [{ type: 'host', value }];
 
-// Paths that every address must serve as-is: built assets, admin, and server routes.
-const shared = '_astro/|_image|_server-islands/|favicon\\.svg|keystatic|api/';
+// Paths that every address must serve as-is: built assets, files in public/ (logo,
+// favicon, uploaded images: anything ending in a file extension), admin, and server routes.
+const shared = '_astro/|_image|_server-islands/|images/|keystatic|api/|[^/]+\\.[a-z0-9]+$';
 
 const routes = [
   // Old links on the main domain move to the subdomains.
