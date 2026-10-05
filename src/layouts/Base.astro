@@ -1,0 +1,71 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site.js';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = site.tagline } = Astro.props;
+const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/blog', label: 'Blog' },
+  { href: '/movies', label: 'Movies' },
+  { href: '/collections', label: 'Collections' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="mx-auto flex max-w-5xl flex-col gap-2 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-8">
+      <a href="/" class="font-serif text-2xl text-screen">{site.name}<span class="text-gold">.</span></a>
+      <nav class="flex gap-5 text-sm sm:gap-6">
+        {nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'transition hover:text-screen',
+              path.startsWith(item.href) ? 'text-gold' : 'text-dim',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="mt-24 border-t border-line">
+      <div class="mx-auto max-w-5xl px-5 py-14 text-center sm:px-8">
+        <p class="label mb-3">End credits</p>
+        <p class="font-serif text-3xl text-screen">Written and directed by {site.name}</p>
+        <p class="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-dim">
+          {site.links.map((l) => <a href={l.href} class="hover:text-gold">{l.label}</a>)}
+        </p>
+        <p class="label mt-8">© {new Date().getFullYear()} {site.fullName}</p>
+      </div>
+    </footer>
+  </body>
+</html>

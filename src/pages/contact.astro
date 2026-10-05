@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site.js';
+---
+
+<Base title="Contact" description={`Get in touch with ${site.name}.`}>
+  <div class="mx-auto max-w-3xl px-5 sm:px-8">
+    <header class="mt-12">
+      <p class="label mb-3">Casting call</p>
+      <h1 class="font-serif text-5xl leading-[1.05] text-screen sm:text-6xl">
+        Let's talk.<br /><em class="text-gold">Ideas, projects, or a film I should watch.</em>
+      </h1>
+    </header>
+
+    <ul class="mt-14">
+      {site.links.map((link) => (
+        <li class="border-t border-line last:border-b">
+          <a
+            href={link.href}
+            target={link.href.startsWith('http') ? '_blank' : undefined}
+            rel={link.href.startsWith('http') ? 'noopener' : undefined}
+            class="group flex items-baseline justify-between gap-4 py-6"
+          >
+            <span class="font-serif text-3xl text-screen transition group-hover:text-gold">{link.label}</span>
+            <span class="truncate font-mono text-sm text-dim">{link.handle} →</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

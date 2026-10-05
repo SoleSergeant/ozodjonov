@@ -1,0 +1,37 @@
+---
+import { cardColor, posterUrl } from '../lib/films.js';
+
+interface Props {
+  film: { title: string; ry?: number | null; rw?: boolean; uz?: boolean; tv?: boolean; post?: string; year?: number };
+  showBadge?: boolean;
+}
+
+const { film, showBadge = true } = Astro.props;
+const src = posterUrl(film);
+const bg = cardColor(film.title);
+const Tag = film.post ? 'a' : 'div';
+---
+
+<figure class="poster group" data-year={film.year} data-rw={film.rw ? '1' : undefined} data-uz={film.uz ? '1' : undefined} data-tv={film.tv ? '1' : undefined}>
+  <Tag
+    href={film.post ? `/blog/${film.post}` : undefined}
+    class="relative block aspect-[2/3] overflow-hidden rounded-[4px] ring-1 ring-white/5 transition duration-300 group-hover:-translate-y-1 group-hover:ring-gold/60 group-hover:shadow-[0_10px_30px_-10px_rgba(217,164,65,0.35)]"
+    style={src ? undefined : `background:${bg}`}
+  >
+    {src ? (
+      <img src={src} alt={`${film.title} poster`} loading="lazy" decoding="async" class="h-full w-full object-cover" />
+    ) : (
+      <div class="flex h-full flex-col justify-between p-3">
+        <span class="label !text-[9px] !text-white/40">{film.tv ? 'Series' : film.uz ? "O'zbek kino" : 'Feature'}</span>
+        <span class="font-serif text-lg leading-tight text-white">{film.title}</span>
+      </div>
+    )}
+    {showBadge && film.rw && (
+      <span class="absolute right-1.5 top-1.5 rounded-[3px] bg-gold px-1.5 py-px font-mono text-[9px] tracking-wider text-ink">REWATCH</span>
+    )}
+  </Tag>
+  <figcaption class="mt-2 text-[13px] leading-snug text-dim">
+    {film.title}
+    {film.post && <a href={`/blog/${film.post}`} class="mt-0.5 block text-gold">Read reflection →</a>}
+  </figcaption>
+</figure>

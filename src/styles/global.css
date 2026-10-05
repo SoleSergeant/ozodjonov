@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0b0b;
+  --color-reel: #141310;
+  --color-screen: #ece6da;
+  --color-dim: #a39d90;
+  --color-faint: #8a8478;
+  --color-line: #2a2722;
+  --color-gold: #d9a441;
+
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html {
+  background: var(--color-ink);
+  color: var(--color-screen);
+  font-family: var(--font-sans);
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  animation: fade-from-black 0.9s ease-out both;
+}
+
+/* Subtle film grain over everything */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes fade-from-black {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+.letterbox {
+  height: 28px;
+  background: #000;
+}
+
+/* Blog post typography */
+.prose-film {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #d9d3c7;
+}
+.prose-film > * + * { margin-top: 1.25em; }
+.prose-film h2,
+.prose-film h3 {
+  font-family: var(--font-serif);
+  color: var(--color-screen);
+  line-height: 1.2;
+  margin-top: 2em;
+}
+.prose-film h2 { font-size: 2rem; }
+.prose-film h3 { font-size: 1.5rem; }
+.prose-film a { color: var(--color-gold); text-underline-offset: 3px; text-decoration: underline; }
+.prose-film blockquote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  color: var(--color-screen);
+  border-left: 2px solid var(--color-gold);
+  padding-left: 1.25rem;
+}
+.prose-film ul { list-style: disc; padding-left: 1.25rem; }
+.prose-film ol { list-style: decimal; padding-left: 1.25rem; }
+.prose-film code { font-family: var(--font-mono); font-size: 0.9em; color: var(--color-gold); }
+.prose-film hr { border-color: var(--color-line); }

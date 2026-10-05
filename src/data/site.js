@@ -1,0 +1,14 @@
+// Your details. Replace the placeholder values before publishing.
+export const site = {
+  name: 'Muhammadjon',
+  fullName: 'Muhammadjon Ozodjonov',
+  tagline: 'Notes on leadership, films, and growing up.',
+  intro:
+    "I'm Muhammadjon, a student and founder from Uzbekistan. This is where I think out loud, and keep a diary of every film that stayed with me.",
+  links: [
+    { label: 'Email', href: 'mailto:you@example.com', handle: 'you@example.com' },
+    { label: 'Telegram', href: 'https://t.me/your_username', handle: '@your_username' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/your-profile', handle: 'in/your-profile' },
+    { label: 'Instagram', href: 'https://instagram.com/your_username', handle: '@your_username' },
+  ],
+};

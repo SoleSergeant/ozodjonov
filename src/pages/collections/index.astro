@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import CollectionCover from '../../components/CollectionCover.astro';
+import { resolvedCollections } from '../../lib/films.js';
+
+const themes = resolvedCollections.filter((c) => c.kind === 'theme');
+const franchises = resolvedCollections.filter((c) => c.kind === 'franchise');
+---
+
+<Base title="Collections" description="Films grouped into box sets: themes I keep coming back to, and the sagas I've watched end to end.">
+  <div class="mx-auto max-w-5xl px-5 sm:px-8">
+    <header class="mt-12">
+      <p class="label mb-3">The box sets</p>
+      <h1 class="font-serif text-5xl leading-[1.05] text-screen sm:text-6xl">Collections</h1>
+      <p class="mt-4 max-w-lg text-dim">Themes I keep coming back to, and the sagas I've watched from start to finish.</p>
+    </header>
+
+    <section class="mt-14">
+      <p class="label mb-6">Reel 01 · Themes</p>
+      <div class="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {themes.map((c) => <CollectionCover collection={c} />)}
+      </div>
+    </section>
+
+    <section class="mt-20">
+      <p class="label mb-6">Reel 02 · Sagas and franchises</p>
+      <div class="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {franchises.map((c) => <CollectionCover collection={c} />)}
+      </div>
+    </section>
+  </div>
+</Base>

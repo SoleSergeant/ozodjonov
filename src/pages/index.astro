@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Poster from '../components/Poster.astro';
+import PostList from '../components/PostList.astro';
+import CollectionCover from '../components/CollectionCover.astro';
+import { site } from '../data/site.js';
+import { diary, years } from '../data/movies.js';
+import { resolvedCollections } from '../lib/films.js';
+import { getPosts } from '../lib/posts';
+
+const posts = (await getPosts()).slice(0, 3);
+const latestYear = years[0];
+const recent = diary[latestYear].map((f) => ({ ...f, year: latestYear })).filter((f) => !f.tv).slice(-6).reverse();
+const themes = resolvedCollections.filter((c) => c.kind === 'theme').slice(0, 3);
+---
+
+<Base>
+  <div class="letterbox"></div>
+  <section class="bg-reel px-5 py-20 text-center sm:py-28">
+    <p class="label mb-5">A personal journal · Est. 2026</p>
+    <h1 class="mx-auto max-w-3xl font-serif text-5xl leading-[1.02] text-screen sm:text-7xl">
+      Notes on leadership,<br /><em class="text-gold">films</em>, and growing up.
+    </h1>
+    <p class="mx-auto mt-6 max-w-md leading-relaxed text-dim">{site.intro}</p>
+  </section>
+  <div class="letterbox"></div>
+
+  <div class="mx-auto max-w-5xl px-5 sm:px-8">
+    <section class="mt-20">
+      <div class="mb-4 flex items-baseline justify-between">
+        <p class="label">Scene 01 · Latest from the blog</p>
+        <a href="/blog" class="text-sm text-dim hover:text-gold">All posts →</a>
+      </div>
+      <PostList posts={posts} />
+    </section>
+
+    <section class="mt-20">
+      <div class="mb-5 flex items-baseline justify-between">
+        <p class="label">Scene 02 · Recently watched</p>
+        <a href="/movies" class="text-sm text-dim hover:text-gold">The film diary →</a>
+      </div>
+      <div class="grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
+        {recent.map((film) => <Poster film={film} />)}
+      </div>
+    </section>
+
+    <section class="mt-20">
+      <div class="mb-5 flex items-baseline justify-between">
+        <p class="label">Scene 03 · Collections</p>
+        <a href="/collections" class="text-sm text-dim hover:text-gold">All collections →</a>
+      </div>
+      <div class="grid gap-8 sm:grid-cols-3">
+        {themes.map((c) => <CollectionCover collection={c} />)}
+      </div>
+    </section>
+  </div>
+</Base>
