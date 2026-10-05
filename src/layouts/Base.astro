@@ -38,8 +38,10 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
   </head>
   <body>
     {!bare && (
-    <header class="mx-auto flex max-w-5xl items-baseline gap-3 px-5 py-6 sm:px-8">
-      <a href={url('main')} class="font-serif text-2xl text-screen transition hover:text-gold">{site.name}<span class="text-gold">.</span></a>
+    <header class="mx-auto flex max-w-5xl items-center gap-3 px-5 py-6 sm:px-8">
+      <a href={url('main')} class="transition hover:opacity-80">
+        <img src="/logo-light.svg" alt={site.fullName} width="458" height="96" class="h-7 w-auto sm:h-8" />
+      </a>
       {section && (
         <>
           <span aria-hidden="true" class="text-line">/</span>
