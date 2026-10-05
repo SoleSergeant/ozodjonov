@@ -2,27 +2,22 @@
   "name": "Muhammadjon",
   "fullName": "Muhammadjon Ozodjonov",
   "tagline": "Notes on leadership, films, and growing up.",
-  "intro": "I'm Muhammadjon, a student and founder from Uzbekistan. This is where I think out loud, and keep a diary of every film that stayed with me.",
+  "intro": "I'm Muhammadjon, a student from Uzbekistan. This is where I think out loud, and keep a diary of every film that stayed with me.",
   "links": [
     {
       "label": "Email",
-      "href": "mailto:you@example.com",
-      "handle": "you@example.com"
+      "href": "mailto:hi@ozodjonov.com",
+      "handle": "hi@ozodjonov.com"
     },
     {
       "label": "Telegram",
-      "href": "https://t.me/your_username",
-      "handle": "@your_username"
+      "href": "https://t.me/ozodjonov_mh",
+      "handle": "@ozodjonov_mh"
     },
     {
       "label": "LinkedIn",
-      "href": "https://www.linkedin.com/in/your-profile",
-      "handle": "in/your-profile"
-    },
-    {
-      "label": "Instagram",
-      "href": "https://instagram.com/your_username",
-      "handle": "@your_username"
+      "href": "https://www.linkedin.com/in/muhammadjon-ozodjonov",
+      "handle": "in/muhammadjon-ozodjonov"
     }
   ]
 }
