@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { site } from '../data/site.js';
+import { url } from '../lib/urls.js';
 
 interface Props {
   title?: string;
@@ -9,12 +10,17 @@ interface Props {
 
 const { title, description = site.tagline } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
+// Which nav item to highlight. Pages live on different subdomains, so match on the file path.
 const path = Astro.url.pathname;
+const current = path.startsWith('/blog') ? 'blog'
+  : path.startsWith('/collections') ? 'collections'
+  : path.startsWith('/movies') ? 'movies'
+  : path.startsWith('/contact') ? 'contact' : 'home';
 const nav = [
-  { href: '/blog', label: 'Blog' },
-  { href: '/movies', label: 'Movies' },
-  { href: '/collections', label: 'Collections' },
-  { href: '/contact', label: 'Contact' },
+  { id: 'blog', href: url('blog'), label: 'Blog' },
+  { id: 'movies', href: url('movie'), label: 'Movies' },
+  { id: 'collections', href: url('movie', '/collections'), label: 'Collections' },
+  { id: 'contact', href: url('main', '/contact'), label: 'Contact' },
 ];
 ---
 
@@ -37,14 +43,14 @@ const nav = [
   </head>
   <body>
     <header class="mx-auto flex max-w-5xl flex-col gap-2 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-8">
-      <a href="/" class="font-serif text-2xl text-screen">{site.name}<span class="text-gold">.</span></a>
+      <a href={url('main')} class="font-serif text-2xl text-screen">{site.name}<span class="text-gold">.</span></a>
       <nav class="flex gap-5 text-sm sm:gap-6">
         {nav.map((item) => (
           <a
             href={item.href}
             class:list={[
               'transition hover:text-screen',
-              path.startsWith(item.href) ? 'text-gold' : 'text-dim',
+              current === item.id ? 'text-gold' : 'text-dim',
             ]}
           >
             {item.label}

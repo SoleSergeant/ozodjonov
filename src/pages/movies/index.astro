@@ -5,6 +5,7 @@ import ActorPhoto from '../../components/ActorPhoto.astro';
 import { diary, years, allEntries } from '../../data/movies.js';
 import { actors } from '../../data/people.js';
 import { findFilms } from '../../lib/films.js';
+import { url } from '../../lib/urls.js';
 
 const stats = [
   { value: allEntries.length, label: 'Titles' },
@@ -46,7 +47,7 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
       <p class="label mb-5">The leading men</p>
       <div class="grid grid-cols-2 gap-6 sm:grid-cols-4">
         {leadingMen.map((a) => (
-          <a href={`/movies/actors/${a.slug}`} class="group text-center">
+          <a href={url('movie', `/actors/${a.slug}`)} class="group text-center">
             <ActorPhoto actor={a} class="mx-auto w-28 text-3xl sm:w-32" />
             <p class="mt-3 text-screen group-hover:text-gold">{a.name}</p>
             <p class="label mt-1">{a.count} titles</p>

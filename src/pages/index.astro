@@ -1,17 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
-import Poster from '../components/Poster.astro';
-import PostList from '../components/PostList.astro';
-import CollectionCover from '../components/CollectionCover.astro';
 import { site } from '../data/site.js';
-import { diary, years } from '../data/movies.js';
-import { resolvedCollections } from '../lib/films.js';
+import { diary, years, allEntries } from '../data/movies.js';
+import { posterUrl, cardColor, formatDate } from '../lib/films.js';
 import { getPosts } from '../lib/posts';
+import { url } from '../lib/urls.js';
 
 const posts = (await getPosts()).slice(0, 3);
 const latestYear = years[0];
-const recent = diary[latestYear].map((f) => ({ ...f, year: latestYear })).filter((f) => !f.tv).slice(-6).reverse();
-const themes = resolvedCollections.filter((c) => c.kind === 'theme').slice(0, 3);
+const recent = diary[latestYear].filter((f) => !f.tv).slice(-5).reverse();
 ---
 
 <Base>
@@ -25,33 +22,43 @@ const themes = resolvedCollections.filter((c) => c.kind === 'theme').slice(0, 3)
   </section>
   <div class="letterbox"></div>
 
-  <div class="mx-auto max-w-5xl px-5 sm:px-8">
-    <section class="mt-20">
-      <div class="mb-4 flex items-baseline justify-between">
-        <p class="label">Scene 01 · Latest from the blog</p>
-        <a href="/blog" class="text-sm text-dim hover:text-gold">All posts →</a>
-      </div>
-      <PostList posts={posts} />
-    </section>
+  <div class="mx-auto mt-16 grid max-w-5xl gap-6 px-5 sm:mt-20 sm:px-8 md:grid-cols-2">
+    <!-- Door 1: the blog -->
+    <a href={url('blog')} class="door group flex flex-col rounded-lg border border-line bg-reel p-7 transition hover:border-gold/60 sm:p-9">
+      <p class="label">Reel 01 · blog.ozodjonov.com</p>
+      <h2 class="mt-3 font-serif text-5xl text-screen transition group-hover:text-gold">The blog</h2>
+      <p class="mt-2 text-dim">Essays on leadership, MUN, and building things.</p>
+      <ul class="mt-8 flex-1 space-y-3 border-t border-line pt-5">
+        {posts.length === 0 && <li class="text-dim">The first post is coming soon.</li>}
+        {posts.map((post) => (
+          <li class="flex items-baseline justify-between gap-4">
+            <span class="font-serif text-xl text-screen/90">{post.data.title}</span>
+            <span class="label shrink-0">{formatDate(post.data.date)}</span>
+          </li>
+        ))}
+      </ul>
+      <span class="mt-8 text-sm text-gold">Read the blog →</span>
+    </a>
 
-    <section class="mt-20">
-      <div class="mb-5 flex items-baseline justify-between">
-        <p class="label">Scene 02 · Recently watched</p>
-        <a href="/movies" class="text-sm text-dim hover:text-gold">The film diary →</a>
+    <!-- Door 2: the movies -->
+    <a href={url('movie')} class="door group flex flex-col overflow-hidden rounded-lg border border-line bg-reel p-7 transition hover:border-gold/60 sm:p-9">
+      <p class="label">Reel 02 · movie.ozodjonov.com</p>
+      <h2 class="mt-3 font-serif text-5xl text-screen transition group-hover:text-gold">The film diary</h2>
+      <p class="mt-2 text-dim">{allEntries.length} films and series since 2024, and what stayed with me.</p>
+      <div class="mt-8 flex flex-1 items-end gap-2 border-t border-line pt-5">
+        {recent.map((film, i) => {
+          const src = posterUrl(film);
+          return (
+            <div
+              class="aspect-[2/3] flex-1 overflow-hidden rounded-[3px] ring-1 ring-black/40 transition duration-300 group-hover:-translate-y-1"
+              style={`background:${cardColor(film.title)}; transition-delay:${i * 40}ms`}
+            >
+              {src && <img src={src} alt={film.title} loading="lazy" class="h-full w-full object-cover" />}
+            </div>
+          );
+        })}
       </div>
-      <div class="grid grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
-        {recent.map((film) => <Poster film={film} />)}
-      </div>
-    </section>
-
-    <section class="mt-20">
-      <div class="mb-5 flex items-baseline justify-between">
-        <p class="label">Scene 03 · Collections</p>
-        <a href="/collections" class="text-sm text-dim hover:text-gold">All collections →</a>
-      </div>
-      <div class="grid gap-8 sm:grid-cols-3">
-        {themes.map((c) => <CollectionCover collection={c} />)}
-      </div>
-    </section>
+      <span class="mt-8 text-sm text-gold">Enter the film diary →</span>
+    </a>
   </div>
 </Base>

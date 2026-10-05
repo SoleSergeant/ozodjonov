@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site.js';
 import { formatDate, runtime } from '../../lib/films.js';
 import { getPosts } from '../../lib/posts';
+import { url } from '../../lib/urls.js';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -34,11 +35,11 @@ const { Content } = await render(post);
 
     <div class="mt-16 border-t border-line pt-8 text-center">
       <p class="label mb-2">Fin.</p>
-      <p class="text-dim">Written by {site.name}. <a href="/contact" class="text-gold hover:underline">Say hello</a></p>
+      <p class="text-dim">Written by {site.name}. <a href={url('main', '/contact')} class="text-gold hover:underline">Say hello</a></p>
     </div>
 
     {next && (
-      <a href={`/blog/${next.id}`} class="group mt-10 block rounded-md border border-line p-6 transition hover:border-gold/60">
+      <a href={url('blog', `/${next.id}`)} class="group mt-10 block rounded-md border border-line p-6 transition hover:border-gold/60">
         <span class="label">Up next</span>
         <span class="mt-1 block font-serif text-2xl text-screen group-hover:text-gold">{next.data.title}</span>
       </a>

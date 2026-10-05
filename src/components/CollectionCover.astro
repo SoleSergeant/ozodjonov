@@ -1,5 +1,6 @@
 ---
 import { cardColor, posterUrl } from '../lib/films.js';
+import { url } from '../lib/urls.js';
 
 interface Props {
   collection: { slug: string; title: string; line: string; items: { title: string }[] };
@@ -9,7 +10,7 @@ const { collection } = Astro.props;
 const stack = collection.items.slice(0, 3);
 ---
 
-<a href={`/collections/${collection.slug}`} class="group block">
+<a href={url('movie', `/collections/${collection.slug}`)} class="group block">
   <div class="relative flex aspect-[4/3] items-end justify-center overflow-hidden rounded-md bg-reel ring-1 ring-line transition group-hover:ring-gold/60">
     {stack.map((film, i) => {
       const src = posterUrl(film);
