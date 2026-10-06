@@ -1,13 +1,10 @@
 ---
-// "Recommend me a film": visitors search TMDB, pick a film, and add an optional note.
+// "Recommend me a film" form: visitors search TMDB, pick a film, and add an optional note.
+// Used on movie.ozodjonov.com/suggest. Open it with ?title=... to start with a title filled in.
 ---
 
-<section id="suggest" class="mt-24 scroll-mt-8 rounded-lg border border-line bg-reel px-6 py-10 sm:px-10">
-  <p class="label mb-3">Your turn · Recommend me a film</p>
-  <h2 class="font-serif text-4xl leading-tight text-screen sm:text-5xl">What should I watch next?</h2>
-  <p class="mt-3 max-w-lg text-dim">Suggest a film or series that stayed with you. I read every one.</p>
-
-  <form id="suggest-form" class="mt-8 max-w-xl" novalidate>
+<div id="suggest">
+  <form id="suggest-form" class="max-w-xl" novalidate>
     <div class="relative">
       <label for="suggest-title" class="label mb-2 block">Film or series</label>
       <input
@@ -77,7 +74,7 @@
       <p id="suggest-status" role="status" aria-live="polite" class="text-sm text-dim"></p>
     </div>
   </form>
-</section>
+</div>
 
 <script>
   type Pick = { id: string; kind: string; title: string; year: string; poster: string | null; seen?: boolean };
@@ -264,13 +261,11 @@
     }
   });
 
-  // Lets the diary search hand over a title ("Suggest it to me").
-  window.addEventListener('suggest-film', (e) => {
-    const title = (e as CustomEvent<string>).detail;
-    if (choice) clearChoice();
-    input.value = title;
-    document.getElementById('suggest')!.scrollIntoView({ behavior: 'smooth' });
-    input.focus({ preventScroll: true });
-    if (title.trim().length >= 2) lookup(title.trim());
-  });
+  // Links like /suggest?title=Amelie (from the diary's empty search) start with the title filled in.
+  const fromLink = new URLSearchParams(location.search).get('title')?.trim().slice(0, 120);
+  if (fromLink) {
+    input.value = fromLink;
+    if (fromLink.length >= 2) lookup(fromLink);
+    input.focus();
+  }
 </script>

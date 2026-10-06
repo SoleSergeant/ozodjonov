@@ -1,0 +1,47 @@
+---
+// movie.ozodjonov.com/suggest: a page to share with anyone who wants to recommend a film.
+import Base from '../../layouts/Base.astro';
+import MovieTabs from '../../components/MovieTabs.astro';
+import SuggestFilm from '../../components/SuggestFilm.astro';
+import { allEntries } from '../../data/movies.js';
+import { posterUrl, uniqueFilms } from '../../lib/films.js';
+import { url } from '../../lib/urls.js';
+
+// A strip of recently watched posters, for atmosphere.
+const strip = uniqueFilms.filter((f) => !f.tv && posterUrl(f)).slice(0, 7);
+---
+
+<Base title="Suggest a film" description="Recommend me a film or series to watch. I read every suggestion.">
+  <div class="mx-auto max-w-5xl px-5 sm:px-8">
+    <MovieTabs active="suggest" />
+
+    <div class="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-16">
+      <div>
+        <p class="label mb-3">Your turn · Recommend me a film</p>
+        <h1 class="font-serif text-5xl leading-[1.05] text-screen sm:text-6xl">
+          What should I<br /><em class="text-gold">watch next?</em>
+        </h1>
+        <p class="mb-10 mt-5 max-w-lg leading-relaxed text-dim">
+          I keep a diary of every film I watch, {allEntries.length} so far. Tell me one that stayed with you,
+          and why. I read every suggestion.
+        </p>
+        <SuggestFilm />
+      </div>
+
+      <aside class="hidden lg:block" aria-hidden="true">
+        <p class="label mb-4">Recently in the diary</p>
+        <div class="grid grid-cols-2 gap-3">
+          {strip.slice(0, 6).map((film, i) => (
+            <img
+              src={posterUrl(film)}
+              alt=""
+              loading="lazy"
+              class:list={['aspect-[2/3] w-full rounded-[3px] object-cover ring-1 ring-white/5', i % 2 === 1 && 'translate-y-6']}
+            />
+          ))}
+        </div>
+        <a href={url('movie')} class="mt-12 inline-block text-sm text-dim hover:text-gold" tabindex="-1">See the whole diary →</a>
+      </aside>
+    </div>
+  </div>
+</Base>

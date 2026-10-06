@@ -3,11 +3,10 @@ import Base from '../../layouts/Base.astro';
 import Poster from '../../components/Poster.astro';
 import ActorPhoto from '../../components/ActorPhoto.astro';
 import MovieTabs from '../../components/MovieTabs.astro';
-import SuggestFilm from '../../components/SuggestFilm.astro';
+import { url } from '../../lib/urls.js';
 import { diary, years, allEntries } from '../../data/movies.js';
 import { actors } from '../../data/people.js';
 import { findFilms } from '../../lib/films.js';
-import { url } from '../../lib/urls.js';
 
 const stats = [
   { value: allEntries.length, label: 'Titles' },
@@ -104,12 +103,18 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
     ))}
     <div id="empty" hidden class="mt-10">
       <p class="text-dim">No films match <span id="empty-query" class="text-screen"></span>. Not seen it yet, maybe.</p>
-      <button id="empty-suggest" type="button" class="mt-3 text-sm text-gold hover:underline">Suggest it to me →</button>
+      <a id="empty-suggest" href={url('movie', '/suggest')} class="mt-3 inline-block text-sm text-gold hover:underline">Suggest it to me →</a>
     </div>
 
     </div>
 
-    <SuggestFilm />
+    <a href={url('movie', '/suggest')} class="group mt-24 flex flex-col gap-2 rounded-lg border border-line bg-reel px-6 py-8 transition hover:border-gold/60 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+      <span>
+        <span class="label block">Your turn</span>
+        <span class="mt-1 block font-serif text-3xl text-screen group-hover:text-gold sm:text-4xl">What should I watch next?</span>
+      </span>
+      <span class="shrink-0 text-gold">Recommend me a film →</span>
+    </a>
   </div>
 </Base>
 
@@ -157,9 +162,13 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
     }),
   );
   search.addEventListener('input', apply);
-  document.getElementById('empty-suggest')!.addEventListener('click', () =>
-    window.dispatchEvent(new CustomEvent('suggest-film', { detail: search.value.trim() })),
-  );
+  // "Suggest it to me" carries the search text over to the suggestion page.
+  const suggestLink = document.getElementById('empty-suggest') as HTMLAnchorElement;
+  const suggestBase = suggestLink.href;
+  search.addEventListener('input', () => {
+    const q = search.value.trim();
+    suggestLink.href = q ? `${suggestBase}?title=${encodeURIComponent(q)}` : suggestBase;
+  });
   // Press "/" anywhere to jump to the search box.
   document.addEventListener('keydown', (e) => {
     if (e.key === '/' && document.activeElement !== search) {

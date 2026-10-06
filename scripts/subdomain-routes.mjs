@@ -14,17 +14,17 @@ const routes = [
   // Old links on the main domain move to the subdomains.
   ...['www.ozodjonov.com', 'ozodjonov.com'].flatMap((h) => [
     { src: '^/blog(?:/(.*))?$', has: host(h), status: 308, headers: { Location: 'https://blog.ozodjonov.com/$1' } },
-    { src: '^/movies/actors/(.*)$', has: host(h), status: 308, headers: { Location: 'https://movie.ozodjonov.com/actors/$1' } },
-    { src: '^/movies/?$', has: host(h), status: 308, headers: { Location: 'https://movie.ozodjonov.com/' } },
+    { src: '^/movies(?:/(.*))?$', has: host(h), status: 308, headers: { Location: 'https://movie.ozodjonov.com/$1' } },
     { src: '^/collections(/.*)?$', has: host(h), status: 308, headers: { Location: 'https://movie.ozodjonov.com/collections$1' } },
   ]),
 
   // blog.ozodjonov.com/<post>  ->  /blog/<post>
   { src: `^/(?!${shared}|blog(?:/|$))(.*)$`, has: host('blog.ozodjonov.com'), dest: '/blog/$1', continue: true },
 
-  // movie.ozodjonov.com/  ->  /movies,  /actors/<name>  ->  /movies/actors/<name>
+  // movie.ozodjonov.com/  ->  /movies,  /actors/<name>  ->  /movies/actors/<name>,  /suggest  ->  /movies/suggest
   { src: '^/$', has: host('movie.ozodjonov.com'), dest: '/movies/', continue: true },
   { src: '^/actors/(.*)$', has: host('movie.ozodjonov.com'), dest: '/movies/actors/$1', continue: true },
+  { src: '^/suggest/?$', has: host('movie.ozodjonov.com'), dest: '/movies/suggest/', continue: true },
 ];
 
 const config = JSON.parse(await readFile(CONFIG, 'utf8'));
