@@ -5,6 +5,7 @@ import posters from '../data/posters.json';
 const IMG = 'https://image.tmdb.org/t/p/w342';
 
 export const posterUrl = (film) => {
+  if (film.poster) return film.poster; // uploaded in the admin
   const path = posters[posterKey(film)];
   return path ? IMG + path : null;
 };

@@ -10,4 +10,5 @@ export const fromDiaryFile = (f) => ({
   uz: !!f.uzbek,
   tv: !!f.series,
   post: f.reflection || undefined,
+  poster: f.poster || undefined,
 });

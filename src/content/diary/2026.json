@@ -268,7 +268,8 @@
       "title": "Ko'zlarim yo'lingda",
       "rewatch": false,
       "uzbek": true,
-      "series": false
+      "series": false,
+      "poster": "/posters/kozlarim-yolingda.webp"
     },
     {
       "title": "Vanilla Sky",
@@ -372,7 +373,8 @@
       "title": "Qo'rg'oshin",
       "rewatch": false,
       "uzbek": true,
-      "series": false
+      "series": false,
+      "poster": "/posters/qorgoshin.webp"
     },
     {
       "title": "Captain America: Brave New World",
@@ -718,7 +720,8 @@
       "title": "O'tkan kunlar",
       "rewatch": false,
       "uzbek": true,
-      "series": false
+      "series": false,
+      "poster": "/posters/otkan-kunlar.webp"
     },
     {
       "title": "Serpico",

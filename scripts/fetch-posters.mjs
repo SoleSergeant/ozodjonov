@@ -23,7 +23,7 @@ for (const file of (await readdir(DIARY)).filter((f) => f.endsWith('.json'))) {
 
 const posters = JSON.parse(await readFile(OUT, 'utf8'));
 const pending = [...new Map(films.map((f) => [posterKey(f), f])).values()].filter(
-  (f) => !(posterKey(f) in posters),
+  (f) => !f.poster && !(posterKey(f) in posters),
 );
 
 async function search(film) {

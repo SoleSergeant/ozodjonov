@@ -56,6 +56,12 @@ export default config({
               description: 'A blog post about this film. Adds a "Read reflection" link to its poster.',
               collection: 'blog',
             }),
+            poster: fields.image({
+              label: 'Poster (optional)',
+              description: 'Upload your own poster. Leave empty to find one automatically.',
+              directory: 'public/posters',
+              publicPath: '/posters/',
+            }),
             search: fields.text({
               label: 'Poster search (optional)',
               description: 'Only if the poster comes out wrong: the original title to search for instead.',
