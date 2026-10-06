@@ -23,6 +23,10 @@ const filters = [
   { id: 'tv', label: 'Series' },
 ];
 
+// Actor names per title, so searching "pacino" finds his films.
+const castByTitle = new Map();
+for (const a of actors) for (const t of a.films) castByTitle.set(t, `${castByTitle.get(t) ?? ''} ${a.name}`.trim());
+
 const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "${a.slug}"`).length }));
 ---
 
@@ -58,8 +62,20 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
       </div>
     </section>
 
-    <div class="sticky top-0 z-10 -mx-5 mt-16 bg-ink/90 px-5 py-4 backdrop-blur sm:-mx-8 sm:px-8" role="toolbar" aria-label="Filter the diary">
-      <div class="flex flex-wrap gap-2">
+    <div class="sticky top-0 z-10 -mx-5 mt-16 bg-ink/90 px-5 py-4 backdrop-blur sm:-mx-8 sm:px-8">
+      <label class="relative mb-3 block">
+        <span class="sr-only">Search the diary</span>
+        <svg aria-hidden="true" class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+        <input
+          id="search"
+          type="search"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder={`Search ${allEntries.length} films, e.g. Godfather`}
+          class="w-full rounded-full border border-[#3a362f] bg-reel py-2.5 pl-10 pr-4 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none"
+        />
+      </label>
+      <div class="flex flex-wrap gap-2" role="toolbar" aria-label="Filter the diary">
         {filters.map((f, i) => (
           <button
             type="button"
@@ -79,26 +95,39 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
           {year} · <span class="year-count">{diary[year].length}</span> titles
         </p>
         <div class="grid grid-cols-3 gap-x-3 gap-y-6 sm:grid-cols-5 lg:grid-cols-6 sm:gap-x-4">
-          {diary[year].map((film) => <Poster film={{ ...film, year }} />)}
+          {diary[year].map((film) => <Poster film={{ ...film, year }} keywords={castByTitle.get(film.title)} />)}
         </div>
       </section>
     ))}
-    <p id="empty" hidden class="mt-10 text-dim">Nothing here yet.</p>
+    <p id="empty" hidden class="mt-10 text-dim">No films match <span id="empty-query" class="text-screen"></span>. Not seen it yet, maybe.</p>
   </div>
 </Base>
 
 <script>
   const buttons = document.querySelectorAll<HTMLButtonElement>('.filter');
   const blocks = document.querySelectorAll<HTMLElement>('.year-block');
+  const search = document.getElementById('search') as HTMLInputElement;
+  let filter = 'all';
 
-  function apply(filter: string) {
+  // Loose matching: ignore case, accents, and the different apostrophes in Uzbek titles
+  // (o' / o‘ / oʻ), so "otkan" finds "O'tkan kunlar" and "amelie" finds "Amélie".
+  const fold = (s: string) =>
+    s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const titles = new Map<HTMLElement, string>();
+  document.querySelectorAll<HTMLElement>('.poster').forEach((p) => titles.set(p, fold(`${p.dataset.title ?? ''} ${p.dataset.keywords ?? ''}`)));
+  const squash = (s: string) => s.replace(/ /g, '');
+
+  function apply() {
+    const words = fold(search.value).split(' ').filter(Boolean);
     let shown = 0;
     blocks.forEach((block) => {
       let count = 0;
       block.querySelectorAll<HTMLElement>('.poster').forEach((p) => {
-        const match =
-          filter === 'all' ||
-          (/^\d{4}$/.test(filter) ? p.dataset.year === filter : p.dataset[filter] === '1');
+        const title = titles.get(p)!;
+        const matchesFilter =
+          filter === 'all' || (/^\d{4}$/.test(filter) ? p.dataset.year === filter : p.dataset[filter] === '1');
+        const matchesSearch = words.every((w) => title.includes(w) || squash(title).includes(w));
+        const match = matchesFilter && matchesSearch;
         p.hidden = !match;
         if (match) count++;
       });
@@ -107,8 +136,22 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
       shown += count;
     });
     document.getElementById('empty')!.hidden = shown > 0;
+    document.getElementById('empty-query')!.textContent = search.value.trim() ? `“${search.value.trim()}”` : 'this filter';
     buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === filter)));
   }
 
-  buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter!)));
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      filter = b.dataset.filter!;
+      apply();
+    }),
+  );
+  search.addEventListener('input', apply);
+  // Press "/" anywhere to jump to the search box.
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement !== search) {
+      e.preventDefault();
+      search.focus();
+    }
+  });
 </script>
