@@ -12,4 +12,4 @@ A guy's standards say, "She must know how to cook." Then he falls for someone wh
 
 We write our wants before the person. And when they show up, they become the only want.
 
-06/10/2026
+10/06/2026
