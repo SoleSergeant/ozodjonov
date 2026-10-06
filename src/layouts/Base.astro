@@ -5,6 +5,8 @@ import { url, publicUrl, hosts } from '../lib/urls.js';
 
 interface Props {
   title?: string;
+  /** Use this exact title (tab and link previews) instead of "<title> · <name>". */
+  fullTitle?: string;
   description?: string;
   /** Hide the header and footer (used by the landing page). */
   bare?: boolean;
@@ -12,8 +14,8 @@ interface Props {
   type?: 'website' | 'article';
 }
 
-const { title, description = site.intro || site.tagline, bare = false, type = 'website' } = Astro.props;
-const pageTitle = title ? `${title} · ${site.name}` : `${site.fullName} - ${site.tagline}`;
+const { title, fullTitle, description = site.intro || site.tagline, bare = false, type = 'website' } = Astro.props;
+const pageTitle = fullTitle ?? (title ? `${title} · ${site.name}` : `${site.fullName} - ${site.tagline}`);
 const pageUrl = publicUrl(Astro.url.pathname.replace(/\/$/, '') || '/');
 const ogImage = `${hosts.main}/og.png`;
 // Each subdomain is its own site; the header just says which one you're on.
