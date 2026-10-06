@@ -12,8 +12,8 @@ interface Props {
   type?: 'website' | 'article';
 }
 
-const { title, description = site.tagline, bare = false, type = 'website' } = Astro.props;
-const pageTitle = title ? `${title} · ${site.name}` : `${site.fullName} · ${site.tagline}`;
+const { title, description = site.intro || site.tagline, bare = false, type = 'website' } = Astro.props;
+const pageTitle = title ? `${title} · ${site.name}` : `${site.fullName} - ${site.tagline}`;
 const pageUrl = publicUrl(Astro.url.pathname.replace(/\/$/, '') || '/');
 const ogImage = `${hosts.main}/og.png`;
 // Each subdomain is its own site; the header just says which one you're on.
