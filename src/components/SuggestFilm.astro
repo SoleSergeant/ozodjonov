@@ -1,0 +1,276 @@
+---
+// "Recommend me a film": visitors search TMDB, pick a film, and add an optional note.
+---
+
+<section id="suggest" class="mt-24 scroll-mt-8 rounded-lg border border-line bg-reel px-6 py-10 sm:px-10">
+  <p class="label mb-3">Your turn · Recommend me a film</p>
+  <h2 class="font-serif text-4xl leading-tight text-screen sm:text-5xl">What should I watch next?</h2>
+  <p class="mt-3 max-w-lg text-dim">Suggest a film or series that stayed with you. I read every one.</p>
+
+  <form id="suggest-form" class="mt-8 max-w-xl" novalidate>
+    <div class="relative">
+      <label for="suggest-title" class="label mb-2 block">Film or series</label>
+      <input
+        id="suggest-title"
+        name="title"
+        type="text"
+        autocomplete="off"
+        spellcheck="false"
+        maxlength="120"
+        required
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="suggest-list"
+        aria-autocomplete="list"
+        placeholder="Start typing a title…"
+        class="w-full rounded-md border border-[#3a362f] bg-ink px-4 py-3 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none"
+      />
+      <ul
+        id="suggest-list"
+        role="listbox"
+        hidden
+        class="absolute inset-x-0 top-full z-20 mt-1 max-h-96 overflow-auto rounded-md border border-line bg-[#141310] p-1 shadow-2xl"
+      ></ul>
+    </div>
+
+    <div id="suggest-picked" hidden class="mt-4 flex items-center gap-4 rounded-md border border-gold/40 bg-ink p-3">
+      <div class="picked-poster h-[72px] w-12 shrink-0 overflow-hidden rounded-[3px] bg-line"></div>
+      <div class="min-w-0 flex-1">
+        <p class="picked-title truncate font-serif text-xl text-screen"></p>
+        <p class="picked-meta label mt-0.5"></p>
+      </div>
+      <button type="button" class="picked-clear text-sm text-dim hover:text-gold">Change</button>
+    </div>
+
+    <label for="suggest-note" class="label mb-2 mt-6 block">Why should I watch it? <span class="normal-case tracking-normal">(optional)</span></label>
+    <textarea
+      id="suggest-note"
+      name="note"
+      rows="3"
+      maxlength="280"
+      placeholder="One or two lines is plenty."
+      class="w-full resize-y rounded-md border border-[#3a362f] bg-ink px-4 py-3 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none"
+    ></textarea>
+
+    <label for="suggest-name" class="label mb-2 mt-5 block">Your name <span class="normal-case tracking-normal">(optional)</span></label>
+    <input
+      id="suggest-name"
+      name="name"
+      type="text"
+      maxlength="40"
+      autocomplete="given-name"
+      class="w-full rounded-md border border-[#3a362f] bg-ink px-4 py-3 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none sm:w-72"
+    />
+
+    <!-- Hidden from people; bots that fill it in are ignored. -->
+    <div aria-hidden="true" class="absolute -left-[9999px] h-px w-px overflow-hidden">
+      <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+    </div>
+
+    <div class="mt-7 flex flex-wrap items-center gap-4">
+      <button
+        type="submit"
+        class="rounded-full bg-gold px-6 py-2.5 text-[15px] font-medium text-ink transition hover:brightness-110 disabled:opacity-60"
+      >
+        Send suggestion
+      </button>
+      <p id="suggest-status" role="status" aria-live="polite" class="text-sm text-dim"></p>
+    </div>
+  </form>
+</section>
+
+<script>
+  type Pick = { id: string; kind: string; title: string; year: string; poster: string | null; seen?: boolean };
+
+  const form = document.getElementById('suggest-form') as HTMLFormElement;
+  const input = document.getElementById('suggest-title') as HTMLInputElement;
+  const list = document.getElementById('suggest-list') as HTMLUListElement;
+  const picked = document.getElementById('suggest-picked') as HTMLDivElement;
+  const status = document.getElementById('suggest-status') as HTMLParagraphElement;
+  const submit = form.querySelector('button[type=submit]') as HTMLButtonElement;
+
+  let choice: Pick | null = null;
+  let results: Pick[] = [];
+  let active = -1;
+  let timer: number | undefined;
+  let seq = 0;
+
+  const say = (text: string, tone: 'dim' | 'gold' | 'error' = 'dim') => {
+    status.textContent = text;
+    status.className = `text-sm ${tone === 'gold' ? 'text-gold' : tone === 'error' ? 'text-[#e2572b]' : 'text-dim'}`;
+  };
+
+  function closeList() {
+    list.hidden = true;
+    input.setAttribute('aria-expanded', 'false');
+    input.removeAttribute('aria-activedescendant');
+    active = -1;
+  }
+
+  function renderList() {
+    list.replaceChildren();
+    if (!results.length) return closeList();
+    results.forEach((r, i) => {
+      const li = document.createElement('li');
+      li.id = `suggest-opt-${i}`;
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', String(i === active));
+      li.className = `flex cursor-pointer items-center gap-3 rounded px-2 py-1.5 ${i === active ? 'bg-line' : 'hover:bg-line/60'}`;
+      const img = document.createElement('div');
+      img.className = 'h-12 w-8 shrink-0 overflow-hidden rounded-[2px] bg-line';
+      if (r.poster) {
+        const el = document.createElement('img');
+        el.src = r.poster;
+        el.alt = '';
+        el.className = 'h-full w-full object-cover';
+        img.append(el);
+      }
+      const text = document.createElement('div');
+      text.className = 'min-w-0 flex-1';
+      const t = document.createElement('p');
+      t.className = 'truncate text-[15px] text-screen';
+      t.textContent = r.title;
+      const meta = document.createElement('p');
+      meta.className = 'text-xs text-faint';
+      meta.textContent = [r.year, r.kind === 'tv' ? 'Series' : 'Film', r.seen ? 'Already in my diary' : ''].filter(Boolean).join(' · ');
+      text.append(t, meta);
+      li.append(img, text);
+      li.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        choose(r);
+      });
+      list.append(li);
+    });
+    list.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+    if (active >= 0) input.setAttribute('aria-activedescendant', `suggest-opt-${active}`);
+  }
+
+  function choose(r: Pick) {
+    choice = r;
+    closeList();
+    picked.hidden = false;
+    input.parentElement!.hidden = true;
+    picked.querySelector('.picked-title')!.textContent = r.title;
+    picked.querySelector('.picked-meta')!.textContent = [r.year, r.kind === 'tv' ? 'Series' : 'Film'].filter(Boolean).join(' · ');
+    const box = picked.querySelector('.picked-poster')!;
+    box.replaceChildren();
+    if (r.poster) {
+      const el = document.createElement('img');
+      el.src = r.poster;
+      el.alt = '';
+      el.className = 'h-full w-full object-cover';
+      box.append(el);
+    }
+    say(r.seen ? 'I’ve already seen this one, it’s in the diary.' : '', r.seen ? 'gold' : 'dim');
+    (document.getElementById('suggest-note') as HTMLTextAreaElement).focus();
+  }
+
+  function clearChoice() {
+    choice = null;
+    picked.hidden = true;
+    input.parentElement!.hidden = false;
+    input.focus();
+    say('');
+  }
+
+  async function lookup(q: string) {
+    const mine = ++seq;
+    try {
+      const res = await fetch(`/api/suggest?q=${encodeURIComponent(q)}`);
+      const data = await res.json();
+      if (mine !== seq) return;
+      results = data.results ?? [];
+      active = -1;
+      renderList();
+    } catch {
+      results = [];
+      closeList();
+    }
+  }
+
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    const q = input.value.trim();
+    if (q.length < 2) {
+      results = [];
+      return closeList();
+    }
+    timer = window.setTimeout(() => lookup(q), 220);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (list.hidden || !results.length) return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      active = (active + (e.key === 'ArrowDown' ? 1 : -1) + results.length) % results.length;
+      renderList();
+    } else if (e.key === 'Enter' && active >= 0) {
+      e.preventDefault();
+      choose(results[active]);
+    } else if (e.key === 'Escape') {
+      closeList();
+    }
+  });
+  input.addEventListener('blur', () => setTimeout(closeList, 120));
+  picked.querySelector('.picked-clear')!.addEventListener('click', clearChoice);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const title = input.value.trim();
+    if (!choice && title.length < 2) {
+      say('Type a title first.', 'error');
+      input.focus();
+      return;
+    }
+    if (choice?.seen) {
+      say('I’ve already seen this one. Got another?', 'gold');
+      return;
+    }
+    submit.disabled = true;
+    say('Sending…');
+    try {
+      const res = await fetch('/api/suggest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: choice?.id ?? '',
+          title: choice ? '' : title,
+          note: data.get('note'),
+          name: data.get('name'),
+          website: data.get('website'),
+        }),
+      });
+      const out = await res.json();
+      if (!res.ok) throw new Error(out.error);
+      if (out.status === 'seen') {
+        say(`Already seen “${out.title}”, it’s in the diary. Got another?`, 'gold');
+      } else {
+        form.reset();
+        if (choice) clearChoice();
+        input.value = '';
+        const others = out.count - 1;
+        say(
+          `Thank you! “${out.title}” is on my list` +
+            (others > 0 ? `, and ${others} other ${others === 1 ? 'person' : 'people'} suggested it too.` : '.'),
+          'gold',
+        );
+      }
+    } catch (err) {
+      say((err as Error).message || 'Couldn’t send that. Try again.', 'error');
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  // Lets the diary search hand over a title ("Suggest it to me").
+  window.addEventListener('suggest-film', (e) => {
+    const title = (e as CustomEvent<string>).detail;
+    if (choice) clearChoice();
+    input.value = title;
+    document.getElementById('suggest')!.scrollIntoView({ behavior: 'smooth' });
+    input.focus({ preventScroll: true });
+    if (title.trim().length >= 2) lookup(title.trim());
+  });
+</script>

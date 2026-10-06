@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Poster from '../../components/Poster.astro';
 import ActorPhoto from '../../components/ActorPhoto.astro';
 import MovieTabs from '../../components/MovieTabs.astro';
+import SuggestFilm from '../../components/SuggestFilm.astro';
 import { diary, years, allEntries } from '../../data/movies.js';
 import { actors } from '../../data/people.js';
 import { findFilms } from '../../lib/films.js';
@@ -62,6 +63,8 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
       </div>
     </section>
 
+    <!-- The search bar stays pinned only while scrolling through the diary. -->
+    <div>
     <div class="sticky top-0 z-10 -mx-5 mt-16 bg-ink/90 px-5 py-4 backdrop-blur sm:-mx-8 sm:px-8">
       <label class="relative mb-3 block">
         <span class="sr-only">Search the diary</span>
@@ -99,7 +102,14 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
         </div>
       </section>
     ))}
-    <p id="empty" hidden class="mt-10 text-dim">No films match <span id="empty-query" class="text-screen"></span>. Not seen it yet, maybe.</p>
+    <div id="empty" hidden class="mt-10">
+      <p class="text-dim">No films match <span id="empty-query" class="text-screen"></span>. Not seen it yet, maybe.</p>
+      <button id="empty-suggest" type="button" class="mt-3 text-sm text-gold hover:underline">Suggest it to me →</button>
+    </div>
+
+    </div>
+
+    <SuggestFilm />
   </div>
 </Base>
 
@@ -147,6 +157,9 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
     }),
   );
   search.addEventListener('input', apply);
+  document.getElementById('empty-suggest')!.addEventListener('click', () =>
+    window.dispatchEvent(new CustomEvent('suggest-film', { detail: search.value.trim() })),
+  );
   // Press "/" anywhere to jump to the search box.
   document.addEventListener('keydown', (e) => {
     if (e.key === '/' && document.activeElement !== search) {
