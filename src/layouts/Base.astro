@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { site } from '../data/site.js';
 import { url, publicUrl, hosts } from '../lib/urls.js';
+import ThemeToggle from '../components/ThemeToggle.astro';
 
 interface Props {
   title?: string;
@@ -31,6 +32,21 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Pick the theme before anything is drawn, so the page never flashes the wrong one:
+      // the saved choice (a cookie shared across the subdomains), otherwise the device setting.
+      (function () {
+        var saved = (document.cookie.match(/(?:^|; )theme=(light|dark)/) || [])[1];
+        var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.dataset.theme = theme;
+        if (!saved) {
+          matchMedia('(prefers-color-scheme: light)').addEventListener('change', function (e) {
+            if (!/(?:^|; )theme=/.test(document.cookie)) document.documentElement.dataset.theme = e.matches ? 'light' : 'dark';
+          });
+        }
+      })();
+    </script>
+    <meta name="theme-color" content="#0b0b0b" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={pageUrl} />
@@ -59,7 +75,8 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
     {!bare && (
     <header class="mx-auto flex max-w-5xl items-center gap-3 px-5 py-6 sm:px-8">
       <a href={url('main')} class="transition hover:opacity-80">
-        <img src="/logo-light.svg" alt={site.fullName} width="458" height="96" class="h-7 w-auto sm:h-8" />
+        <img src="/logo-light.svg" alt={site.fullName} width="458" height="96" class="logo-for-dark h-7 w-auto sm:h-8" />
+        <img src="/logo.svg" alt={site.fullName} width="458" height="96" class="logo-for-light h-7 w-auto sm:h-8" />
       </a>
       {section && (
         <>
@@ -67,6 +84,7 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
           <a href={section.href} class="font-mono text-sm tracking-wide text-dim transition hover:text-screen">{section.label}</a>
         </>
       )}
+      <ThemeToggle class="ml-auto" />
     </header>
     )}
 

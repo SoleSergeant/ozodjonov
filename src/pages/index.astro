@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import SocialIcon from '../components/SocialIcon.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import { site } from '../data/site.js';
 import { allEntries } from '../data/movies.js';
 import { posterUrl, uniqueFilms } from '../lib/films.js';
@@ -13,17 +14,18 @@ const initials = site.fullName.split(/\s+/).map((w) => w[0]).slice(0, 2).join(''
 
 <Base bare>
   <section class="relative isolate flex min-h-svh items-center justify-center overflow-hidden px-5 py-16">
+    <ThemeToggle class="absolute right-5 top-5 z-10 sm:right-8 sm:top-7" />
     <!-- Poster wall, blurred and darkened -->
     <div aria-hidden="true" class="absolute inset-0 -z-10">
       <div class="absolute -inset-10 grid scale-110 grid-cols-4 gap-2 opacity-90 blur-[6px] sm:grid-cols-6 lg:grid-cols-8">
         {wall.map((src) => <img src={src} alt="" class="aspect-[2/3] w-full object-cover" />)}
       </div>
-      <div class="absolute inset-0 bg-ink/65"></div>
-      <div class="absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 0%, rgba(11,11,11,0.75) 70%, #0b0b0b 100%)"></div>
+      <div class="wall-shade absolute inset-0 bg-ink/65"></div>
+      <div class="absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 0%, color-mix(in srgb, var(--color-ink) 75%, transparent) 70%, var(--color-ink) 100%)"></div>
     </div>
 
     <div class="intro flex flex-col items-center text-center">
-      <div class="h-44 w-44 overflow-hidden rounded-full bg-reel ring-1 ring-white/10 sm:h-52 sm:w-52">
+      <div class="h-44 w-44 overflow-hidden rounded-full bg-reel ring-1 ring-line sm:h-52 sm:w-52">
         {site.photo ? (
           <img src={site.photo} alt={site.fullName} class="h-full w-full object-cover" />
         ) : (

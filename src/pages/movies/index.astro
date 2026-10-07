@@ -74,7 +74,7 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
           autocomplete="off"
           spellcheck="false"
           placeholder={`Search ${allEntries.length} films, e.g. Godfather`}
-          class="w-full rounded-full border border-[#3a362f] bg-reel py-2.5 pl-10 pr-4 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none"
+          class="w-full rounded-full border border-edge bg-reel py-2.5 pl-10 pr-4 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none"
         />
       </label>
       <div class="flex flex-wrap gap-2" role="toolbar" aria-label="Filter the diary">
@@ -83,7 +83,7 @@ const leadingMen = actors.map((a) => ({ ...a, count: findFilms(a.films, `actor "
             type="button"
             data-filter={f.id}
             aria-pressed={i === 0 ? 'true' : 'false'}
-            class="filter rounded-full border border-[#3a362f] px-3.5 py-1.5 text-[13px] text-dim transition hover:border-gold hover:text-screen aria-pressed:border-gold aria-pressed:bg-gold aria-pressed:text-ink"
+            class="filter rounded-full border border-edge px-3.5 py-1.5 text-[13px] text-dim transition hover:border-gold hover:text-screen aria-pressed:border-gold aria-pressed:bg-gold aria-pressed:text-ink"
           >
             {f.label}
           </button>

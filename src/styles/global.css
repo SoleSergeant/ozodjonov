@@ -8,11 +8,30 @@
   --color-faint: #8a8478;
   --color-line: #2a2722;
   --color-gold: #d9a441;
+  --color-edge: #3a362f;
+  --color-prose: #d9d3c7;
+  --color-danger: #e2572b;
 
   --font-serif: "Instrument Serif", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --font-script: "Kaushan Script", cursive;
+}
+
+/* Light theme: warm paper instead of a dark theater. Chosen with the sun/moon toggle,
+   otherwise it follows the device setting (see the script in layouts/Base.astro). */
+:root[data-theme="light"] {
+  --color-ink: #f3efe6;
+  --color-reel: #e9e3d6;
+  --color-screen: #1b1915;
+  --color-dim: #5c574d;
+  --color-faint: #7d776b;
+  --color-line: #d8d1c2;
+  --color-gold: #96650f;
+  --color-edge: #c4bcab;
+  --color-prose: #2a2722;
+  --color-danger: #c2410c;
+  color-scheme: light;
 }
 
 html {
@@ -21,7 +40,17 @@ html {
   font-family: var(--font-sans);
   color-scheme: dark;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+:root[data-theme="light"] body::after {
+  opacity: 0.035;
+}
+
+/* The header shows the light logo on dark pages and the original dark logo on light pages. */
+.logo-for-light { display: none; }
+:root[data-theme="light"] .logo-for-dark { display: none; }
+:root[data-theme="light"] .logo-for-light { display: block; }
 
 body {
   min-height: 100vh;
@@ -70,7 +99,7 @@ body::after {
 .prose-film {
   font-size: 1.125rem;
   line-height: 1.8;
-  color: #d9d3c7;
+  color: var(--color-prose);
 }
 .prose-film > * + * { margin-top: 1.25em; }
 .prose-film h2,
@@ -96,3 +125,8 @@ body::after {
 .prose-film ol { list-style: decimal; padding-left: 1.25rem; }
 .prose-film code { font-family: var(--font-mono); font-size: 0.9em; color: var(--color-gold); }
 .prose-film hr { border-color: var(--color-line); }
+
+/* Landing page: the poster wall shows through paper more than through black, so shade it more. */
+:root[data-theme="light"] .wall-shade {
+  background-color: color-mix(in srgb, var(--color-ink) 80%, transparent);
+}

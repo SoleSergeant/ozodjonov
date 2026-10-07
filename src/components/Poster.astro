@@ -18,7 +18,7 @@ const Tag = film.post ? 'a' : 'div';
 <figure class="poster group" data-title={film.title} data-keywords={keywords} data-year={film.year} data-rw={film.rw ? '1' : undefined} data-uz={film.uz ? '1' : undefined} data-tv={film.tv ? '1' : undefined}>
   <Tag
     href={film.post ? url('blog', `/${film.post}`) : undefined}
-    class="relative block aspect-[2/3] overflow-hidden rounded-[4px] ring-1 ring-white/5 transition duration-300 group-hover:-translate-y-1 group-hover:ring-gold/60 group-hover:shadow-[0_10px_30px_-10px_rgba(217,164,65,0.35)]"
+    class="relative block aspect-[2/3] overflow-hidden rounded-[4px] ring-1 ring-line transition duration-300 group-hover:-translate-y-1 group-hover:ring-gold/60 group-hover:shadow-[0_10px_30px_-10px_rgba(217,164,65,0.35)]"
     style={src ? undefined : `background:${bg}`}
   >
     {src ? (

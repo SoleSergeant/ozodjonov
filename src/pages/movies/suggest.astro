@@ -36,7 +36,7 @@ const strip = uniqueFilms.filter((f) => !f.tv && posterUrl(f)).slice(0, 7);
               src={posterUrl(film)}
               alt=""
               loading="lazy"
-              class:list={['aspect-[2/3] w-full rounded-[3px] object-cover ring-1 ring-white/5', i % 2 === 1 && 'translate-y-6']}
+              class:list={['aspect-[2/3] w-full rounded-[3px] object-cover ring-1 ring-line', i % 2 === 1 && 'translate-y-6']}
             />
           ))}
         </div>

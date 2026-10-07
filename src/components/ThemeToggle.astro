@@ -1,0 +1,53 @@
+---
+// Sun / moon button that switches between the dark and light themes.
+// The choice is saved in a cookie on .ozodjonov.com, so it carries across blog., movie. and cv.
+import sun from '@tabler/icons/outline/sun.svg?raw';
+import moon from '@tabler/icons/outline/moon.svg?raw';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const icon = (svg: string) => svg.replace(/width="24"/, 'width="100%"').replace(/height="24"/, 'height="100%"');
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  aria-label="Switch to light theme"
+  title="Switch theme"
+  class:list={[
+    'theme-toggle inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line text-dim transition hover:border-gold hover:text-gold print:hidden',
+    className,
+  ]}
+>
+  <span class="icon-sun h-[18px] w-[18px]" set:html={icon(sun)} />
+  <span class="icon-moon h-[18px] w-[18px]" set:html={icon(moon)} />
+</button>
+
+<style>
+  /* Show the sun in dark mode (click for light), the moon in light mode (click for dark). */
+  .icon-moon { display: none; }
+  :global(:root[data-theme='light']) .icon-sun { display: none; }
+  :global(:root[data-theme='light']) .icon-moon { display: block; }
+</style>
+
+<script>
+  const label = () =>
+    document.documentElement.dataset.theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme';
+
+  document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]:not([data-ready])').forEach((button) => {
+    button.dataset.ready = '';
+    button.setAttribute('aria-label', label());
+    button.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+      document.documentElement.dataset.theme = next;
+      // Shared across the subdomains in production; plain cookie on localhost.
+      const domain = location.hostname.endsWith('ozodjonov.com') ? '; domain=.ozodjonov.com' : '';
+      document.cookie = `theme=${next}; path=/; max-age=31536000; samesite=lax${domain}`;
+      document.querySelectorAll('[data-theme-toggle]').forEach((b) => b.setAttribute('aria-label', label()));
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', next === 'light' ? '#f3efe6' : '#0b0b0b');
+    });
+  });
+</script>

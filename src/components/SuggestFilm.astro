@@ -20,13 +20,13 @@
         aria-controls="suggest-list"
         aria-autocomplete="list"
         placeholder="Start typing a title…"
-        class="w-full rounded-md border border-[#3a362f] bg-ink px-4 py-3 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none"
+        class="w-full rounded-md border border-edge bg-ink px-4 py-3 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none"
       />
       <ul
         id="suggest-list"
         role="listbox"
         hidden
-        class="absolute inset-x-0 top-full z-20 mt-1 max-h-96 overflow-auto rounded-md border border-line bg-[#141310] p-1 shadow-2xl"
+        class="absolute inset-x-0 top-full z-20 mt-1 max-h-96 overflow-auto rounded-md border border-line bg-reel p-1 shadow-2xl"
       ></ul>
     </div>
 
@@ -46,7 +46,7 @@
       rows="3"
       maxlength="280"
       placeholder="One or two lines is plenty."
-      class="w-full resize-y rounded-md border border-[#3a362f] bg-ink px-4 py-3 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none"
+      class="w-full resize-y rounded-md border border-edge bg-ink px-4 py-3 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none"
     ></textarea>
 
     <label for="suggest-name" class="label mb-2 mt-5 block">Your name <span class="normal-case tracking-normal">(optional)</span></label>
@@ -56,7 +56,7 @@
       type="text"
       maxlength="40"
       autocomplete="given-name"
-      class="w-full rounded-md border border-[#3a362f] bg-ink px-4 py-3 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none sm:w-72"
+      class="w-full rounded-md border border-edge bg-ink px-4 py-3 text-[15px] text-screen placeholder:text-faint focus:border-gold focus:outline-none sm:w-72"
     />
 
     <!-- Hidden from people; bots that fill it in are ignored. -->
@@ -94,7 +94,7 @@
 
   const say = (text: string, tone: 'dim' | 'gold' | 'error' = 'dim') => {
     status.textContent = text;
-    status.className = `text-sm ${tone === 'gold' ? 'text-gold' : tone === 'error' ? 'text-[#e2572b]' : 'text-dim'}`;
+    status.className = `text-sm ${tone === 'gold' ? 'text-gold' : tone === 'error' ? 'text-danger' : 'text-dim'}`;
   };
 
   function closeList() {
