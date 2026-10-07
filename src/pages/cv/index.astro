@@ -1,0 +1,231 @@
+---
+// cv.ozodjonov.com: the CV, edited in the admin under "CV". Prints as a clean light page.
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site.js';
+import cv from '../../content/cv.json';
+
+const contact = [cv.location, cv.email, cv.phone].filter(Boolean);
+---
+
+<Base fullTitle={`${site.fullName} · CV`} description={cv.summary}>
+  <article class="cv mx-auto max-w-4xl px-5 sm:px-8">
+    <header class="mt-10 flex flex-col gap-8 sm:mt-14 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="label mb-4 print:hidden">Curriculum vitae</p>
+        <h1 class="cv-name font-serif text-5xl leading-[1.02] text-screen sm:text-7xl">{site.fullName}</h1>
+        <p class="cv-headline mt-3 font-mono text-sm tracking-wide text-gold sm:text-base">{cv.headline}</p>
+        <p class="cv-contact mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm text-dim">
+          {contact.map((c, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true" class="text-line">/</span>}
+              {c.includes('@') ? <a href={`mailto:${c}`} class="hover:text-gold">{c}</a> : c.startsWith('+') ? <a href={`tel:${c.replace(/\s/g, '')}`} class="hover:text-gold">{c}</a> : <span>{c}</span>}
+            </>
+          ))}
+        </p>
+      </div>
+      <button
+        type="button"
+        id="print"
+        class="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-gold/60 px-5 py-2.5 text-sm text-gold transition hover:bg-gold hover:text-ink sm:self-auto print:hidden"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14" /></svg>
+        Download PDF
+      </button>
+    </header>
+
+    <p class="cv-summary mt-10 max-w-2xl text-lg leading-relaxed text-screen/90">{cv.summary}</p>
+
+    {cv.stats.length > 0 && (
+      <dl class="cv-stats mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4 print:hidden">
+        {cv.stats.map((s) => (
+          <div class="border-t border-line pt-3">
+            <dd class="font-serif text-4xl text-screen">{s.value}</dd>
+            <dt class="label mt-1">{s.label}</dt>
+          </div>
+        ))}
+      </dl>
+    )}
+
+    <section class="cv-section mt-16">
+      <h2 class="label mb-6">Experience</h2>
+      <ol class="space-y-10">
+        {cv.experience.map((job) => (
+          <li class="cv-item grid gap-2 border-l border-line pl-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-x-8">
+            <div>
+              <h3 class="font-serif text-3xl leading-tight text-screen">{job.organization}</h3>
+              <p class="mt-1 text-gold">{job.role}</p>
+            </div>
+            <p class="label sm:text-right">
+              {job.start} – {job.end}<br class="hidden sm:block" /><span class="sm:hidden"> · </span>{job.place}
+            </p>
+            <ul class="mt-3 space-y-2 text-[15px] leading-relaxed text-screen/85 sm:col-span-2">
+              {job.points.map((p) => (
+                <li class="relative pl-5 before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-2.5 before:bg-gold">{p}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <div class="mt-16 grid gap-16 md:grid-cols-2">
+      <section class="cv-section">
+        <h2 class="label mb-6">Education</h2>
+        {cv.education.map((e) => (
+          <div class="cv-item mb-6">
+            <h3 class="font-serif text-2xl leading-tight text-screen">{e.school}</h3>
+            <p class="mt-1 text-gold">{e.focus}</p>
+            <p class="label mt-2">{e.start} – {e.end} · {e.place}</p>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-section">
+        <h2 class="label mb-6">Honors</h2>
+        <ul class="space-y-4">
+          {cv.honors.map((h) => (
+            <li class="cv-item flex gap-4">
+              <span class="font-mono text-sm text-gold">{h.year}</span>
+              <span>
+                <span class="block text-screen">{h.title}</span>
+                <span class="text-sm text-dim">{h.detail}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+
+    <section class="cv-section mt-16">
+      <h2 class="label mb-5">Skills</h2>
+      <ul class="flex flex-wrap gap-2">
+        {cv.skills.map((s) => <li class="cv-skill rounded-full border border-line px-4 py-1.5 text-sm text-screen/90">{s}</li>)}
+      </ul>
+    </section>
+  </article>
+</Base>
+
+<script>
+  // "Download PDF" opens the print dialog; choosing "Save as PDF" gives the light version below.
+  document.getElementById('print')?.addEventListener('click', () => window.print());
+</script>
+
+<style is:global>
+  @media print {
+    @page {
+      size: A4;
+      margin: 11mm 13mm;
+    }
+    html,
+    body {
+      background: #fff !important;
+      color: #16181d !important;
+      animation: none !important;
+    }
+    body::after,
+    body > header,
+    body > footer {
+      display: none !important;
+    }
+    .cv {
+      max-width: none;
+      padding: 0;
+      font-size: 10.5pt;
+    }
+    .cv * {
+      color: #16181d !important;
+      border-color: #d9d6cf !important;
+    }
+    .cv .text-gold,
+    .cv .cv-headline,
+    .cv .before\:bg-gold::before {
+      color: #9a6b12 !important;
+      background-color: #9a6b12;
+    }
+    .cv .text-gold {
+      background: none;
+    }
+    .cv header {
+      margin-top: 0;
+    }
+    .cv-name {
+      font-size: 26pt !important;
+    }
+    .cv-summary {
+      margin-top: 14pt;
+      font-size: 11pt;
+    }
+    .cv-stats {
+      margin-top: 12pt;
+    }
+    .cv-stats dd {
+      font-size: 20pt;
+    }
+    .cv-section {
+      margin-top: 12pt !important;
+    }
+    .cv-section h3 {
+      font-size: 15pt !important;
+    }
+    .cv-item {
+      break-inside: avoid;
+    }
+    .cv .space-y-10 > * + * {
+      margin-top: 9pt !important;
+    }
+    /* Tighter rhythm so the whole CV fits on one A4 page. */
+    .cv {
+      font-size: 9.5pt;
+      line-height: 1.4;
+    }
+    .cv .text-lg,
+    .cv .text-\[15px\] {
+      font-size: 9.5pt !important;
+      line-height: 1.38 !important;
+    }
+    .cv .space-y-2 > * + * {
+      margin-top: 1.5pt !important;
+    }
+    .cv .space-y-4 > * + * {
+      margin-top: 5pt !important;
+    }
+    .cv ul.mt-3 {
+      margin-top: 4pt !important;
+    }
+    .cv-stats {
+      margin-top: 9pt !important;
+    }
+    .cv-stats > div {
+      padding-top: 4pt;
+    }
+    .cv-stats dd {
+      font-size: 16pt !important;
+    }
+    .cv-section h2 {
+      margin-bottom: 7pt !important;
+    }
+    .cv-section h3 {
+      font-size: 13pt !important;
+    }
+    .cv .mt-16 {
+      margin-top: 14pt !important;
+    }
+    .cv .grid.md\:grid-cols-2 {
+      grid-template-columns: 1fr 1fr;
+      gap: 18pt;
+    }
+    .cv .cv-item.mb-6 {
+      margin-bottom: 0;
+    }
+    .cv-skill {
+      padding: 1pt 7pt !important;
+      font-size: 8.5pt !important;
+    }
+    .cv .label {
+      color: #6b675f !important;
+    }
+    .cv a {
+      text-decoration: none;
+    }
+  }
+</style>

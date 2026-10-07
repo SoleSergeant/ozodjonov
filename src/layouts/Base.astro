@@ -22,6 +22,7 @@ const ogImage = `${hosts.main}/og.png`;
 const path = Astro.url.pathname;
 const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
   : path.startsWith('/movies') || path.startsWith('/collections') ? { label: 'movies', href: url('movie') }
+  : path.startsWith('/cv') ? { label: 'cv', href: url('cv') }
   : null;
 ---
 

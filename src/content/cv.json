@@ -1,0 +1,69 @@
+{
+  "headline": "Project Leader | Community Builder",
+  "location": "Fergana, Uzbekistan",
+  "email": "hi@ozodjonov.com",
+  "phone": "",
+  "summary": "Project leader with experience managing teams, executing large-scale events, and securing partnerships across NGOs and organizations. Led initiatives with 400+ participants and raised $9,000+ in funding. Focused on delivering structured, high-impact projects.",
+  "stats": [
+    { "value": "400+", "label": "Participants led" },
+    { "value": "$9,000+", "label": "Funding raised" },
+    { "value": "11", "label": "Partner organizations" },
+    { "value": "3", "label": "Olympiad podiums" }
+  ],
+  "experience": [
+    {
+      "organization": "Code Caravan",
+      "role": "Founder / Project Manager",
+      "start": "January 2025",
+      "end": "Present",
+      "place": "Fergana, Uzbekistan",
+      "points": [
+        "Managed planning and execution of 2 hackathons with 200+ participants",
+        "Coordinated cross-functional teams across 4 departments to deliver events on time",
+        "Secured partnerships with 2 government organizations and 5 NGOs",
+        "Raised over $9,000 in funding to support program execution and growth"
+      ]
+    },
+    {
+      "organization": "Turon Model United Nations",
+      "role": "Secretary General",
+      "start": "August 2025",
+      "end": "Present",
+      "place": "Fergana, Uzbekistan",
+      "points": [
+        "Lead and manage a team of 20+ members across 4 departments",
+        "Secured partnerships with 1 government organization and 3 NGOs to support event operations",
+        "Raised $400+ in funding for youth volunteering initiatives",
+        "Directed end-to-end execution of 2 large-scale conferences with 250+ participants",
+        "Oversaw planning, delegation, and delivery to ensure smooth event operations and participant experience"
+      ]
+    },
+    {
+      "organization": "Neuronix",
+      "role": "Community Manager",
+      "start": "February 2026",
+      "end": "Present",
+      "place": "Remote",
+      "points": [
+        "Coordinate online webinars featuring guest speakers and industry professionals",
+        "Moderate live sessions, ensuring smooth interaction between speakers and audience",
+        "Design structured discussion flows and research-backed questions to drive engagement"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school": "Presidential School in Fergana",
+      "place": "Fergana",
+      "focus": "Economics and Computer Science",
+      "start": "October 2021",
+      "end": "Present"
+    }
+  ],
+  "honors": [
+    { "title": "1st place in Informatics Olympiad", "detail": "Among over 300 students", "year": "2022" },
+    { "title": "2nd place in Informatics Olympiad", "detail": "Among over 300 students", "year": "2023" },
+    { "title": "3rd place in Informatics Olympiad", "detail": "Among over 400 students", "year": "2024" }
+  ],
+  "skills": ["Project Planning & Execution", "Leadership", "Partnership Development", "Moderation", "Outreach"]
+}

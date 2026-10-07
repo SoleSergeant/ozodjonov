@@ -13,6 +13,7 @@ export default config({
     navigation: {
       Writing: ['blog'],
       Movies: ['diary', 'collections', 'actors'],
+      CV: ['cv'],
       Settings: ['site'],
     },
   },
@@ -122,6 +123,58 @@ export default config({
   },
 
   singletons: {
+    cv: singleton({
+      label: 'CV',
+      path: 'src/content/cv',
+      format: { data: 'json' },
+      schema: {
+        headline: fields.text({ label: 'Headline', description: 'e.g. Project Leader | Community Builder' }),
+        location: fields.text({ label: 'Location' }),
+        email: fields.text({ label: 'Email', description: 'Shown publicly. Leave empty to hide.' }),
+        phone: fields.text({ label: 'Phone', description: 'Shown publicly. Leave empty to hide.' }),
+        summary: fields.text({ label: 'Summary', multiline: true }),
+        stats: fields.array(
+          fields.object({
+            value: fields.text({ label: 'Number', description: 'e.g. 400+' }),
+            label: fields.text({ label: 'Label', description: 'e.g. Participants led' }),
+          }),
+          { label: 'Highlight numbers', itemLabel: (p) => `${p.fields.value.value} ${p.fields.label.value}` },
+        ),
+        experience: fields.array(
+          fields.object({
+            organization: fields.text({ label: 'Organization' }),
+            role: fields.text({ label: 'Role' }),
+            start: fields.text({ label: 'Start', description: 'e.g. January 2025' }),
+            end: fields.text({ label: 'End', description: 'e.g. Present' }),
+            place: fields.text({ label: 'Place', description: 'e.g. Fergana, Uzbekistan or Remote' }),
+            points: fields.array(fields.text({ label: 'Point', multiline: true }), {
+              label: 'What you did',
+              itemLabel: (p) => p.value,
+            }),
+          }),
+          { label: 'Experience', itemLabel: (p) => `${p.fields.organization.value} · ${p.fields.role.value}` },
+        ),
+        education: fields.array(
+          fields.object({
+            school: fields.text({ label: 'School' }),
+            place: fields.text({ label: 'Place' }),
+            focus: fields.text({ label: 'Focus', description: 'e.g. Economics and Computer Science' }),
+            start: fields.text({ label: 'Start' }),
+            end: fields.text({ label: 'End' }),
+          }),
+          { label: 'Education', itemLabel: (p) => p.fields.school.value },
+        ),
+        honors: fields.array(
+          fields.object({
+            title: fields.text({ label: 'Honor' }),
+            detail: fields.text({ label: 'Detail', description: 'e.g. Among over 300 students' }),
+            year: fields.text({ label: 'Year' }),
+          }),
+          { label: 'Honors', itemLabel: (p) => `${p.fields.year.value} · ${p.fields.title.value}` },
+        ),
+        skills: fields.array(fields.text({ label: 'Skill' }), { label: 'Skills', itemLabel: (p) => p.value }),
+      },
+    }),
     site: singleton({
       label: 'Site settings',
       path: 'src/content/site',
