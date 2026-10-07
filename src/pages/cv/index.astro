@@ -68,7 +68,36 @@ const contact = [cv.location, cv.email, cv.phone].filter(Boolean);
       </ol>
     </section>
 
-    <div class="mt-16 grid gap-16 md:grid-cols-2">
+    {cv.projects?.length > 0 && (
+      <section class="cv-section mt-16">
+        <h2 class="label mb-6">Projects</h2>
+        <ul class="grid gap-4 md:grid-cols-3">
+          {cv.projects.map((p) => (
+            <li class="cv-item cv-project flex flex-col rounded-md border border-line bg-reel p-5">
+              <h3 class="font-serif text-2xl leading-tight text-screen">{p.name}</h3>
+              <p class="mt-2 flex-1 text-[15px] leading-relaxed text-screen/85">{p.description}</p>
+              <p class="label mt-3">{p.tech}</p>
+              <p class="cv-links mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                {p.github && (
+                  <a href={p.github} target="_blank" rel="noopener" class="text-gold hover:underline">
+                    <span class="print:hidden">GitHub ↗</span>
+                    <span class="hidden print:inline">{p.github.replace('https://', '')}</span>
+                  </a>
+                )}
+                {p.live && (
+                  <a href={p.live} target="_blank" rel="noopener" class="text-gold hover:underline">
+                    <span class="print:hidden">Live site ↗</span>
+                    <span class="hidden print:inline">{p.live.replace('https://', '')}</span>
+                  </a>
+                )}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <div class="cv-edu-row mt-16 grid gap-12 md:grid-cols-3">
       <section class="cv-section">
         <h2 class="label mb-6">Education</h2>
         {cv.education.map((e) => (
@@ -78,9 +107,19 @@ const contact = [cv.location, cv.email, cv.phone].filter(Boolean);
             <p class="label mt-2">{e.start} – {e.end} · {e.place}</p>
           </div>
         ))}
+        {cv.tests?.length > 0 && (
+          <dl class="cv-item mt-2 flex flex-wrap gap-x-8 gap-y-3">
+            {cv.tests.map((t) => (
+              <div>
+                <dt class="label">{t.name}</dt>
+                <dd class="font-serif text-3xl text-screen">{t.score}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
       </section>
 
-      <section class="cv-section">
+      <section class="cv-section cv-honors">
         <h2 class="label mb-6">Honors</h2>
         <ul class="space-y-4">
           {cv.honors.map((h) => (
@@ -94,14 +133,39 @@ const contact = [cv.location, cv.email, cv.phone].filter(Boolean);
           ))}
         </ul>
       </section>
+
+      {cv.languages?.length > 0 && (
+        <section class="cv-section cv-langs">
+          <h2 class="label mb-6">Languages</h2>
+          <ul class="space-y-3">
+            {cv.languages.map((l) => (
+              <li class="cv-item border-b border-line pb-2">
+                <span class="block text-screen">{l.language}</span>
+                <span class="text-sm text-dim">{l.level}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </div>
 
-    <section class="cv-section mt-16">
-      <h2 class="label mb-5">Skills</h2>
-      <ul class="flex flex-wrap gap-2">
-        {cv.skills.map((s) => <li class="cv-skill rounded-full border border-line px-4 py-1.5 text-sm text-screen/90">{s}</li>)}
-      </ul>
-    </section>
+    <div class="mt-16 grid gap-12 md:grid-cols-2">
+      <section class="cv-section">
+        <h2 class="label mb-5">Skills</h2>
+        <ul class="flex flex-wrap gap-2">
+          {cv.skills.map((s) => <li class="cv-skill rounded-full border border-line px-4 py-1.5 text-sm text-screen/90">{s}</li>)}
+        </ul>
+      </section>
+
+      {cv.building?.length > 0 && (
+        <section class="cv-section">
+          <h2 class="label mb-5">Building</h2>
+          <ul class="flex flex-wrap gap-2">
+            {cv.building.map((s) => <li class="cv-skill rounded-full border border-gold/40 px-4 py-1.5 text-sm text-screen/90">{s}</li>)}
+          </ul>
+        </section>
+      )}
+    </div>
   </article>
 </Base>
 
@@ -114,7 +178,7 @@ const contact = [cv.location, cv.email, cv.phone].filter(Boolean);
   @media print {
     @page {
       size: A4;
-      margin: 11mm 13mm;
+      margin: 9mm 13mm;
     }
     html,
     body {
@@ -175,12 +239,12 @@ const contact = [cv.location, cv.email, cv.phone].filter(Boolean);
     }
     /* Tighter rhythm so the whole CV fits on one A4 page. */
     .cv {
-      font-size: 9.5pt;
+      font-size: 9pt;
       line-height: 1.4;
     }
     .cv .text-lg,
     .cv .text-\[15px\] {
-      font-size: 9.5pt !important;
+      font-size: 9pt !important;
       line-height: 1.38 !important;
     }
     .cv .space-y-2 > * + * {
@@ -220,6 +284,115 @@ const contact = [cv.location, cv.email, cv.phone].filter(Boolean);
     .cv-skill {
       padding: 1pt 7pt !important;
       font-size: 8.5pt !important;
+    }
+    .cv .grid.md\:grid-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8pt;
+    }
+    .cv-project {
+      background: none !important;
+      padding: 6pt 8pt !important;
+    }
+    .cv-project h3 {
+      font-size: 12pt !important;
+    }
+    .cv-project .mt-2,
+    .cv-project .mt-3 {
+      margin-top: 3pt !important;
+    }
+    /* Education and Languages stacked on the left, Honors wider on the right. */
+    .cv .cv-edu-row {
+      grid-template-columns: 1fr 1.5fr !important;
+      column-gap: 18pt !important;
+      row-gap: 4pt !important;
+    }
+    .cv .cv-honors {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .cv .cv-langs {
+      grid-column: 1;
+      margin-top: 0 !important;
+    }
+    .cv .cv-langs li {
+      display: flex;
+      justify-content: space-between;
+      gap: 8pt;
+      padding-bottom: 2pt;
+    }
+    .cv .cv-langs li .block {
+      display: inline;
+    }
+    .cv dd.text-3xl {
+      font-size: 12pt !important;
+    }
+    .cv .cv-edu-row dl {
+      margin-top: 3pt !important;
+      gap: 3pt 16pt !important;
+    }
+    .cv .cv-edu-row .mb-6,
+    .cv .cv-edu-row h2 {
+      margin-bottom: 4pt !important;
+    }
+    .cv header .mt-3,
+    .cv header .mt-4 {
+      margin-top: 2pt !important;
+    }
+    .cv-name {
+      font-size: 22pt !important;
+    }
+    .cv-summary {
+      margin-top: 8pt !important;
+    }
+    .cv,
+    .cv .text-lg,
+    .cv .text-\[15px\] {
+      line-height: 1.32 !important;
+    }
+    .cv-project p.text-\[15px\] {
+      font-size: 8.3pt !important;
+    }
+    .cv .cv-edu-row dl > div {
+      display: flex;
+      align-items: baseline;
+      gap: 4pt;
+    }
+    .cv .mt-16 {
+      margin-top: 10pt !important;
+    }
+    .cv .cv-langs .space-y-3 > * + * {
+      margin-top: 1pt !important;
+    }
+    .cv .cv-honors li > span > span {
+      display: inline;
+    }
+    .cv .cv-honors li > span > span + span::before {
+      content: ' · ';
+    }
+    .cv .cv-honors .text-sm,
+    .cv .cv-langs .text-sm,
+    .cv .cv-edu-row .label {
+      font-size: 8pt !important;
+      line-height: 1.3 !important;
+    }
+    .cv .cv-langs li {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+    .cv-links {
+      font-size: 7.5pt !important;
+    }
+    .cv dd.text-3xl {
+      font-size: 15pt !important;
+    }
+    .cv .mt-6 {
+      margin-top: 6pt !important;
+    }
+    .cv .mb-5 {
+      margin-bottom: 6pt !important;
+    }
+    .cv .space-y-3 > * + * {
+      margin-top: 3pt !important;
     }
     .cv .label {
       color: #6b675f !important;

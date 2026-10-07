@@ -51,6 +51,29 @@
       ]
     }
   ],
+  "projects": [
+    {
+      "name": "TuronMUN Platform",
+      "description": "Official website, delegate registration, and admin system for Turon Model United Nations conferences.",
+      "tech": "React, TypeScript, Supabase",
+      "github": "https://github.com/SoleSergeant/turonmun",
+      "live": "https://turonmun-weld.vercel.app"
+    },
+    {
+      "name": "Vibd",
+      "description": "Platform where volunteers and early-career talent prove their skills through real work, and organizations hire from verified impact history. Includes AI skill matching and a job chatbot.",
+      "tech": "Next.js, TypeScript, PostgreSQL, AI",
+      "github": "https://github.com/SoleSergeant/vibd",
+      "live": null
+    },
+    {
+      "name": "MuAIlim",
+      "description": "AI-powered exam preparation app for students in Uzbekistan.",
+      "tech": "React Native (Expo), FastAPI, Supabase, Claude",
+      "github": "https://github.com/SoleSergeant/MuAIlim",
+      "live": null
+    }
+  ],
   "education": [
     {
       "school": "Presidential School in Fergana",
@@ -83,5 +106,31 @@
     "Partnership Development",
     "Moderation",
     "Outreach"
+  ],
+  "tests": [
+    {
+      "name": "IELTS",
+      "score": "7.5"
+    },
+    {
+      "name": "SAT",
+      "score": "1450"
+    }
+  ],
+  "languages": [
+    {
+      "language": "Uzbek",
+      "level": "Native"
+    },
+    {
+      "language": "English",
+      "level": "Full professional proficiency"
+    }
+  ],
+  "building": [
+    "AI-assisted development (Claude Code, Cursor)",
+    "Supabase",
+    "Vercel",
+    "Git & GitHub"
   ]
 }

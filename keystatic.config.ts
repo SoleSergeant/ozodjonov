@@ -173,6 +173,34 @@ export default config({
           { label: 'Honors', itemLabel: (p) => `${p.fields.year.value} · ${p.fields.title.value}` },
         ),
         skills: fields.array(fields.text({ label: 'Skill' }), { label: 'Skills', itemLabel: (p) => p.value }),
+        projects: fields.array(
+          fields.object({
+            name: fields.text({ label: 'Project' }),
+            description: fields.text({ label: 'What it is', multiline: true }),
+            tech: fields.text({ label: 'Built with', description: 'e.g. Next.js, Supabase' }),
+            github: fields.url({ label: 'GitHub link' }),
+            live: fields.url({ label: 'Live link (optional)' }),
+          }),
+          { label: 'Projects', itemLabel: (p) => p.fields.name.value },
+        ),
+        tests: fields.array(
+          fields.object({
+            name: fields.text({ label: 'Test', description: 'e.g. IELTS' }),
+            score: fields.text({ label: 'Score' }),
+          }),
+          { label: 'Test scores', itemLabel: (p) => `${p.fields.name.value} ${p.fields.score.value}` },
+        ),
+        languages: fields.array(
+          fields.object({
+            language: fields.text({ label: 'Language' }),
+            level: fields.text({ label: 'Level', description: 'e.g. Native' }),
+          }),
+          { label: 'Languages', itemLabel: (p) => `${p.fields.language.value} · ${p.fields.level.value}` },
+        ),
+        building: fields.array(fields.text({ label: 'Tool or skill' }), {
+          label: 'Building (tech skills)',
+          itemLabel: (p) => p.value,
+        }),
       },
     }),
     site: singleton({
