@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "node --env-file-if-exists=.env scripts/fetch-posters.mjs --optional && astro build && node scripts/subdomain-routes.mjs",
+    "build": "node --env-file-if-exists=.env scripts/fetch-posters.mjs --optional && node scripts/landing-wall.mjs --optional && astro build && node scripts/subdomain-routes.mjs",
     "preview": "astro preview",
     "posters": "node --env-file-if-exists=.env scripts/fetch-posters.mjs"
   },

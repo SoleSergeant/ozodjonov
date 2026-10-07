@@ -4,11 +4,8 @@ import SocialIcon from '../components/SocialIcon.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { site } from '../data/site.js';
 import { allEntries } from '../data/movies.js';
-import { posterUrl, uniqueFilms } from '../lib/films.js';
 import { url } from '../lib/urls.js';
 
-// Background: a blurred wall of posters from the film diary, newest first.
-const wall = uniqueFilms.map(posterUrl).filter(Boolean).slice(0, 24);
 const initials = site.fullName.split(/\s+/).map((w) => w[0]).slice(0, 2).join('');
 ---
 
@@ -17,9 +14,8 @@ const initials = site.fullName.split(/\s+/).map((w) => w[0]).slice(0, 2).join(''
     <ThemeToggle class="absolute right-5 top-5 z-10 sm:right-8 sm:top-7" />
     <!-- Poster wall, blurred and darkened -->
     <div aria-hidden="true" class="absolute inset-0 -z-10">
-      <div class="absolute -inset-10 grid scale-110 grid-cols-4 gap-2 opacity-90 blur-[6px] sm:grid-cols-6 lg:grid-cols-8">
-        {wall.map((src) => <img src={src} alt="" class="aspect-[2/3] w-full object-cover" />)}
-      </div>
+      <!-- One pre-blurred image, made at build time by scripts/landing-wall.mjs. -->
+      <img src="/wall.webp" alt="" width="960" height="720" fetchpriority="high" decoding="async" class="absolute inset-0 h-full w-full scale-110 object-cover opacity-90" />
       <div class="wall-shade absolute inset-0 bg-ink/65"></div>
       <div class="absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 0%, color-mix(in srgb, var(--color-ink) 75%, transparent) 70%, var(--color-ink) 100%)"></div>
     </div>

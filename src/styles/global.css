@@ -25,9 +25,9 @@
   --color-reel: #e9e3d6;
   --color-screen: #1b1915;
   --color-dim: #5c574d;
-  --color-faint: #7d776b;
+  --color-faint: #67615a;
   --color-line: #d8d1c2;
-  --color-gold: #96650f;
+  --color-gold: #865a0b;
   --color-edge: #c4bcab;
   --color-prose: #2a2722;
   --color-danger: #c2410c;
@@ -54,7 +54,11 @@ html {
 
 body {
   min-height: 100vh;
-  animation: fade-from-black 0.9s ease-out both;
+  animation: fade-from-black 0.45s ease-out both;
+}
+
+.no-intro body {
+  animation: none;
 }
 
 /* Subtle film grain over everything */
@@ -129,4 +133,28 @@ body::after {
 /* Landing page: the poster wall shows through paper more than through black, so shade it more. */
 :root[data-theme="light"] .wall-shade {
   background-color: color-mix(in srgb, var(--color-ink) 80%, transparent);
+}
+
+/* Keyboard focus: a gold ring on whatever is selected with Tab (mouse clicks don't show it). */
+:is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* "Skip to content" link: hidden until a keyboard user tabs to it. */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 60;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: var(--color-gold);
+  color: var(--color-ink);
+  font-size: 14px;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 12px;
 }

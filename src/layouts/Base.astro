@@ -39,6 +39,11 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
         var saved = (document.cookie.match(/(?:^|; )theme=(light|dark)/) || [])[1];
         var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
         document.documentElement.dataset.theme = theme;
+        // The fade-from-black intro plays once per visit, not on every page (a session cookie
+        // shared across the subdomains).
+        if (/(?:^|; )intro=1/.test(document.cookie)) document.documentElement.classList.add('no-intro');
+        var domain = location.hostname.endsWith('ozodjonov.com') ? '; domain=.ozodjonov.com' : '';
+        document.cookie = 'intro=1; path=/; samesite=lax' + domain;
         if (!saved) {
           matchMedia('(prefers-color-scheme: light)').addEventListener('change', function (e) {
             if (!/(?:^|; )theme=/.test(document.cookie)) document.documentElement.dataset.theme = e.matches ? 'light' : 'dark';
@@ -72,6 +77,7 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
     />
   </head>
   <body>
+    <a href="#main" class="skip-link">Skip to content</a>
     {!bare && (
     <header class="mx-auto flex max-w-5xl items-center gap-3 px-5 py-6 sm:px-8">
       <a href={url('main')} class="transition hover:opacity-80">
@@ -88,7 +94,7 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
     </header>
     )}
 
-    <main>
+    <main id="main" tabindex="-1" class="outline-none">
       <slot />
     </main>
 
