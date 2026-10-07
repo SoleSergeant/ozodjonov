@@ -3,25 +3,37 @@
   "location": "Fergana, Uzbekistan",
   "email": "hi@ozodjonov.com",
   "phone": "",
-  "summary": "Project leader with experience managing teams, executing large-scale events, and securing partnerships across NGOs and organizations. Led initiatives with 400+ participants and raised $9,000+ in funding. Focused on delivering structured, high-impact projects.",
+  "summary": "Project leader with experience managing teams, executing large-scale events, and securing partnerships across NGOs and organizations. Led initiatives with 1400+ participants and raised $12,000+ in funding. Focused on delivering structured, high-impact projects.",
   "stats": [
-    { "value": "400+", "label": "Participants led" },
-    { "value": "$9,000+", "label": "Funding raised" },
-    { "value": "11", "label": "Partner organizations" },
-    { "value": "3", "label": "Olympiad podiums" }
+    {
+      "value": "1400+",
+      "label": "Participants led"
+    },
+    {
+      "value": "$12,000+",
+      "label": "Funding raised"
+    },
+    {
+      "value": "10",
+      "label": "Partner organizations"
+    },
+    {
+      "value": "3",
+      "label": "Olympiad podiums"
+    }
   ],
   "experience": [
     {
       "organization": "Code Caravan",
       "role": "Founder / Project Manager",
       "start": "January 2025",
-      "end": "Present",
+      "end": "June 2026",
       "place": "Fergana, Uzbekistan",
       "points": [
         "Managed planning and execution of 2 hackathons with 200+ participants",
         "Coordinated cross-functional teams across 4 departments to deliver events on time",
-        "Secured partnerships with 2 government organizations and 5 NGOs",
-        "Raised over $9,000 in funding to support program execution and growth"
+        "Secured partnerships with 2 government organizations and 4 NGOs",
+        "Raised over $10,000 in funding to support program execution and growth"
       ]
     },
     {
@@ -33,21 +45,9 @@
       "points": [
         "Lead and manage a team of 20+ members across 4 departments",
         "Secured partnerships with 1 government organization and 3 NGOs to support event operations",
-        "Raised $400+ in funding for youth volunteering initiatives",
-        "Directed end-to-end execution of 2 large-scale conferences with 250+ participants",
+        "Raised $2,000+ in funding for youth volunteering initiatives",
+        "Directed end-to-end execution of 6 large-scale conferences with 1000+ participants",
         "Oversaw planning, delegation, and delivery to ensure smooth event operations and participant experience"
-      ]
-    },
-    {
-      "organization": "Neuronix",
-      "role": "Community Manager",
-      "start": "February 2026",
-      "end": "Present",
-      "place": "Remote",
-      "points": [
-        "Coordinate online webinars featuring guest speakers and industry professionals",
-        "Moderate live sessions, ensuring smooth interaction between speakers and audience",
-        "Design structured discussion flows and research-backed questions to drive engagement"
       ]
     }
   ],
@@ -61,9 +61,27 @@
     }
   ],
   "honors": [
-    { "title": "1st place in Informatics Olympiad", "detail": "Among over 300 students", "year": "2022" },
-    { "title": "2nd place in Informatics Olympiad", "detail": "Among over 300 students", "year": "2023" },
-    { "title": "3rd place in Informatics Olympiad", "detail": "Among over 400 students", "year": "2024" }
+    {
+      "title": "1st place in Informatics Olympiad",
+      "detail": "Among over 300 students",
+      "year": "2022"
+    },
+    {
+      "title": "2nd place in Informatics Olympiad",
+      "detail": "Among over 300 students",
+      "year": "2023"
+    },
+    {
+      "title": "3rd place in Informatics Olympiad",
+      "detail": "Among over 400 students",
+      "year": "2024"
+    }
   ],
-  "skills": ["Project Planning & Execution", "Leadership", "Partnership Development", "Moderation", "Outreach"]
+  "skills": [
+    "Project Planning & Execution",
+    "Leadership",
+    "Partnership Development",
+    "Moderation",
+    "Outreach"
+  ]
 }
