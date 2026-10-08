@@ -268,8 +268,7 @@
       "title": "Ko'zlarim yo'lingda",
       "rewatch": false,
       "uzbek": true,
-      "series": false,
-      "poster": "/posters/2026/kozlarim-yolingda.webp"
+      "series": false
     },
     {
       "title": "Vanilla Sky",
@@ -373,8 +372,7 @@
       "title": "Qo'rg'oshin",
       "rewatch": false,
       "uzbek": true,
-      "series": false,
-      "poster": "/posters/2026/qorgoshin.webp"
+      "series": false
     },
     {
       "title": "Captain America: Brave New World",
@@ -720,8 +718,7 @@
       "title": "O'tkan kunlar",
       "rewatch": false,
       "uzbek": true,
-      "series": false,
-      "poster": "/posters/2026/otkan-kunlar.webp"
+      "series": false
     },
     {
       "title": "Serpico",
@@ -803,6 +800,14 @@
       "uzbek": false,
       "series": false,
       "search": "Black Panther"
+    },
+    {
+      "title": "Undisputed II: Last Man Standing",
+      "released": 2006,
+      "rewatch": false,
+      "uzbek": false,
+      "series": false,
+      "search": "Undisputed II"
     }
   ]
 }
