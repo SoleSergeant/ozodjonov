@@ -37,9 +37,8 @@ const { Content } = await render(post);
 
     <div class="mt-16 border-t border-line pt-8 text-center">
       <p class="label mb-2">Fin.</p>
-      <p class="mb-5 font-serif text-2xl text-screen">Did this stay with you?</p>
       <div class="mb-8 flex justify-center"><LikeButton slug={post.id} size="lg" /></div>
-      <p class="text-dim">Written by {site.name}. <a href={url('main')} class="text-gold hover:underline">Say hello</a></p>
+      <p><a href={url('main')} class="text-gold hover:underline">What do you think?</a></p>
     </div>
 
     {next && (
