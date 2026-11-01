@@ -32,13 +32,19 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0b0b" />
     <script is:inline>
       // Pick the theme before anything is drawn, so the page never flashes the wrong one:
       // the saved choice (a cookie shared across the subdomains), otherwise the device setting.
       (function () {
         var saved = (document.cookie.match(/(?:^|; )theme=(light|dark)/) || [])[1];
         var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-        document.documentElement.dataset.theme = theme;
+        // Also color the phone's browser bar to match.
+        function setTheme(t) {
+          document.documentElement.dataset.theme = t;
+          document.querySelector('meta[name="theme-color"]').content = t === 'light' ? '#f3efe6' : '#0b0b0b';
+        }
+        setTheme(theme);
         // The fade-from-black intro plays once per visit, not on every page (a session cookie
         // shared across the subdomains).
         if (/(?:^|; )intro=1/.test(document.cookie)) document.documentElement.classList.add('no-intro');
@@ -46,12 +52,11 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
         document.cookie = 'intro=1; path=/; samesite=lax' + domain;
         if (!saved) {
           matchMedia('(prefers-color-scheme: light)').addEventListener('change', function (e) {
-            if (!/(?:^|; )theme=/.test(document.cookie)) document.documentElement.dataset.theme = e.matches ? 'light' : 'dark';
+            if (!/(?:^|; )theme=/.test(document.cookie)) setTheme(e.matches ? 'light' : 'dark');
           });
         }
       })();
     </script>
-    <meta name="theme-color" content="#0b0b0b" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={pageUrl} />

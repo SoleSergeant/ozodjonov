@@ -52,12 +52,12 @@ const initials = site.fullName.split(/\s+/).map((w) => w[0]).slice(0, 2).join(''
         ))}
       </nav>
 
-      <nav aria-label="Sections" class="mt-14 flex items-center gap-4 font-mono text-xs uppercase tracking-[0.2em] text-dim">
-        <a href={url('blog')} class="transition hover:text-gold">Blog</a>
+      <nav aria-label="Sections" class="mt-10 flex items-center gap-1 font-mono text-[13px] uppercase tracking-[0.2em] text-dim">
+        <a href={url('blog')} class="inline-block px-3 py-3.5 transition hover:text-gold">Blog</a>
         <span class="text-line">/</span>
-        <a href={url('movie')} class="transition hover:text-gold">Movies <span class="text-faint">({allEntries.length})</span></a>
+        <a href={url('movie')} class="inline-block px-3 py-3.5 transition hover:text-gold">Movies <span class="text-faint">({allEntries.length})</span></a>
         <span class="text-line">/</span>
-        <a href={url('cv')} class="transition hover:text-gold">CV</a>
+        <a href={url('cv')} class="inline-block px-3 py-3.5 transition hover:text-gold">CV</a>
       </nav>
     </div>
   </section>

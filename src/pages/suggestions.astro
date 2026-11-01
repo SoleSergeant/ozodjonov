@@ -10,6 +10,11 @@ export const prerender = false;
 Astro.response.headers.set('X-Robots-Tag', 'noindex, nofollow');
 Astro.response.headers.set('Cache-Control', 'no-store');
 
+// Only on www (and localhost), not on the blog., movie. or cv. subdomains.
+if (/^(blog|movie|cv)\./.test(Astro.url.hostname)) {
+  return new Response('Not found', { status: 404 });
+}
+
 const password = env('SUGGESTIONS_PASSWORD');
 
 function authorized(header: string | null) {
@@ -39,6 +44,11 @@ let suggestions: Suggestion[] = [];
 let error = '';
 if (ok && redisEnabled) {
   if (Astro.request.method === 'POST') {
+    // The browser resends the password on its own, so only accept deletes made from this page,
+    // never a form on another site.
+    if (Astro.request.headers.get('origin') !== Astro.url.origin) {
+      return new Response('Forbidden', { status: 403 });
+    }
     const form = await Astro.request.formData();
     const id = String(form.get('delete') ?? '');
     if (/^(movie|tv|text)-[a-z0-9-]{1,60}$/.test(id)) await deleteSuggestion(id);

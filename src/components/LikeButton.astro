@@ -1,6 +1,7 @@
 ---
 // Heart button with a like count. Every button for the same post on a page stays in sync.
-// Hidden until the count loads, so it never shows up broken if likes aren't set up.
+// Invisible (but keeping its space, so the page doesn't jump) until the count loads,
+// so it never shows up broken if likes aren't set up.
 import heart from '@tabler/icons/outline/heart.svg?raw';
 import heartFilled from '@tabler/icons/filled/heart.svg?raw';
 
@@ -18,9 +19,8 @@ const icon = (svg: string) => svg.replace(/width="24"/, 'width="100%"').replace(
   data-like={slug}
   aria-pressed="false"
   aria-label="Like this post"
-  hidden
   class:list={[
-    'like group inline-flex items-center gap-2 rounded-full border border-line text-dim transition hover:border-gold/60 hover:text-screen aria-pressed:border-gold/60 aria-pressed:text-gold',
+    'like invisible group inline-flex items-center gap-2 rounded-full border border-line text-dim transition hover:border-gold/60 hover:text-screen aria-pressed:border-gold/60 aria-pressed:text-gold',
     size === 'lg' ? 'px-5 py-2.5 text-base' : 'px-3.5 py-1.5 text-sm',
   ]}
 >
@@ -41,7 +41,7 @@ const icon = (svg: string) => svg.replace(/width="24"/, 'width="100%"').replace(
 
   function render(slug: string, state: State) {
     for (const b of buttons.filter((b) => b.dataset.like === slug)) {
-      b.hidden = false;
+      b.classList.remove('invisible');
       b.setAttribute('aria-pressed', String(state.liked));
       b.setAttribute('aria-label', state.liked ? 'Unlike this post' : 'Like this post');
       b.querySelector('.count')!.textContent = String(state.count);
