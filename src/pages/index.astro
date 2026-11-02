@@ -1,6 +1,6 @@
 ---
 // ozodjonov.com: the title page of a screenplay, then the scenes (posts), the montage
-// (a life in days), and cuts to the other parts of the site.
+// (a life in days), and cuts to the other parts of the site. One screen on desktop.
 import Base from '../layouts/Base.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import PostList from '../components/PostList.astro';
@@ -19,51 +19,54 @@ const cuts = [
 ---
 
 <Base bare>
-  <div class="mx-auto max-w-2xl px-5 pb-20 sm:px-8">
-    <div class="flex justify-end pt-5"><ThemeToggle /></div>
+  <div class="relative mx-auto flex min-h-svh max-w-5xl flex-col justify-center px-5 py-16 sm:px-8 lg:py-6">
+    <ThemeToggle class="absolute right-5 top-5 sm:right-8" />
 
-    <header class="pb-16 pt-14 text-center sm:pt-20">
-      <h1 class="text-3xl font-bold uppercase tracking-[0.06em] text-screen underline decoration-2 underline-offset-8 sm:text-4xl">Ozodjonov</h1>
-      <p class="mt-6 text-dim">an ongoing screenplay</p>
-      <p class="mt-10 text-dim">written by</p>
-      <p class="mt-2 text-lg text-screen">{site.fullName}</p>
-    </header>
+    <div class="grid gap-14 lg:grid-cols-2 lg:gap-20">
+      <div class="flex flex-col">
+        <header class="text-center">
+          <h1 class="text-3xl font-bold uppercase tracking-[0.06em] text-screen underline decoration-2 underline-offset-8 sm:text-4xl">Ozodjonov</h1>
+          <p class="mt-5 text-dim">an ongoing screenplay</p>
+          <p class="mt-6 text-dim lg:mt-4">written by</p>
+          <p class="mt-1 text-lg text-screen">{site.fullName}</p>
+        </header>
 
-    <div class="space-y-5 text-[17px] leading-relaxed">
-      <p class="text-screen">FADE IN:</p>
-      <p class="font-bold uppercase text-screen">Int. A room in Fergana — Night</p>
-      <p class="text-prose">
-        {site.fullName.toUpperCase()} ({site.role?.toLowerCase().replace(/ \/ /g, ', ')}) sits at a desk. Behind him, {allEntries.length} films
-        he has watched since 2024. In front of him, a blank page.
-      </p>
-      <div class="mx-auto max-w-sm text-prose">
-        <p class="text-center text-screen">MUHAMMADJON</p>
-        <p class="mt-1">I am not a writer. But I will try.</p>
+        <div class="mt-10 space-y-4 leading-relaxed lg:mt-7">
+          <p class="text-screen">FADE IN:</p>
+          <p class="font-bold uppercase text-screen">Int. A room in Fergana — Night</p>
+          <p class="text-prose">
+            MUHAMMADJON sits at a desk. Behind him, {allEntries.length} films. In front of him, a blank page.
+          </p>
+          <div class="mx-auto max-w-xs text-prose">
+            <p class="text-center text-screen">MUHAMMADJON</p>
+            <p>I am not a writer. But I will try.</p>
+          </div>
+        </div>
+
+        <nav aria-label="Sections" class="mt-8 space-y-1 text-right lg:mt-6">
+          {cuts.map((c) => (
+            <a href={c.href} class="group block py-1 text-screen">
+              CUT TO: <span class="uppercase underline decoration-line underline-offset-4 group-hover:text-gold group-hover:decoration-gold">{c.label}</span>
+              <span class="text-faint"> ({c.note})</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <div class="flex flex-col justify-center gap-12">
+        <section aria-labelledby="scenes">
+          <h2 id="scenes" class="mb-3 font-bold uppercase text-screen">The scenes so far</h2>
+          <PostList posts={posts} limit={4} compact />
+          {posts.length > 4 && <a href={url('blog')} class="mt-3 inline-block text-sm text-gold hover:underline">All {posts.length} scenes →</a>}
+        </section>
+
+        <LifeInDays list={3} />
       </div>
     </div>
 
-    <section class="mt-16" aria-labelledby="scenes">
-      <h2 id="scenes" class="mb-4 font-bold uppercase text-screen">The scenes so far</h2>
-      <PostList posts={posts} limit={5} />
-      {posts.length > 5 && <a href={url('blog')} class="mt-4 inline-block text-gold hover:underline">All {posts.length} scenes →</a>}
-    </section>
-
-    <div class="mt-16">
-      <LifeInDays />
-    </div>
-
-    <nav aria-label="Sections" class="mt-16 space-y-3 text-right">
-      {cuts.map((c) => (
-        <a href={c.href} class="group block py-1 text-[17px] text-screen">
-          CUT TO: <span class="uppercase underline decoration-line underline-offset-4 group-hover:text-gold group-hover:decoration-gold">{c.label}</span>
-          <span class="text-faint"> ({c.note})</span>
-        </a>
-      ))}
-    </nav>
-
-    <footer id="contact" class="mt-20 border-t border-line pt-6 text-sm text-dim">
-      <p class="label mb-2">Contact</p>
-      <ul class="flex flex-wrap gap-x-5 gap-y-2">
+    <footer id="contact" class="mt-14 border-t border-line pt-4 text-sm text-dim lg:mt-8">
+      <ul class="flex flex-wrap gap-x-5 gap-y-1">
+        <li class="label self-center">Contact</li>
         {site.links.map((link) => (
           <li>
             <a

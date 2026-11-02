@@ -6,6 +6,12 @@ import { getPosts } from '../lib/posts';
 import { allEntries } from '../data/movies.js';
 import { url } from '../lib/urls.js';
 
+interface Props {
+  /** How many of the latest events to list under the grid. */
+  list?: number;
+}
+const { list: listLimit = 8 } = Astro.props;
+
 const START = '2026-11-02';
 const iso = (d: Date) => d.toISOString().slice(0, 10);
 const nice = (date: string) =>
@@ -26,71 +32,62 @@ for (const e of events) byDay.set(e.date, [...(byDay.get(e.date) ?? []), e]);
 
 // The page is rebuilt whenever content changes, so "today" is the last build.
 const today = iso(new Date());
-const lastYear = Math.max(Number(today.slice(0, 4)), ...events.map((e) => Number(e.date.slice(0, 4))));
 
-// Weeks run Monday to Sunday; days before the start of the range are blank.
-function weeks(year: number) {
-  const first = new Date(`${year === 2026 ? START : `${year}-01-01`}T00:00:00Z`);
-  const cursor = new Date(first);
-  cursor.setUTCDate(cursor.getUTCDate() - ((cursor.getUTCDay() + 6) % 7));
-  const out: { days: (string | null)[]; month?: string }[] = [];
-  while (cursor.getUTCFullYear() <= year) {
-    const days: (string | null)[] = [];
-    let month: string | undefined;
-    for (let i = 0; i < 7; i++) {
-      const d = iso(cursor);
-      const inRange = cursor >= first && cursor.getUTCFullYear() === year;
-      days.push(inRange ? d : null);
-      if (inRange && (cursor.getUTCDate() === 1 || (d === iso(first) && !out.length))) {
-        month = cursor.toLocaleDateString('en-GB', { month: 'short', timeZone: 'UTC' }).toUpperCase();
-      }
-      cursor.setUTCDate(cursor.getUTCDate() + 1);
+// A rolling window of WEEKS weeks (Monday to Sunday): from the start until it fills up,
+// then the latest weeks. Days before 2 Nov 2026 are blank.
+const WEEKS = 26;
+const startMonday = new Date(`${START}T00:00:00Z`);
+const firstMonday = new Date(Math.max(startMonday.getTime(), new Date(`${today}T00:00:00Z`).getTime() - (WEEKS - 1) * 7 * 864e5));
+firstMonday.setUTCDate(firstMonday.getUTCDate() - ((firstMonday.getUTCDay() + 6) % 7));
+const weeks = Array.from({ length: WEEKS }, (_, w) => {
+  let month: string | undefined;
+  const days = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(firstMonday.getTime() + (w * 7 + i) * 864e5);
+    const d = iso(date);
+    if (date.getUTCDate() === 1 || (w === 0 && i === 0)) {
+      month = date.toLocaleDateString('en-GB', { month: 'short', timeZone: 'UTC' }).toUpperCase();
     }
-    out.push({ days, month });
-  }
-  return out;
-}
+    return d >= START ? d : null;
+  });
+  return { days, month };
+});
 
-const years = Array.from({ length: lastYear - 2025 }, (_, i) => lastYear - i).map((year) => ({ year, weeks: weeks(year) }));
 const describe = (list: Event[]) => list.map((e) => (e.kind === 'post' ? `Wrote “${e.title}”` : `Watched ${e.title}`)).join(' · ');
 ---
 
 <section aria-labelledby="montage">
   <h2 id="montage" class="font-bold uppercase text-screen">Montage — a life in days</h2>
   <p class="mt-1 text-sm text-dim">
-    Every film and every post, one square a day, starting 2 November 2026.
+    One square a day since 2 November 2026.
     <span class="ml-2 whitespace-nowrap"><span class="inline-block h-2.5 w-2.5 bg-screen/75 align-middle"></span> film</span>
     <span class="ml-2 whitespace-nowrap"><span class="inline-block h-2.5 w-2.5 bg-gold align-middle"></span> post</span>
   </p>
 
-  {years.map(({ year, weeks }) => (
-    <div class="mt-5">
-      <p class="label mb-2">{year}</p>
-      <div class="grid gap-[3px]" style={`grid-template-columns: repeat(${weeks.length}, minmax(0, 13px))`}>
-        {weeks.map((w) => <span class="h-4 text-[10px] leading-4 text-faint">{w.month ?? ''}</span>)}
-      </div>
-      <div class="grid grid-flow-col grid-rows-7 gap-[3px]" style={`grid-template-columns: repeat(${weeks.length}, minmax(0, 13px))`}>
-        {weeks.flatMap((w) =>
-          w.days.map((d) => {
-            if (!d) return <span aria-hidden="true" class="aspect-square"></span>;
-            const list = byDay.get(d) ?? [];
-            const post = list.find((e) => e.kind === 'post');
-            const tip = `${nice(d)}${list.length ? `: ${describe(list)}` : ''}`;
-            const tone = post ? 'bg-gold' : list.length ? 'bg-screen/75' : d > today ? 'border border-line' : 'bg-line';
-            return post ? (
-              <a href={post.href} title={tip} aria-label={tip} class:list={['aspect-square rounded-[2px] hover:opacity-70', tone]}></a>
-            ) : (
-              <span title={tip} class:list={['aspect-square rounded-[2px]', tone]}></span>
-            );
-          }),
-        )}
-      </div>
+  <div class="mt-4">
+    <div class="grid gap-[3px]" style={`grid-template-columns: repeat(${WEEKS}, minmax(0, 13px))`}>
+      {weeks.map((w) => <span class="h-4 overflow-visible whitespace-nowrap text-[10px] leading-4 text-faint">{w.month ?? ''}</span>)}
     </div>
-  ))}
+    <div class="grid grid-flow-col grid-rows-7 gap-[3px]" style={`grid-template-columns: repeat(${WEEKS}, minmax(0, 13px))`}>
+      {weeks.flatMap((w) =>
+        w.days.map((d) => {
+          if (!d) return <span aria-hidden="true" class="aspect-square"></span>;
+          const list = byDay.get(d) ?? [];
+          const post = list.find((e) => e.kind === 'post');
+          const tip = `${nice(d)}${list.length ? `: ${describe(list)}` : ''}`;
+          const tone = post ? 'bg-gold' : list.length ? 'bg-screen/75' : d > today ? 'border border-line' : 'bg-line';
+          return post ? (
+            <a href={post.href} title={tip} aria-label={tip} class:list={['aspect-square rounded-[2px] hover:opacity-70', tone]}></a>
+          ) : (
+            <span title={tip} class:list={['aspect-square rounded-[2px]', tone]}></span>
+          );
+        }),
+      )}
+    </div>
+  </div>
 
-  <ul class="mt-6 space-y-1.5 text-[15px]">
+  <ul class="mt-4 space-y-1 text-[15px]">
     {events.length === 0 && <li class="text-dim">— The montage starts today. Nothing on the reel yet.</li>}
-    {events.slice(0, 8).map((e) => (
+    {events.slice(0, listLimit).map((e) => (
       <li class="text-dim">
         — {nice(e.date)}. {e.kind === 'post' ? 'Writes' : 'Watches'}{' '}
         <a href={e.href} class="uppercase text-screen underline decoration-line underline-offset-4 hover:text-gold hover:decoration-gold">{e.title}</a>.
