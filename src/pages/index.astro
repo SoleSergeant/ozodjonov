@@ -57,9 +57,16 @@ const cuts = [
 
       <div class="flex flex-col items-center justify-center gap-10 lg:items-stretch">
         {site.photo && (
-          <figure class="mx-auto w-52 sm:w-60">
-            <img src={site.photo} alt={site.fullName} width="480" height="600" class="aspect-[4/5] w-full rounded-[3px] border border-line object-cover" />
-            <figcaption class="label mt-2 text-center">Muhammadjon · Fergana</figcaption>
+          <figure class="group relative mx-auto w-52 -rotate-2 border border-line bg-reel p-2 pb-3 shadow-sm transition duration-500 hover:rotate-0 motion-reduce:rotate-0 sm:w-56 lg:mx-0">
+            {/* A headshot clipped to the script: black and white, tilted, color and straight on hover. */}
+            <svg aria-hidden="true" viewBox="0 0 20 52" class="absolute -top-5 left-7 z-10 h-14 w-5 rotate-6 text-faint">
+              <path d="M7 34V10a4.5 4.5 0 0 1 9 0v28a7 7 0 0 1-14 0V14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <div class="aspect-[4/5] overflow-hidden">
+              {/* shortcut: the zoom is tuned to the current photo's framing; adjust if the photo changes. */}
+              <img src={site.photo} alt={site.fullName} width="480" height="600" class="h-full w-full origin-[51%_42%] scale-[1.45] object-cover grayscale contrast-110 transition duration-500 group-hover:grayscale-0" />
+            </div>
+            <figcaption class="label mt-2">Muhammadjon · Fergana</figcaption>
           </figure>
         )}
 
