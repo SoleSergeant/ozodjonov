@@ -3,7 +3,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import LikeButton from '../../components/LikeButton.astro';
 import { formatDate, runtime } from '../../lib/films.js';
-import { getPosts } from '../../lib/posts';
+import { excerpt, getPosts } from '../../lib/posts';
 import { url } from '../../lib/urls.js';
 
 export async function getStaticPaths() {
@@ -18,7 +18,7 @@ const { post, scene, next } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<Base title={post.data.title} description={post.data.description} type="article">
+<Base title={post.data.title} description={excerpt(post)} type="article">
   <article class="mx-auto max-w-[40rem] px-5 sm:px-8">
     <header class="mb-12 mt-14">
       <p class="label mb-4">

@@ -18,7 +18,15 @@ interface Props {
 const { title, fullTitle, description = site.intro || site.tagline, bare = false, type = 'website' } = Astro.props;
 const pageTitle = fullTitle ?? (title ? `${title} · ${site.name}` : `${site.fullName} - ${site.tagline}`);
 const pageUrl = publicUrl(Astro.url.pathname.replace(/\/$/, '') || '/');
-const ogImage = `${hosts.main}/og.png?v=2`;
+// Each kind of page has its own preview card, drawn by src/pages/og/[...card].png.ts.
+const route = Astro.url.pathname.replace(/\/$/, '');
+const card = /^\/blog\/[^/]+$/.test(route) ? route.slice(1)
+  : route === '/blog' ? 'blog'
+  : route === '/movies/suggest' ? 'suggest'
+  : route.startsWith('/movies') || route.startsWith('/collections') ? 'movies'
+  : route.startsWith('/cv') ? 'cv'
+  : 'home';
+const ogImage = `${hosts.main}/og/${card}.png`;
 // Each subdomain is its own site; the header just says which one you're on.
 const path = Astro.url.pathname;
 const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
@@ -67,7 +75,7 @@ const cuts = section?.label === 'blog' ? [{ label: 'Home', href: url('main') }, 
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="ozodjonov" />
+    <meta property="og:image:alt" content={pageTitle} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
