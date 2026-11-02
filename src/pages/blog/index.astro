@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import PostList from '../../components/PostList.astro';
 import { getPosts } from '../../lib/posts';
+import { hosts } from '../../lib/urls.js';
 
 const posts = await getPosts();
 ---
@@ -9,8 +10,9 @@ const posts = await getPosts();
 <Base title="Blog" description="Essays on leadership, MUN, building things, and films.">
   <div class="mx-auto max-w-3xl px-5 sm:px-8">
     <header class="mb-10 mt-12">
-      <p class="label mb-3">The blog</p>
-      <h1 class="font-serif text-5xl leading-tight text-screen sm:text-6xl">Thinking out loud.</h1>
+      <p class="label mb-3">Int. The writer's room — Day</p>
+      <h1 class="text-3xl font-bold uppercase text-screen sm:text-4xl">Thinking out loud.</h1>
+      <p class="mt-3 text-dim">Every post is a scene. <a href={`${hosts.blog}/rss.xml`} class="text-gold hover:underline">Follow by RSS</a>.</p>
     </header>
     <PostList posts={posts} />
   </div>

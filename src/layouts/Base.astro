@@ -32,17 +32,17 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0b0b0b" />
+    <meta name="theme-color" content="#f7f5ef" />
     <script is:inline>
       // Pick the theme before anything is drawn, so the page never flashes the wrong one:
-      // the saved choice (a cookie shared across the subdomains), otherwise the device setting.
+      // the saved choice (a cookie shared across the subdomains), otherwise script paper.
       (function () {
         var saved = (document.cookie.match(/(?:^|; )theme=(light|dark)/) || [])[1];
-        var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        var theme = saved || 'light';
         // Also color the phone's browser bar to match.
         function setTheme(t) {
           document.documentElement.dataset.theme = t;
-          document.querySelector('meta[name="theme-color"]').content = t === 'light' ? '#f3efe6' : '#0b0b0b';
+          document.querySelector('meta[name="theme-color"]').content = t === 'light' ? '#f7f5ef' : '#121110';
         }
         setTheme(theme);
         // The fade-from-black intro plays once per visit, not on every page (a session cookie
@@ -50,11 +50,6 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
         if (/(?:^|; )intro=1/.test(document.cookie)) document.documentElement.classList.add('no-intro');
         var domain = location.hostname.endsWith('ozodjonov.com') ? '; domain=.ozodjonov.com' : '';
         document.cookie = 'intro=1; path=/; samesite=lax' + domain;
-        if (!saved) {
-          matchMedia('(prefers-color-scheme: light)').addEventListener('change', function (e) {
-            if (!/(?:^|; )theme=/.test(document.cookie)) setTheme(e.matches ? 'light' : 'dark');
-          });
-        }
       })();
     </script>
     <title>{pageTitle}</title>
@@ -74,10 +69,11 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.fullName} · blog`} href={`${hosts.blog}/rss.xml`} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&family=Kaushan+Script&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -106,8 +102,8 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
     {!bare && (
     <footer class="mt-24 border-t border-line">
       <div class="mx-auto max-w-5xl px-5 py-14 text-center sm:px-8">
-        <p class="label mb-3">End credits</p>
-        <p class="font-serif text-3xl text-screen">Written and directed by {site.name}</p>
+        <p class="label mb-3">The end</p>
+        <p class="font-serif text-xl uppercase text-screen">Written and directed by {site.name}</p>
         <p class="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-dim">
           {site.links.map((l) => <a href={l.href} class="hover:text-gold">{l.label}</a>)}
         </p>

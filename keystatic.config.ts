@@ -48,6 +48,11 @@ export default config({
         films: fields.array(
           fields.object({
             title: fields.text({ label: 'Title', validation: { isRequired: true } }),
+            watched: fields.date({
+              label: 'Date watched',
+              description: 'Puts the film on the home page calendar. Filled in with today for new films.',
+              defaultValue: { kind: 'today' },
+            }),
             released: fields.integer({ label: 'Release year', description: 'Helps find the right poster.' }),
             rewatch: fields.checkbox({ label: 'Rewatch' }),
             uzbek: fields.checkbox({ label: 'Uzbek cinema' }),

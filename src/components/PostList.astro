@@ -1,30 +1,33 @@
 ---
+// Posts as numbered scenes, newest first. The oldest post is scene 1.
 import type { CollectionEntry } from 'astro:content';
 import { formatDate, runtime } from '../lib/films.js';
 import { url } from '../lib/urls.js';
 
 interface Props {
   posts: CollectionEntry<'blog'>[];
+  limit?: number;
 }
 
-const { posts } = Astro.props;
+const { posts, limit = posts.length } = Astro.props;
 ---
 
 {posts.length === 0 ? (
-  <p class="border-t border-line py-6 text-dim">The first post is coming soon.</p>
+  <p class="border-t border-line py-6 text-dim">Scene 1 is still being written.</p>
 ) : (
-  <ul>
-    {posts.map((post) => (
-      <li class="border-t border-line first:border-t-0">
-        <a href={url('blog', `/${post.id}`)} class="group flex flex-col gap-1 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-          <span>
-            <span class="font-serif text-2xl text-screen transition group-hover:text-gold sm:text-[1.7rem]">{post.data.title}</span>
+  <ol>
+    {posts.slice(0, limit).map((post, i) => (
+      <li class="border-t border-line last:border-b">
+        <a href={url('blog', `/${post.id}`)} class="group flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:gap-5">
+          <span class="shrink-0 text-faint sm:w-20">{posts.length - i}.</span>
+          <span class="min-w-0 flex-1">
+            <span class="font-bold uppercase text-screen transition group-hover:text-gold">{post.data.title}</span>
             {post.data.draft && <span class="label ml-2 !text-gold">Draft</span>}
-            {post.data.description && <span class="mt-1 block text-sm text-dim">{post.data.description}</span>}
+            {post.data.description && <span class="mt-1 block font-[family-name:var(--font-read)] text-[17px] text-dim">{post.data.description}</span>}
           </span>
           <span class="label shrink-0">{formatDate(post.data.date)} · {runtime(post.body ?? '')} min</span>
         </a>
       </li>
     ))}
-  </ul>
+  </ol>
 )}

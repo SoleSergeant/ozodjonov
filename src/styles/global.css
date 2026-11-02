@@ -1,35 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #0b0b0b;
-  --color-reel: #141310;
-  --color-screen: #ece6da;
-  --color-dim: #a39d90;
-  --color-faint: #8a8478;
-  --color-line: #2a2722;
-  --color-gold: #d9a441;
-  --color-edge: #3a362f;
-  --color-prose: #d9d3c7;
+  /* Dark: a script read under a desk lamp. ("gold" is the accent token: revision red now.) */
+  --color-ink: #121110;
+  --color-reel: #1a1917;
+  --color-screen: #ece8df;
+  --color-dim: #a8a296;
+  --color-faint: #8d877b;
+  --color-line: #2c2a26;
+  --color-gold: #e0675a;
+  --color-edge: #3d3a34;
+  --color-prose: #dcd7cc;
   --color-danger: #e2572b;
 
-  --font-serif: "Instrument Serif", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  --font-script: "Kaushan Script", cursive;
+  /* The whole site is typed like a screenplay; only the post text uses a reading serif. */
+  --font-serif: "Courier Prime", "Courier New", monospace;
+  --font-sans: "Courier Prime", "Courier New", monospace;
+  --font-mono: "Courier Prime", "Courier New", monospace;
+  --font-read: "Newsreader", Georgia, serif;
 }
 
-/* Light theme: warm paper instead of a dark theater. Chosen with the sun/moon toggle,
-   otherwise it follows the device setting (see the script in layouts/Base.astro). */
+/* Light theme: script paper, the default (see the script in layouts/Base.astro). */
 :root[data-theme="light"] {
-  --color-ink: #f3efe6;
-  --color-reel: #e9e3d6;
-  --color-screen: #1b1915;
-  --color-dim: #5c574d;
-  --color-faint: #67615a;
-  --color-line: #d8d1c2;
-  --color-gold: #865a0b;
-  --color-edge: #c4bcab;
-  --color-prose: #2a2722;
+  --color-ink: #f7f5ef;
+  --color-reel: #eeebe3;
+  --color-screen: #161513;
+  --color-dim: #4e4a43;
+  --color-faint: #67625a;
+  --color-line: #dcd7cc;
+  --color-gold: #a3261b;
+  --color-edge: #c9c3b6;
+  --color-prose: #262420;
   --color-danger: #c2410c;
   color-scheme: light;
 }
@@ -88,38 +89,35 @@ body::after {
 
 .label {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-faint);
 }
 
-.letterbox {
-  height: 28px;
-  background: #000;
-}
-
 /* Blog post typography */
 .prose-film {
-  font-size: 1.125rem;
-  line-height: 1.8;
+  font-family: var(--font-read);
+  font-size: 1.25rem;
+  line-height: 1.75;
   color: var(--color-prose);
 }
 .prose-film > * + * { margin-top: 1.25em; }
 .prose-film h2,
 .prose-film h3 {
   font-family: var(--font-serif);
+  font-weight: 700;
+  text-transform: uppercase;
   color: var(--color-screen);
   line-height: 1.2;
   margin-top: 2em;
 }
-.prose-film h2 { font-size: 2rem; }
-.prose-film h3 { font-size: 1.5rem; }
+.prose-film h2 { font-size: 1.25rem; }
+.prose-film h3 { font-size: 1.1rem; }
 .prose-film a { color: var(--color-gold); text-underline-offset: 3px; text-decoration: underline; }
 .prose-film blockquote {
-  font-family: var(--font-serif);
   font-style: italic;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   line-height: 1.4;
   color: var(--color-screen);
   border-left: 2px solid var(--color-gold);
@@ -129,11 +127,6 @@ body::after {
 .prose-film ol { list-style: decimal; padding-left: 1.25rem; }
 .prose-film code { font-family: var(--font-mono); font-size: 0.9em; color: var(--color-gold); }
 .prose-film hr { border-color: var(--color-line); }
-
-/* Landing page: the poster wall shows through paper more than through black, so shade it more. */
-:root[data-theme="light"] .wall-shade {
-  background-color: color-mix(in srgb, var(--color-ink) 80%, transparent);
-}
 
 /* Keyboard focus: a gold ring on whatever is selected with Tab (mouse clicks don't show it). */
 :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {

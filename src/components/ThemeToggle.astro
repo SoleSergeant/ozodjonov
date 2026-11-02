@@ -47,7 +47,7 @@ const icon = (svg: string) => svg.replace(/width="24"/, 'width="100%"').replace(
       const domain = location.hostname.endsWith('ozodjonov.com') ? '; domain=.ozodjonov.com' : '';
       document.cookie = `theme=${next}; path=/; max-age=31536000; samesite=lax${domain}`;
       document.querySelectorAll('[data-theme-toggle]').forEach((b) => b.setAttribute('aria-label', label()));
-      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', next === 'light' ? '#f3efe6' : '#0b0b0b');
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', next === 'light' ? '#f7f5ef' : '#121110');
     });
   });
 </script>

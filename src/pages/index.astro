@@ -1,83 +1,80 @@
 ---
+// ozodjonov.com: the title page of a screenplay, then the scenes (posts), the montage
+// (a life in days), and cuts to the other parts of the site.
 import Base from '../layouts/Base.astro';
-import SocialIcon from '../components/SocialIcon.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import PostList from '../components/PostList.astro';
+import LifeInDays from '../components/LifeInDays.astro';
 import { site } from '../data/site.js';
 import { allEntries } from '../data/movies.js';
+import { getPosts } from '../lib/posts';
 import { url } from '../lib/urls.js';
 
-const initials = site.fullName.split(/\s+/).map((w) => w[0]).slice(0, 2).join('');
+const posts = await getPosts();
+const cuts = [
+  { label: 'The film diary', note: `${allEntries.length} titles`, href: url('movie') },
+  { label: 'All scenes', note: 'the blog', href: url('blog') },
+  { label: 'The CV', note: 'the résumé', href: url('cv') },
+];
 ---
 
 <Base bare>
-  <section class="relative isolate flex min-h-svh items-center justify-center overflow-hidden px-5 py-16">
-    <ThemeToggle class="absolute right-5 top-5 z-10 sm:right-8 sm:top-7" />
-    <!-- Poster wall, blurred and darkened -->
-    <div aria-hidden="true" class="absolute inset-0 -z-10">
-      <!-- One pre-blurred image, made at build time by scripts/landing-wall.mjs. -->
-      <img src="/wall.webp" alt="" width="960" height="720" fetchpriority="high" decoding="async" class="absolute inset-0 h-full w-full scale-110 object-cover opacity-90" />
-      <div class="wall-shade absolute inset-0 bg-ink/65"></div>
-      <div class="absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 0%, color-mix(in srgb, var(--color-ink) 75%, transparent) 70%, var(--color-ink) 100%)"></div>
-    </div>
+  <div class="mx-auto max-w-2xl px-5 pb-20 sm:px-8">
+    <div class="flex justify-end pt-5"><ThemeToggle /></div>
 
-    <div class="intro flex flex-col items-center text-center">
-      <div class="h-44 w-44 overflow-hidden rounded-full bg-reel ring-1 ring-line sm:h-52 sm:w-52">
-        {site.photo ? (
-          <img src={site.photo} alt={site.fullName} class="h-full w-full object-cover" />
-        ) : (
-          <div class="flex h-full w-full items-center justify-center font-serif text-6xl text-gold">{initials}</div>
-        )}
+    <header class="pb-16 pt-14 text-center sm:pt-20">
+      <h1 class="text-3xl font-bold uppercase tracking-[0.06em] text-screen underline decoration-2 underline-offset-8 sm:text-4xl">Ozodjonov</h1>
+      <p class="mt-6 text-dim">an ongoing screenplay</p>
+      <p class="mt-10 text-dim">written by</p>
+      <p class="mt-2 text-lg text-screen">{site.fullName}</p>
+    </header>
+
+    <div class="space-y-5 text-[17px] leading-relaxed">
+      <p class="text-screen">FADE IN:</p>
+      <p class="font-bold uppercase text-screen">Int. A room in Fergana — Night</p>
+      <p class="text-prose">
+        {site.fullName.toUpperCase()} ({site.role?.toLowerCase().replace(/ \/ /g, ', ')}) sits at a desk. Behind him, {allEntries.length} films
+        he has watched since 2024. In front of him, a blank page.
+      </p>
+      <div class="mx-auto max-w-sm text-prose">
+        <p class="text-center text-screen">MUHAMMADJON</p>
+        <p class="mt-1">I am not a writer. But I will try.</p>
       </div>
-
-      <h1 class="mt-10 flex items-center gap-3 font-[family-name:var(--font-script)] whitespace-nowrap text-[clamp(1.3rem,6.2vw,3rem)] leading-tight text-screen sm:gap-4">
-        <span aria-hidden="true" class="h-[3px] w-5 rounded bg-screen sm:w-7"></span>
-        {site.fullName}
-        <span aria-hidden="true" class="h-[3px] w-5 rounded bg-screen sm:w-7"></span>
-      </h1>
-
-      {site.role && <p class="mt-5 font-mono text-sm tracking-wide text-screen/85 sm:text-[15px]">{site.role}</p>}
-
-      <nav aria-label="Contact" class="mt-8 flex items-center gap-7">
-        {site.links.map((link) => (
-          <a
-            href={link.href}
-            target={link.href.startsWith('http') ? '_blank' : undefined}
-            rel={link.href.startsWith('http') ? 'noopener' : undefined}
-            aria-label={link.label}
-            title={link.label}
-            class="block h-7 w-7 text-screen transition hover:-translate-y-0.5 hover:text-gold"
-          >
-            <SocialIcon href={link.href} label={link.label} />
-          </a>
-        ))}
-      </nav>
-
-      <nav aria-label="Sections" class="mt-10 flex items-center gap-1 font-mono text-[13px] uppercase tracking-[0.2em] text-dim">
-        <a href={url('blog')} class="inline-block px-3 py-3.5 transition hover:text-gold">Blog</a>
-        <span class="text-line">/</span>
-        <a href={url('movie')} class="inline-block px-3 py-3.5 transition hover:text-gold">Movies <span class="text-faint">({allEntries.length})</span></a>
-        <span class="text-line">/</span>
-        <a href={url('cv')} class="inline-block px-3 py-3.5 transition hover:text-gold">CV</a>
-      </nav>
     </div>
-  </section>
+
+    <section class="mt-16" aria-labelledby="scenes">
+      <h2 id="scenes" class="mb-4 font-bold uppercase text-screen">The scenes so far</h2>
+      <PostList posts={posts} limit={5} />
+      {posts.length > 5 && <a href={url('blog')} class="mt-4 inline-block text-gold hover:underline">All {posts.length} scenes →</a>}
+    </section>
+
+    <div class="mt-16">
+      <LifeInDays />
+    </div>
+
+    <nav aria-label="Sections" class="mt-16 space-y-3 text-right">
+      {cuts.map((c) => (
+        <a href={c.href} class="group block py-1 text-[17px] text-screen">
+          CUT TO: <span class="uppercase underline decoration-line underline-offset-4 group-hover:text-gold group-hover:decoration-gold">{c.label}</span>
+          <span class="text-faint"> ({c.note})</span>
+        </a>
+      ))}
+    </nav>
+
+    <footer id="contact" class="mt-20 border-t border-line pt-6 text-sm text-dim">
+      <p class="label mb-2">Contact</p>
+      <ul class="flex flex-wrap gap-x-5 gap-y-2">
+        {site.links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              target={link.href.startsWith('http') ? '_blank' : undefined}
+              rel={link.href.startsWith('http') ? 'noopener' : undefined}
+              class="inline-block py-1 hover:text-gold"
+            >{link.handle ?? link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </footer>
+  </div>
 </Base>
-
-<style>
-  .intro > * {
-    animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  }
-  .intro > :nth-child(2) { animation-delay: 0.12s; }
-  .intro > :nth-child(3) { animation-delay: 0.22s; }
-  .intro > :nth-child(4) { animation-delay: 0.32s; }
-  .intro > :nth-child(5) { animation-delay: 0.42s; }
-
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: none; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .intro > * { animation: none; }
-  }
-</style>
