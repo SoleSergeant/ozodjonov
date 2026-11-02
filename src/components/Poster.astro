@@ -18,15 +18,15 @@ const Tag = film.post ? 'a' : 'div';
 <figure class="poster group" data-title={film.title} data-keywords={keywords} data-year={film.year} data-rw={film.rw ? '1' : undefined} data-uz={film.uz ? '1' : undefined} data-tv={film.tv ? '1' : undefined}>
   <Tag
     href={film.post ? url('blog', `/${film.post}`) : undefined}
-    class="relative block aspect-[2/3] overflow-hidden rounded-[4px] ring-1 ring-line transition duration-300 group-hover:-translate-y-1 group-hover:ring-gold/60 group-hover:shadow-[0_10px_30px_-10px_rgba(217,164,65,0.35)]"
+    class="relative block aspect-[2/3] overflow-hidden rounded-[4px] ring-1 ring-line transition duration-300 group-hover:-translate-y-1 group-hover:ring-gold/60 group-hover:shadow-[0_10px_30px_-12px_rgba(0,0,0,0.35)]"
     style={src ? undefined : `background:${bg}`}
   >
     {src ? (
       <img src={src} alt={`${film.title} poster`} loading="lazy" decoding="async" class="h-full w-full object-cover" />
     ) : (
       <div class="flex h-full flex-col justify-between p-3">
-        <span class="label !text-[9px] !text-white/40">{film.tv ? 'Series' : film.uz ? "O'zbek kino" : 'Feature'}</span>
-        <span class="font-serif text-lg leading-tight text-white">{film.title}</span>
+        <span class="label !text-[9px]">{film.tv ? 'Series' : film.uz ? "O'zbek kino" : 'Feature'}</span>
+        <span class="text-[15px] font-bold uppercase leading-tight text-screen">{film.title}</span>
       </div>
     )}
     {showBadge && film.rw && (

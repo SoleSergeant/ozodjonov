@@ -15,9 +15,11 @@ export const photoUrl = (name) => {
   return path ? 'https://image.tmdb.org/t/p/w185' + path : null;
 };
 
-// Fallback "title card" color, picked from the title so it stays stable.
-const hues = ['#1d2a3a', '#3a2a1d', '#2a1d2f', '#1d3a2f', '#2f2a20', '#33201d', '#202c33', '#2b2a1e', '#1f1c26', '#2d2219'];
-export const cardColor = (title) => hues[[...title].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % hues.length];
+// Fallback "title card" color for missing posters: a faint tint of the page's own card color,
+// picked from the title so it stays stable and works on both paper and dark.
+const hues = ['#1d4a7a', '#7a4a1d', '#5a1d6f', '#1d6a4f', '#6f5a20', '#83301d', '#20607a', '#5b5a1e', '#3f2c66', '#7d4219'];
+export const cardColor = (title) =>
+  `color-mix(in srgb, ${hues[[...title].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % hues.length]} 14%, var(--color-reel))`;
 
 // One entry per title (the most recent watch), keeping first-watch order otherwise.
 export const uniqueFilms = (() => {

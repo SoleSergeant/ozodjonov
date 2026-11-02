@@ -6,12 +6,12 @@ import { allEntries } from '../data/movies.js';
 import { url } from '../lib/urls.js';
 
 interface Props {
-  /** How many of the latest events to list under the grid. */
+  /** How many of the latest events to list under the grid; the rest fold away. */
   list?: number;
   /** Only films (the movie site), not posts. */
   filmsOnly?: boolean;
 }
-const { list: listLimit = Infinity, filmsOnly = false } = Astro.props;
+const { list: listLimit = 10, filmsOnly = false } = Astro.props;
 
 const START = '2026-11-02';
 const iso = (d: Date) => d.toISOString().slice(0, 10);
@@ -98,9 +98,10 @@ const describe = (list: Event[]) => list.map((e) => (e.kind === 'post' ? `Wrote 
     </div>
   ))}
 
-  <ul class="mt-4 space-y-1 text-[15px]">
-    {events.length === 0 && <li class="text-dim">— The montage starts today. Nothing on the reel yet.</li>}
-    {events.slice(0, listLimit).map((e) => (
+  {events.length === 0 && <p class="mt-4 text-[15px] text-dim">— The montage starts today. Nothing on the reel yet.</p>}
+  {[events.slice(0, listLimit), events.slice(listLimit)].map((part, i) => {
+    if (!part.length) return null;
+    const items = part.map((e) => (
       <li class="text-dim">
         — {nice(e.date)}. {e.kind === 'post' ? 'Writes' : 'Watches'}{' '}
         {filmsOnly ? (
@@ -109,6 +110,14 @@ const describe = (list: Event[]) => list.map((e) => (e.kind === 'post' ? `Wrote 
           <a href={e.href} class="uppercase text-screen underline decoration-line underline-offset-4 hover:text-gold hover:decoration-gold">{e.title}</a>
         )}.
       </li>
-    ))}
-  </ul>
+    ));
+    return i === 0 ? (
+      <ul class="mt-4 space-y-1 text-[15px]">{items}</ul>
+    ) : (
+      <details class="mt-2 text-[15px]">
+        <summary class="cursor-pointer text-gold hover:underline">All {events.length} entries</summary>
+        <ul class="mt-2 space-y-1">{items}</ul>
+      </details>
+    );
+  })}
 </section>

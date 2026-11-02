@@ -18,8 +18,8 @@ const strip = uniqueFilms.filter((f) => !f.tv && posterUrl(f)).slice(0, 7);
     <div class="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-16">
       <div>
         <p class="label mb-3">Your turn · Recommend me a film</p>
-        <h1 class="font-serif text-5xl leading-[1.05] text-screen sm:text-6xl">
-          What should I<br /><em class="text-gold">watch next?</em>
+        <h1 class="text-3xl font-bold uppercase leading-tight text-screen sm:text-4xl">
+          What should I watch next?
         </h1>
         <p class="mb-10 mt-5 max-w-lg leading-relaxed text-dim">
           I keep a diary of every film I watch, {allEntries.length} so far. Tell me one that stayed with you,
