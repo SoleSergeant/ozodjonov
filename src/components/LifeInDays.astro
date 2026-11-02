@@ -8,12 +8,10 @@ import { url } from '../lib/urls.js';
 interface Props {
   /** How many of the latest events to list under the grid. */
   list?: number;
-  /** Every year since the start (one grid per year) instead of the latest 26 weeks. */
-  history?: boolean;
   /** Only films (the movie site), not posts. */
   filmsOnly?: boolean;
 }
-const { list: listLimit = Infinity, history = false, filmsOnly = false } = Astro.props;
+const { list: listLimit = Infinity, filmsOnly = false } = Astro.props;
 
 const START = '2026-11-02';
 const iso = (d: Date) => d.toISOString().slice(0, 10);
@@ -57,19 +55,12 @@ function weekGrid(from: string, to: string) {
   return weeks;
 }
 
-const addDays = (date: string, n: number) => iso(new Date(new Date(`${date}T00:00:00Z`).getTime() + n * 864e5));
-let grids: { label?: string; weeks: ReturnType<typeof weekGrid> }[];
-if (history) {
-  const lastYear = Math.max(Number(today.slice(0, 4)), ...events.map((e) => Number(e.date.slice(0, 4))));
-  grids = Array.from({ length: lastYear - 2025 }, (_, i) => lastYear - i).map((y) => ({
-    label: String(y),
-    weeks: weekGrid(y === 2026 ? START : `${y}-01-01`, `${y}-12-31`),
-  }));
-} else {
-  // A rolling 26 weeks: from the start until it fills up, then the latest weeks.
-  const from = [START, addDays(today, -25 * 7)].sort().at(-1)!;
-  grids = [{ weeks: weekGrid(from, addDays(from, 26 * 7 - 1)) }];
-}
+// One grid per year, newest first.
+const lastYear = Math.max(Number(today.slice(0, 4)), ...events.map((e) => Number(e.date.slice(0, 4))));
+const grids = Array.from({ length: lastYear - 2025 }, (_, i) => lastYear - i).map((y) => ({
+  label: String(y),
+  weeks: weekGrid(y === 2026 ? START : `${y}-01-01`, `${y}-12-31`),
+}));
 
 const describe = (list: Event[]) => list.map((e) => (e.kind === 'post' ? `Wrote “${e.title}”` : `Watched ${e.title}`)).join(' · ');
 ---
@@ -83,12 +74,12 @@ const describe = (list: Event[]) => list.map((e) => (e.kind === 'post' ? `Wrote 
   </p>
 
   {grids.map(({ label, weeks }) => (
-    <div class:list={['mt-4', history && 'overflow-x-auto pb-1']}>
-      {label && <p class="label mb-1">{label}</p>}
-      <div class="grid gap-[3px]" style={`grid-template-columns: repeat(${weeks.length}, ${history ? '11px' : 'minmax(0, 13px)'})`}>
+    <div class="mt-4 overflow-x-auto pb-1">
+      <p class="label mb-1">{label}</p>
+      <div class="grid gap-[3px]" style={`grid-template-columns: repeat(${weeks.length}, 11px)`}>
         {weeks.map((w) => <span class="h-4 overflow-visible whitespace-nowrap text-[10px] leading-4 text-faint">{w.month ?? ''}</span>)}
       </div>
-      <div class="grid grid-flow-col grid-rows-7 gap-[3px]" style={`grid-template-columns: repeat(${weeks.length}, ${history ? '11px' : 'minmax(0, 13px)'})`}>
+      <div class="grid grid-flow-col grid-rows-7 gap-[3px]" style={`grid-template-columns: repeat(${weeks.length}, 11px)`}>
         {weeks.flatMap((w) =>
           w.days.map((d) => {
             if (!d) return <span aria-hidden="true" class="aspect-square"></span>;
