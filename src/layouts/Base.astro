@@ -18,13 +18,17 @@ interface Props {
 const { title, fullTitle, description = site.intro || site.tagline, bare = false, type = 'website' } = Astro.props;
 const pageTitle = fullTitle ?? (title ? `${title} · ${site.name}` : `${site.fullName} - ${site.tagline}`);
 const pageUrl = publicUrl(Astro.url.pathname.replace(/\/$/, '') || '/');
-const ogImage = `${hosts.main}/og.png`;
+const ogImage = `${hosts.main}/og.png?v=2`;
 // Each subdomain is its own site; the header just says which one you're on.
 const path = Astro.url.pathname;
 const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
   : path.startsWith('/movies') || path.startsWith('/collections') ? { label: 'movies', href: url('movie') }
   : path.startsWith('/cv') ? { label: 'cv', href: url('cv') }
   : null;
+// Blog and movies point to each other and home, like a script's right-aligned transitions.
+const cuts = section?.label === 'blog' ? [{ label: 'Home', href: url('main') }, { label: 'Movies', href: url('movie') }]
+  : section?.label === 'movies' ? [{ label: 'Home', href: url('main') }, { label: 'Blog', href: url('blog') }]
+  : [];
 ---
 
 <!doctype html>
@@ -93,6 +97,14 @@ const section = path.startsWith('/blog') ? { label: 'blog', href: url('blog') }
       )}
       <ThemeToggle class="ml-auto" />
     </header>
+    )}
+    {!bare && cuts.length > 0 && (
+      <nav aria-label="Elsewhere" class="mx-auto -mt-3 max-w-5xl px-5 text-right text-[13px] uppercase text-dim sm:px-8">
+        Cut to:{' '}
+        {cuts.map((c, i) => (
+          <>{i > 0 && <span aria-hidden="true" class="text-faint"> · </span>}<a href={c.href} class="inline-block py-2 text-screen underline decoration-line underline-offset-4 hover:text-gold hover:decoration-gold">{c.label}</a></>
+        ))}
+      </nav>
     )}
 
     <main id="main" tabindex="-1" class="outline-none">
