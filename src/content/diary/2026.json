@@ -850,6 +850,13 @@
       "rewatch": false,
       "uzbek": false,
       "series": false
+    },
+    {
+      "title": "Moon Knight",
+      "watched": "2026-11-03",
+      "rewatch": false,
+      "uzbek": false,
+      "series": true
     }
   ]
 }
