@@ -857,6 +857,13 @@
       "rewatch": false,
       "uzbek": false,
       "series": true
+    },
+    {
+      "title": "Dead Poets Society",
+      "watched": "2026-11-08",
+      "rewatch": true,
+      "uzbek": false,
+      "series": false
     }
   ]
 }
