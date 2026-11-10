@@ -1,67 +1,83 @@
 ---
-// cv.ozodjonov.com: the CV, edited in the admin under "CV". Prints as a clean light page.
+// cv.ozodjonov.com: the CV, edited in the admin under "CV". One column, in the order a reader
+// skims (who, education, experience, projects, honors, skills); prints as a clean one-page A4.
 import Base from '../../layouts/Base.astro';
 import { site } from '../../data/site.js';
 import cv from '../../content/cv.json';
 
-const contact = [cv.location, cv.email, cv.phone].filter(Boolean);
+// Contact line: place, email, then the site and the public profiles (no messaging apps).
+const links = [
+  { label: 'ozodjonov.com', href: 'https://www.ozodjonov.com' },
+  ...site.links
+    .filter((l) => /github|linkedin/i.test(l.href))
+    .map((l) => ({ label: l.href.replace(/^https?:\/\/(www\.)?/, ''), href: l.href })),
+];
+const short = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '');
 ---
 
 <Base fullTitle={`${site.fullName} · CV`} description={cv.summary}>
-  <article class="cv mx-auto max-w-4xl px-5 sm:px-8">
-    <header class="mt-10 flex flex-col gap-8 sm:mt-14 sm:flex-row sm:items-end sm:justify-between">
+  <article class="cv mx-auto max-w-3xl px-5 sm:px-8">
+    <header class="mt-10 flex flex-col gap-6 sm:mt-14 sm:flex-row sm:items-start sm:justify-between">
       <div>
         <p class="label mb-4 print:hidden">Curriculum vitae</p>
-        <h1 class="cv-name font-serif text-5xl leading-[1.02] text-screen sm:text-7xl">{site.fullName}</h1>
-        <p class="cv-headline mt-3 font-mono text-sm tracking-wide text-gold sm:text-base">{cv.headline}</p>
-        <p class="cv-contact mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm text-dim">
-          {contact.map((c, i) => (
-            <>
-              {i > 0 && <span aria-hidden="true" class="text-line">/</span>}
-              {c.includes('@') ? <a href={`mailto:${c}`} class="hover:text-gold">{c}</a> : c.startsWith('+') ? <a href={`tel:${c.replace(/\s/g, '')}`} class="hover:text-gold">{c}</a> : <span>{c}</span>}
-            </>
-          ))}
+        <h1 class="cv-name text-3xl font-bold uppercase leading-tight text-screen sm:text-4xl">{site.fullName}</h1>
+        <p class="cv-headline mt-2 text-gold">{cv.headline}</p>
+        <p class="cv-contact mt-3 flex flex-wrap gap-x-3 gap-y-1 text-sm text-dim">
+          <span>{cv.location}</span>
+          {cv.email && <><span aria-hidden="true" class="text-faint">·</span><a href={`mailto:${cv.email}`} class="hover:text-gold">{cv.email}</a></>}
+          {cv.phone && <><span aria-hidden="true" class="text-faint">·</span><a href={`tel:${cv.phone.replace(/\s/g, '')}`} class="hover:text-gold">{cv.phone}</a></>}
+          {links.map((l) => <><span aria-hidden="true" class="text-faint">·</span><a href={l.href} class="hover:text-gold">{l.label}</a></>)}
         </p>
       </div>
       <button
         type="button"
         id="print"
-        class="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-gold/60 px-5 py-2.5 text-sm text-gold transition hover:bg-gold hover:text-ink sm:self-auto print:hidden"
+        class="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-gold/60 px-5 py-2.5 text-sm text-gold transition hover:bg-gold hover:text-ink print:hidden"
       >
         <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14" /></svg>
         Download PDF
       </button>
     </header>
 
-    <p class="cv-summary mt-10 max-w-2xl text-lg leading-relaxed text-screen/90">{cv.summary}</p>
+    <p class="cv-summary mt-8 font-[family-name:var(--font-read)] text-xl leading-relaxed text-prose">{cv.summary}</p>
 
     {cv.stats.length > 0 && (
-      <dl class="cv-stats mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4 print:hidden">
+      <dl class="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4 print:hidden">
         {cv.stats.map((s) => (
-          <div class="border-t border-line pt-3">
-            <dd class="font-serif text-4xl text-screen">{s.value}</dd>
+          <div class="border-t border-line pt-2">
+            <dd class="text-2xl font-bold text-screen">{s.value}</dd>
             <dt class="label mt-1">{s.label}</dt>
           </div>
         ))}
       </dl>
     )}
 
-    <section class="cv-section mt-16">
-      <h2 class="label mb-6">Experience</h2>
-      <ol class="space-y-10">
+    <section class="cv-section">
+      <h2>Education</h2>
+      {cv.education.map((e) => (
+        <div class="cv-item">
+          <div class="cv-row">
+            <h3>{e.school}</h3>
+            <p class="cv-when">{e.start} – {e.end}</p>
+          </div>
+          <p class="text-dim">{e.focus} · {e.place}</p>
+        </div>
+      ))}
+      {cv.tests?.length > 0 && <p class="mt-2 text-screen">{cv.tests.map((t) => `${t.name} ${t.score}`).join(' · ')}</p>}
+    </section>
+
+    <section class="cv-section">
+      <h2>Experience</h2>
+      <ol class="cv-list">
         {cv.experience.map((job) => (
-          <li class="cv-item grid gap-2 border-l border-line pl-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-x-8">
-            <div>
-              <h3 class="font-serif text-3xl leading-tight text-screen">{job.organization}</h3>
-              <p class="mt-1 text-gold">{job.role}</p>
+          <li class="cv-item">
+            <div class="cv-row">
+              <h3>{job.organization}<span class="cv-role">, {job.role}</span></h3>
+              <p class="cv-when">{job.start} – {job.end}</p>
             </div>
-            <p class="label sm:text-right">
-              {job.start} – {job.end}<br class="hidden sm:block" /><span class="sm:hidden"> · </span>{job.place}
-            </p>
-            <ul class="mt-3 space-y-2 text-[15px] leading-relaxed text-screen/85 sm:col-span-2">
-              {job.points.map((p) => (
-                <li class="relative pl-5 before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-2.5 before:bg-gold">{p}</li>
-              ))}
+            {job.about && <p class="cv-about">{job.about}</p>}
+            <ul class="cv-points">
+              {job.points.map((p) => <li>{p}</li>)}
             </ul>
           </li>
         ))}
@@ -69,336 +85,91 @@ const contact = [cv.location, cv.email, cv.phone].filter(Boolean);
     </section>
 
     {cv.projects?.length > 0 && (
-      <section class="cv-section mt-16">
-        <h2 class="label mb-6">Projects</h2>
-        <ul class="grid gap-4 md:grid-cols-3">
+      <section class="cv-section">
+        <h2>Projects</h2>
+        <ul class="cv-list">
           {cv.projects.map((p) => (
-            <li class="cv-item cv-project flex flex-col rounded-md border border-line bg-reel p-5">
-              <h3 class="font-serif text-2xl leading-tight text-screen">{p.name}</h3>
-              <p class="mt-2 flex-1 text-[15px] leading-relaxed text-screen/85">{p.description}</p>
-              <p class="label mt-3">{p.tech}</p>
-              <p class="cv-links mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-                {p.github && (
-                  <a href={p.github} target="_blank" rel="noopener" class="text-gold hover:underline">
-                    <span class="print:hidden">GitHub ↗</span>
-                    <span class="hidden print:inline">{p.github.replace('https://', '')}</span>
-                  </a>
-                )}
-                {p.live && (
-                  <a href={p.live} target="_blank" rel="noopener" class="text-gold hover:underline">
-                    <span class="print:hidden">Live site ↗</span>
-                    <span class="hidden print:inline">{p.live.replace('https://', '')}</span>
-                  </a>
-                )}
-              </p>
+            <li class="cv-item">
+              <div class="cv-row">
+                <h3>{p.name}</h3>
+                <p class="cv-when">{p.tech}</p>
+              </div>
+              <p class="text-prose">{p.description}</p>
+              {(p.github || p.live) && (
+                <p class="cv-links mt-1 flex flex-wrap gap-x-4 text-sm">
+                  {p.live && <a href={p.live} class="text-gold hover:underline">{short(p.live)}</a>}
+                  {p.github && <a href={p.github} class="text-gold hover:underline">{short(p.github)}</a>}
+                </p>
+              )}
             </li>
           ))}
         </ul>
       </section>
     )}
 
-    <div class="cv-edu-row mt-16 grid gap-12 md:grid-cols-3">
+    {cv.honors?.length > 0 && (
       <section class="cv-section">
-        <h2 class="label mb-6">Education</h2>
-        {cv.education.map((e) => (
-          <div class="cv-item mb-6">
-            <h3 class="font-serif text-2xl leading-tight text-screen">{e.school}</h3>
-            <p class="mt-1 text-gold">{e.focus}</p>
-            <p class="label mt-2">{e.start} – {e.end} · {e.place}</p>
-          </div>
-        ))}
-        {cv.tests?.length > 0 && (
-          <dl class="cv-item mt-2 flex flex-wrap gap-x-8 gap-y-3">
-            {cv.tests.map((t) => (
-              <div>
-                <dt class="label">{t.name}</dt>
-                <dd class="font-serif text-3xl text-screen">{t.score}</dd>
-              </div>
-            ))}
-          </dl>
-        )}
-      </section>
-
-      <section class="cv-section cv-honors">
-        <h2 class="label mb-6">Honors</h2>
-        <ul class="space-y-4">
+        <h2>Honors</h2>
+        <ul class="cv-list">
           {cv.honors.map((h) => (
-            <li class="cv-item flex gap-4">
-              <span class="font-mono text-sm text-gold">{h.year}</span>
-              <span>
-                <span class="block text-screen">{h.title}</span>
-                <span class="text-sm text-dim">{h.detail}</span>
-              </span>
+            <li class="cv-item">
+              <div class="cv-row">
+                <h3>{h.title}</h3>
+                <p class="cv-when">{h.year}</p>
+              </div>
+              <p class="text-prose">{h.detail}</p>
             </li>
           ))}
         </ul>
       </section>
+    )}
 
+    <section class="cv-section">
+      <h2>Skills</h2>
+      <p class="text-prose"><span class="cv-key">Technical:</span> {cv.skills.join(', ')}</p>
       {cv.languages?.length > 0 && (
-        <section class="cv-section cv-langs">
-          <h2 class="label mb-6">Languages</h2>
-          <ul class="space-y-3">
-            {cv.languages.map((l) => (
-              <li class="cv-item border-b border-line pb-2">
-                <span class="block text-screen">{l.language}</span>
-                <span class="text-sm text-dim">{l.level}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <p class="mt-1 text-prose"><span class="cv-key">Languages:</span> {cv.languages.map((l) => `${l.language} (${l.level.toLowerCase()})`).join(', ')}</p>
       )}
-    </div>
-
-    <div class="mt-16 grid gap-12 md:grid-cols-2">
-      <section class="cv-section">
-        <h2 class="label mb-5">Skills</h2>
-        <ul class="flex flex-wrap gap-2">
-          {cv.skills.map((s) => <li class="cv-skill rounded-full border border-line px-4 py-1.5 text-sm text-screen/90">{s}</li>)}
-        </ul>
-      </section>
-
-      {cv.building?.length > 0 && (
-        <section class="cv-section">
-          <h2 class="label mb-5">Building</h2>
-          <ul class="flex flex-wrap gap-2">
-            {cv.building.map((s) => <li class="cv-skill rounded-full border border-gold/40 px-4 py-1.5 text-sm text-screen/90">{s}</li>)}
-          </ul>
-        </section>
-      )}
-    </div>
+    </section>
   </article>
 </Base>
 
 <script>
-  // "Download PDF" opens the print dialog; choosing "Save as PDF" gives the light version below.
+  // "Download PDF" opens the print dialog; choosing "Save as PDF" gives the one-page version below.
   document.getElementById('print')?.addEventListener('click', () => window.print());
 </script>
 
 <style is:global>
+  .cv-section { margin-top: 2.5rem; border-top: 1px solid var(--color-line); padding-top: 1rem; }
+  .cv-section h2 { margin-bottom: 0.9rem; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-faint); }
+  .cv-list > * + * { margin-top: 1.4rem; }
+  .cv-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; column-gap: 1rem; }
+  .cv-row h3 { font-weight: 700; text-transform: uppercase; color: var(--color-screen); }
+  .cv-role { font-weight: 400; text-transform: none; color: var(--color-gold); }
+  .cv-when { font-size: 0.85rem; color: var(--color-dim); }
+  .cv-about { margin-top: 0.15rem; font-style: italic; color: var(--color-dim); }
+  .cv-points { margin-top: 0.5rem; color: var(--color-prose); }
+  .cv-points li { position: relative; padding-left: 1.1rem; }
+  .cv-points li + li { margin-top: 0.3rem; }
+  .cv-points li::before { content: '—'; position: absolute; left: 0; color: var(--color-faint); }
+  .cv-key { font-weight: 700; color: var(--color-screen); }
+
   @media print {
-    @page {
-      size: A4;
-      margin: 9mm 13mm;
-    }
-    html,
-    body {
-      background: #fff !important;
-      color: #16181d !important;
-      animation: none !important;
-    }
-    body::after,
-    body > header,
-    body > footer {
-      display: none !important;
-    }
-    .cv {
-      max-width: none;
-      padding: 0;
-      font-size: 10.5pt;
-    }
-    .cv * {
-      color: #16181d !important;
-      border-color: #d9d6cf !important;
-    }
-    .cv .text-gold,
-    .cv .cv-headline,
-    .cv .before\:bg-gold::before {
-      color: #9a6b12 !important;
-      background-color: #9a6b12;
-    }
-    .cv .text-gold {
-      background: none;
-    }
-    .cv header {
-      margin-top: 0;
-    }
-    .cv-name {
-      font-size: 26pt !important;
-    }
-    .cv-summary {
-      margin-top: 14pt;
-      font-size: 11pt;
-    }
-    .cv-stats {
-      margin-top: 12pt;
-    }
-    .cv-stats dd {
-      font-size: 20pt;
-    }
-    .cv-section {
-      margin-top: 12pt !important;
-    }
-    .cv-section h3 {
-      font-size: 15pt !important;
-    }
-    .cv-item {
-      break-inside: avoid;
-    }
-    .cv .space-y-10 > * + * {
-      margin-top: 9pt !important;
-    }
-    /* Tighter rhythm so the whole CV fits on one A4 page. */
-    .cv {
-      font-size: 9pt;
-      line-height: 1.4;
-    }
-    .cv .text-lg,
-    .cv .text-\[15px\] {
-      font-size: 9pt !important;
-      line-height: 1.38 !important;
-    }
-    .cv .space-y-2 > * + * {
-      margin-top: 1.5pt !important;
-    }
-    .cv .space-y-4 > * + * {
-      margin-top: 5pt !important;
-    }
-    .cv ul.mt-3 {
-      margin-top: 4pt !important;
-    }
-    .cv-stats {
-      margin-top: 9pt !important;
-    }
-    .cv-stats > div {
-      padding-top: 4pt;
-    }
-    .cv-stats dd {
-      font-size: 16pt !important;
-    }
-    .cv-section h2 {
-      margin-bottom: 7pt !important;
-    }
-    .cv-section h3 {
-      font-size: 13pt !important;
-    }
-    .cv .mt-16 {
-      margin-top: 14pt !important;
-    }
-    .cv .grid.md\:grid-cols-2 {
-      grid-template-columns: 1fr 1fr;
-      gap: 18pt;
-    }
-    .cv .cv-item.mb-6 {
-      margin-bottom: 0;
-    }
-    .cv-skill {
-      padding: 1pt 7pt !important;
-      font-size: 8.5pt !important;
-    }
-    .cv .grid.md\:grid-cols-3 {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8pt;
-    }
-    .cv-project {
-      background: none !important;
-      padding: 6pt 8pt !important;
-    }
-    .cv-project h3 {
-      font-size: 12pt !important;
-    }
-    .cv-project .mt-2,
-    .cv-project .mt-3 {
-      margin-top: 3pt !important;
-    }
-    /* Education and Languages stacked on the left, Honors wider on the right. */
-    .cv .cv-edu-row {
-      grid-template-columns: 1fr 1.5fr !important;
-      column-gap: 18pt !important;
-      row-gap: 4pt !important;
-    }
-    .cv .cv-honors {
-      grid-column: 2;
-      grid-row: 1 / span 2;
-    }
-    .cv .cv-langs {
-      grid-column: 1;
-      margin-top: 0 !important;
-    }
-    .cv .cv-langs li {
-      display: flex;
-      justify-content: space-between;
-      gap: 8pt;
-      padding-bottom: 2pt;
-    }
-    .cv .cv-langs li .block {
-      display: inline;
-    }
-    .cv dd.text-3xl {
-      font-size: 12pt !important;
-    }
-    .cv .cv-edu-row dl {
-      margin-top: 3pt !important;
-      gap: 3pt 16pt !important;
-    }
-    .cv .cv-edu-row .mb-6,
-    .cv .cv-edu-row h2 {
-      margin-bottom: 4pt !important;
-    }
-    .cv header .mt-3,
-    .cv header .mt-4 {
-      margin-top: 2pt !important;
-    }
-    .cv-name {
-      font-size: 22pt !important;
-    }
-    .cv-summary {
-      margin-top: 8pt !important;
-    }
-    .cv,
-    .cv .text-lg,
-    .cv .text-\[15px\] {
-      line-height: 1.32 !important;
-    }
-    .cv-project p.text-\[15px\] {
-      font-size: 8.3pt !important;
-    }
-    .cv .cv-edu-row dl > div {
-      display: flex;
-      align-items: baseline;
-      gap: 4pt;
-    }
-    .cv .mt-16 {
-      margin-top: 10pt !important;
-    }
-    .cv .cv-langs .space-y-3 > * + * {
-      margin-top: 1pt !important;
-    }
-    .cv .cv-honors li > span > span {
-      display: inline;
-    }
-    .cv .cv-honors li > span > span + span::before {
-      content: ' · ';
-    }
-    .cv .cv-honors .text-sm,
-    .cv .cv-langs .text-sm,
-    .cv .cv-edu-row .label {
-      font-size: 8pt !important;
-      line-height: 1.3 !important;
-    }
-    .cv .cv-langs li {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
-    .cv-links {
-      font-size: 7.5pt !important;
-    }
-    .cv dd.text-3xl {
-      font-size: 15pt !important;
-    }
-    .cv .mt-6 {
-      margin-top: 6pt !important;
-    }
-    .cv .mb-5 {
-      margin-bottom: 6pt !important;
-    }
-    .cv .space-y-3 > * + * {
-      margin-top: 3pt !important;
-    }
-    .cv .label {
-      color: #6b675f !important;
-    }
-    .cv a {
-      text-decoration: none;
-    }
+    @page { size: A4; margin: 11mm 14mm; }
+    html, body { background: #fff !important; animation: none !important; }
+    body::after, body > header, body > footer, body > nav { display: none !important; }
+    .cv { max-width: none; padding: 0; font-size: 9.6pt; line-height: 1.38; --color-screen: #111; --color-prose: #222; --color-dim: #444; --color-faint: #666; --color-line: #ccc; --color-gold: #7d1d14; }
+    .cv header { margin-top: 0; }
+    .cv-name { font-size: 20pt !important; }
+    .cv-headline, .cv-contact { margin-top: 2pt !important; font-size: 9.6pt !important; }
+    .cv-summary { margin-top: 8pt !important; font-size: 10.5pt !important; line-height: 1.4 !important; }
+    .cv-section { margin-top: 9pt; padding-top: 5pt; }
+    .cv-section h2 { margin-bottom: 4pt; font-size: 8pt; }
+    .cv-list > * + * { margin-top: 7pt; }
+    .cv-points { margin-top: 2pt; }
+    .cv-points li + li { margin-top: 1pt; }
+    .cv-item { break-inside: avoid; }
+    .cv-links, .cv-when { font-size: 8.5pt !important; }
+    .cv a { text-decoration: none; }
   }
 </style>

@@ -133,7 +133,7 @@ export default config({
       path: 'src/content/cv',
       format: { data: 'json' },
       schema: {
-        headline: fields.text({ label: 'Headline', description: 'e.g. Project Leader | Community Builder' }),
+        headline: fields.text({ label: 'Headline', description: 'Your titles, e.g. Student · Founder, Code Caravan' }),
         location: fields.text({ label: 'Location' }),
         email: fields.text({ label: 'Email', description: 'Shown publicly. Leave empty to hide.' }),
         phone: fields.text({ label: 'Phone', description: 'Shown publicly. Leave empty to hide.' }),
@@ -152,8 +152,9 @@ export default config({
             start: fields.text({ label: 'Start', description: 'e.g. January 2025' }),
             end: fields.text({ label: 'End', description: 'e.g. Present' }),
             place: fields.text({ label: 'Place', description: 'e.g. Fergana, Uzbekistan or Remote' }),
+            about: fields.text({ label: 'What the organization is (optional)', description: 'One line for readers who have never heard of it.' }),
             points: fields.array(fields.text({ label: 'Point', multiline: true }), {
-              label: 'What you did',
+              label: 'What you achieved (start with a verb, add a number)',
               itemLabel: (p) => p.value,
             }),
           }),
@@ -177,7 +178,7 @@ export default config({
           }),
           { label: 'Honors', itemLabel: (p) => `${p.fields.year.value} · ${p.fields.title.value}` },
         ),
-        skills: fields.array(fields.text({ label: 'Skill' }), { label: 'Skills', itemLabel: (p) => p.value }),
+        skills: fields.array(fields.text({ label: 'Skill' }), { label: 'Technical skills', itemLabel: (p) => p.value }),
         projects: fields.array(
           fields.object({
             name: fields.text({ label: 'Project' }),
@@ -202,10 +203,6 @@ export default config({
           }),
           { label: 'Languages', itemLabel: (p) => `${p.fields.language.value} · ${p.fields.level.value}` },
         ),
-        building: fields.array(fields.text({ label: 'Tool or skill' }), {
-          label: 'Building (tech skills)',
-          itemLabel: (p) => p.value,
-        }),
       },
     }),
     site: singleton({

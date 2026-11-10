@@ -1,12 +1,12 @@
 {
-  "headline": "Project Leader | Community Builder",
+  "headline": "Student · Founder, Code Caravan · Secretary-General, TuronMUN",
   "location": "Fergana, Uzbekistan",
   "email": "hi@ozodjonov.com",
   "phone": "",
-  "summary": "Project leader with experience managing teams, executing large-scale events, and securing partnerships across NGOs and organizations. Led initiatives with 1400+ participants and raised $12,000+ in funding. Focused on delivering structured, high-impact projects.",
+  "summary": "Student at the Presidential School in Fergana (Economics & Computer Science). Organizes hackathons and Model UN conferences for young people in Uzbekistan's regions, and builds the software that runs them.",
   "stats": [
     {
-      "value": "1400+",
+      "value": "1,400+",
       "label": "Participants led"
     },
     {
@@ -18,43 +18,41 @@
       "label": "Partner organizations"
     },
     {
-      "value": "3",
-      "label": "Olympiad podiums"
+      "value": "9",
+      "label": "Events organized"
     }
   ],
   "experience": [
     {
       "organization": "Code Caravan",
-      "role": "Founder / Project Manager",
-      "start": "January 2025",
-      "end": "June 2026",
+      "role": "Founder & Project Manager",
+      "start": "Jan 2025",
+      "end": "Jun 2026",
       "place": "Fergana, Uzbekistan",
+      "about": "Hackathons for students in Uzbekistan's regions, where such events are rare.",
       "points": [
-        "Managed planning and execution of 2 hackathons with 200+ participants",
-        "Coordinated cross-functional teams across 4 departments to deliver events on time",
-        "Secured partnerships with 2 government organizations and 4 NGOs",
-        "Raised over $10,000 in funding to support program execution and growth"
+        "Organized 3 hackathons (Code Caravan I, II and TECH4REGION) for 400+ participants in 85+ teams across Fergana and Andijan.",
+        "Raised $10,000+ in prizes and grants from partners including the Andijan Regional Administration, IT Park Andijan and the Goethe-Institut Tashkent.",
+        "Secured partnerships with 2 government organizations and 4 NGOs."
       ]
     },
     {
       "organization": "Turon Model United Nations",
-      "role": "Secretary General",
-      "start": "August 2025",
+      "role": "Secretary-General",
+      "start": "Aug 2025",
       "end": "Present",
       "place": "Fergana, Uzbekistan",
+      "about": "",
       "points": [
-        "Lead and manage a team of 20+ members across 4 departments",
-        "Secured partnerships with 1 government organization and 3 NGOs to support event operations",
-        "Raised $2,000+ in funding for youth volunteering initiatives",
-        "Directed end-to-end execution of 6 large-scale conferences with 1000+ participants",
-        "Oversaw planning, delegation, and delivery to ensure smooth event operations and participant experience"
+        "Directed 6 conferences for 1,000+ delegates, leading a 20+ member team across 4 departments.",
+        "Raised $2,000+ and secured support from 1 government organization and 3 NGOs."
       ]
     }
   ],
   "projects": [
     {
       "name": "TuronMUN Platform",
-      "description": "Official website, delegate registration, and admin system for Turon Model United Nations conferences.",
+      "description": "Website, delegate registration and admin system for Turon Model United Nations; 1,000+ delegates registered.",
       "tech": "React, TypeScript, Supabase",
       "github": "https://github.com/SoleSergeant/turonmun",
       "live": "https://turonmun-weld.vercel.app"
@@ -79,33 +77,28 @@
       "school": "Presidential School in Fergana",
       "place": "Fergana",
       "focus": "Economics and Computer Science",
-      "start": "October 2021",
+      "start": "Oct 2021",
       "end": "Present"
     }
   ],
   "honors": [
     {
-      "title": "1st place in Informatics Olympiad",
-      "detail": "Among over 300 students",
-      "year": "2022"
-    },
-    {
-      "title": "2nd place in Informatics Olympiad",
-      "detail": "Among over 300 students",
-      "year": "2023"
-    },
-    {
-      "title": "3rd place in Informatics Olympiad",
-      "detail": "Among over 400 students",
-      "year": "2024"
+      "title": "Regional Informatics Olympiad",
+      "detail": "1st place (2022), 2nd place (2023), 3rd place (2024), among 300–400 students each year",
+      "year": "2022–24"
     }
   ],
   "skills": [
-    "Project Planning & Execution",
-    "Leadership",
-    "Partnership Development",
-    "Moderation",
-    "Outreach"
+    "TypeScript",
+    "React",
+    "Next.js",
+    "React Native",
+    "FastAPI",
+    "Supabase",
+    "PostgreSQL",
+    "Git & GitHub",
+    "Vercel",
+    "AI-assisted development (Claude Code, Cursor)"
   ],
   "tests": [
     {
@@ -126,11 +119,5 @@
       "language": "English",
       "level": "Full professional proficiency"
     }
-  ],
-  "building": [
-    "AI-assisted development (Claude Code, Cursor)",
-    "Supabase",
-    "Vercel",
-    "Git & GitHub"
   ]
 }
