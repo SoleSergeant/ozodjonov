@@ -864,6 +864,13 @@
       "rewatch": true,
       "uzbek": false,
       "series": false
+    },
+    {
+      "title": "VisionQuest",
+      "watched": "2026-11-11",
+      "rewatch": false,
+      "uzbek": false,
+      "series": true
     }
   ]
 }
