@@ -871,6 +871,13 @@
       "rewatch": false,
       "uzbek": false,
       "series": true
+    },
+    {
+      "title": "The Odyssey",
+      "watched": "2026-11-18",
+      "rewatch": false,
+      "uzbek": false,
+      "series": false
     }
   ]
 }
